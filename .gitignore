@@ -1,0 +1,23 @@
+# LaTeX intermedios
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.listing
+*.fls
+*.fdb_latexmk
+_minted-*/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/

@@ -1,0 +1,1720 @@
+% =============================================================================
+%  Diplomado en Data Science Aplicada con Python para la Toma de Decisiones
+%  Clase 2: Control de Flujo — Condicionales, Listas y Ciclos
+%  SLB Ecuador | UDLA
+%
+%  Compilar: pdflatex -shell-escape presentacion.tex (x2 para refs)
+% =============================================================================
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+% ── Codificación y lenguaje ──────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% ── Fuentes ──────────────────────────────────────────────────────────────────
+\usepackage{FiraSans}
+\usepackage{FiraMono}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ── Gráficos y diagramas ────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc, fit, decorations.pathreplacing}
+\usepackage{fontawesome5}
+
+% ── Código fuente ────────────────────────────────────────────────────────────
+\usepackage{minted}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted, skins, breakable}
+
+% ── Tablas y utilidades ──────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{calc}
+
+% =============================================================================
+%  PALETA DE COLORES (rojo UDLA + variantes)
+% =============================================================================
+\definecolor{arcaRed}{HTML}{C82B40}
+\definecolor{arcaDark}{HTML}{6B1525}
+\definecolor{udlaCrimson}{HTML}{A31545}
+\definecolor{arcaGray}{HTML}{F5F5F5}
+\definecolor{arcaLightGray}{HTML}{EBEBEB}
+\definecolor{textDark}{HTML}{2D2D2D}
+\definecolor{textMuted}{HTML}{6B7280}
+\definecolor{codeGreen}{HTML}{16A34A}
+\definecolor{codeBlue}{HTML}{2563EB}
+\definecolor{codeOrange}{HTML}{EA580C}
+\definecolor{slbBlue}{HTML}{0014DC}
+\definecolor{terminalBg}{HTML}{0F172A}
+\definecolor{terminalGreen}{HTML}{86EFAC}
+\definecolor{terminalMuted}{HTML}{94A3B8}
+\definecolor{codeBg}{HTML}{FAFAFA}
+
+% =============================================================================
+%  CONFIGURACIÓN DEL TEMA BEAMER
+% =============================================================================
+\usetheme{default}
+\usecolortheme{default}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{headline}{}
+
+\setbeamercolor{normal text}{fg=textDark}
+\setbeamercolor{frametitle}{fg=arcaRed, bg=white}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=white!85}
+\setbeamercolor{author}{fg=white!80}
+\setbeamercolor{date}{fg=white!70}
+\setbeamercolor{item}{fg=arcaRed}
+\setbeamercolor{subitem}{fg=arcaDark}
+\setbeamercolor{block title}{fg=white, bg=arcaRed}
+\setbeamercolor{block body}{fg=textDark, bg=arcaGray}
+\setbeamercolor{block title alerted}{fg=white, bg=codeOrange}
+\setbeamercolor{block body alerted}{fg=textDark, bg=arcaGray}
+\setbeamercolor{block title example}{fg=white, bg=codeGreen}
+\setbeamercolor{block body example}{fg=textDark, bg=arcaGray}
+\setbeamercolor{section in toc}{fg=arcaDark}
+
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+\setbeamerfont{title}{size=\huge, series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{block title}{size=\normalsize, series=\bfseries}
+\setbeamerfont{footnote}{size=\tiny}
+
+\setbeamertemplate{itemize item}{\scriptsize\raise1.5pt\hbox{\color{arcaRed}$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1pt\hbox{\color{arcaDark}$\bullet$}}
+\setbeamertemplate{enumerate items}[default]
+\setbeamercolor{enumerate item}{fg=arcaRed}
+
+% =============================================================================
+%  HEADER
+% =============================================================================
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[arcaDark] (current page.north west) rectangle
+      ([yshift=-0.7cm]current page.north east);
+    \node[anchor=west, inner sep=0pt] at
+      ([xshift=0.6cm, yshift=-0.35cm]current page.north west)
+      {\includegraphics[height=0.45cm]{../logo_udla_white.png}};
+    \node[anchor=east, inner sep=0pt] at
+      ([xshift=-0.6cm, yshift=-0.35cm]current page.north east)
+      {\includegraphics[height=0.42cm]{../SLB_white.png}};
+  \end{tikzpicture}%
+  \vspace{0.7cm}%
+}
+
+% =============================================================================
+%  FOOTER
+% =============================================================================
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[arcaLightGray, line width=0.4pt]
+      ([yshift=0.55cm, xshift=0.6cm]current page.south west) --
+      ([yshift=0.55cm, xshift=-0.6cm]current page.south east);
+    \node[anchor=south, font=\tiny\color{textMuted}] at
+      ([yshift=0.15cm]current page.south)
+      {Diplomado en Data Science Aplicada con Python \(\cdot\) SLB Ecuador};
+    \node[anchor=south east, font=\scriptsize\bfseries\color{arcaRed}] at
+      ([xshift=-0.6cm, yshift=0.15cm]current page.south east)
+      {\insertframenumber};
+  \end{tikzpicture}%
+}
+
+% =============================================================================
+%  FRAMETITLE personalizado con línea roja
+% =============================================================================
+\setbeamertemplate{frametitle}{%
+  \vspace{0.25cm}%
+  \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle%
+  \par\vspace{2pt}%
+  \begin{tikzpicture}
+    \fill[arcaRed] (0,0) rectangle (3cm, 1.5pt);
+    \fill[arcaLightGray] (3cm,0) rectangle (\textwidth, 0.5pt);
+  \end{tikzpicture}%
+  \vspace{0.1cm}%
+}
+
+% =============================================================================
+%  ESTILO DE BLOQUES DE CÓDIGO (minted + tcolorbox)
+% =============================================================================
+\newtcblisting{pyblock}[1][]{%
+  listing engine=minted,
+  minted language=python,
+  minted style=xcode,
+  minted options={
+    fontsize=\small,
+    linenos=false,
+    breaklines=true,
+    python3=true
+  },
+  enhanced,
+  colback=codeBg,
+  colframe=arcaRed,
+  left=8pt,
+  right=6pt,
+  top=5pt,
+  bottom=5pt,
+  boxrule=0pt,
+  leftrule=3pt,
+  arc=3pt,
+  listing only,
+  title={\hspace{-2pt}\faPython\hspace{5pt}Python},
+  fonttitle=\scriptsize\bfseries,
+  colbacktitle=arcaRed,
+  coltitle=white,
+  attach boxed title to top left={xshift=8pt, yshift=-7pt},
+  boxed title style={
+    arc=2pt, boxrule=0pt,
+    top=1.5pt, bottom=1.5pt, left=6pt, right=6pt
+  },
+  drop fuzzy shadow=black!12,
+  #1
+}
+
+\newtcblisting{outputblock}[1][]{%
+  listing engine=minted,
+  minted language=text,
+  minted style=bw,
+  minted options={
+    fontsize=\small,
+    breaklines=true,
+    formatcom=\color{terminalGreen}
+  },
+  enhanced,
+  colback=terminalBg,
+  colframe=terminalBg,
+  coltext=terminalGreen,
+  left=10pt, right=6pt, top=5pt, bottom=5pt,
+  boxrule=0pt,
+  arc=3pt,
+  listing only,
+  title={\hspace{-2pt}\faTerminal\hspace{5pt}Output},
+  fonttitle=\scriptsize\bfseries,
+  colbacktitle=terminalGreen!85!black,
+  coltitle=terminalBg,
+  attach boxed title to top left={xshift=8pt, yshift=-7pt},
+  boxed title style={
+    arc=2pt, boxrule=0pt,
+    top=1.5pt, bottom=1.5pt, left=6pt, right=6pt
+  },
+  #1
+}
+
+% =============================================================================
+%  SECTION DIVIDERS
+% =============================================================================
+\newcommand{\sectionframe}[2]{%
+  \begingroup
+    \setbeamertemplate{headline}{}
+    \setbeamertemplate{footline}{}
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}[plain, noframenumbering]
+      \begin{tikzpicture}[remember picture, overlay]
+        \fill[arcaRed] (current page.south west) rectangle (current page.north east);
+        \node[anchor=center, text=white, font=\Huge\bfseries, text width=12cm,
+              align=center] at ([yshift=0.5cm]current page.center) {#1};
+        \node[anchor=center, text=white!80, font=\large, text width=10cm,
+              align=center] at ([yshift=-0.8cm]current page.center) {#2};
+      \end{tikzpicture}
+    \end{frame}
+  \endgroup
+}
+
+% =============================================================================
+%  METADATOS
+% =============================================================================
+\title{Diplomado en Data Science Aplicada\\con Python para la Toma de Decisiones}
+\subtitle{Clase 2: Control de Flujo — Condicionales, Listas y Ciclos}
+\author{Carlos Enrique Mosquera Trujillo}
+\date{2026}
+
+% =============================================================================
+%  DOCUMENTO
+% =============================================================================
+\begin{document}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  FRAME 1: PORTADA
+% ─────────────────────────────────────────────────────────────────────────────
+{
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\begin{frame}[plain, noframenumbering]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \fill[arcaRed] (current page.north west) rectangle ([yshift=-0.35cm]current page.north east);
+    \fill[arcaDark] (current page.south west) rectangle ([yshift=0.35cm]current page.south east);
+    \fill[arcaRed]
+      ([xshift=1.1cm, yshift=-0.35cm]current page.north west) rectangle
+      ([xshift=1.15cm, yshift=0.35cm]current page.south west);
+
+    \node[anchor=north west, inner sep=0pt] at
+      ([xshift=1.8cm, yshift=-1.2cm]current page.north west)
+      {\includegraphics[height=1.6cm]{../logo_udla.png}};
+    \node[anchor=north east, inner sep=0pt] at
+      ([xshift=-1.5cm, yshift=-1.2cm]current page.north east)
+      {\includegraphics[height=1.5cm]{../SLB.png}};
+
+    \node[anchor=center, text=arcaDark, text width=13cm, align=center] at
+      ([yshift=0.8cm]current page.center) {
+        {\huge\bfseries Diplomado en Data Science Aplicada}\\[6pt]
+        {\huge\bfseries con Python para la Toma de Decisiones}
+      };
+    \fill[arcaRed]
+      ([yshift=-0.4cm, xshift=-3cm]current page.center) rectangle
+      ([yshift=-0.33cm, xshift=3cm]current page.center);
+    \node[anchor=center, text=arcaRed, font=\Large] at
+      ([yshift=-1.1cm]current page.center) {
+        Clase 2: Control de Flujo --- Condicionales, Listas y Ciclos
+      };
+    \node[anchor=center, text=textMuted, font=\normalsize] at
+      ([yshift=-2.2cm]current page.center) {
+        {\color{arcaRed}\faUser}\hspace{6pt}Carlos Enrique Mosquera Trujillo
+        \hspace{16pt}
+        {\color{arcaRed}\faIndustry}\hspace{4pt}SLB Ecuador
+      };
+  \end{tikzpicture}
+\end{frame}
+}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  FRAME 2: RECAP CLASE 1 + TEMAS DE HOY
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{frame}{Recap Clase 1 + Temas de Hoy}
+  \vspace{-6pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\small\color{arcaDark}\bfseries\faCheckCircle\hspace{5pt}Ya sabemos hacer:}
+      \vspace{4pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{3pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{print()} y operaciones aritméticas
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Variables y nombres (\texttt{snake\_case})
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Tipos (\texttt{int}, \texttt{float}, \texttt{str}, \texttt{bool})
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Conversiones \texttt{int()}, \texttt{float()}, \texttt{str()}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Leer datos con \texttt{input()}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{if / elif / else} básico
+      \end{itemize}
+      }
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\small\color{arcaDark}\bfseries\faForward\hspace{5pt}Hoy vamos a profundizar en:}
+      \vspace{4pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{3pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \textbf{Condicionales a fondo}: cuándo usar
+          \texttt{if} solo, \texttt{if/else},
+          \texttt{if/elif/else} y las trampas comunes
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \textbf{Listas con profundidad}:
+          slicing, métodos, operador \texttt{in}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \textbf{Ciclos \texttt{for} aplicados}:
+          \texttt{range}, \texttt{enumerate}, \texttt{zip}
+          y los patrones más útiles
+      \end{itemize}
+      }
+
+      \vspace{6pt}
+      {\scriptsize\color{arcaDark}\itshape
+        Al final: reporte de una batería completa de pozos.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Condicionales a Fondo}{Cómo el programa toma decisiones}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ── Anatomía de if ───────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=5]{Anatomía de \texttt{if}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Un \texttt{if} evalúa una condición. Si es \texttt{True}, ejecuta el bloque; si es \texttt{False}, lo salta.}
+
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{pyblock}
+presion = 3200
+
+if presion > 3000:
+    print("Alerta: presion alta")
+
+print("Fin")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Alerta: presion alta
+Fin
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{if} + condición + \texttt{:}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          El \textbf{bloque} son las líneas con
+          \textbf{4 espacios} de indentación.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{print("Fin")} \textbf{no} está
+          indentado: se ejecuta \textbf{siempre}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── if solo ──────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=8]{\texttt{if} Solo --- ``Hacer Algo Solo Si\ldots''}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Se usa cuando \textbf{no hay caso alternativo}: solo actuamos si pasa algo especial.}
+
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+presion = 2800
+
+if presion > 3000:
+    print("Alerta: presion alta")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+(no imprime nada)
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{arcaDark}\bfseries Cuándo usarlo:}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Enviar una alerta cuando algo falla.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Registrar un evento cuando ocurre.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Aplicar un descuento solo si el pedido
+          supera cierto monto.
+      \end{itemize}
+      }
+      \vspace{3pt}
+      {\scriptsize\color{textMuted}\itshape
+        Como la presión es 2800, la condición es
+        \texttt{False} y no pasa nada. No hace
+        falta \texttt{else}.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── if / else ────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=8]{\texttt{if / else} --- Dos Caminos Exclusivos}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Se usa cuando \textbf{siempre} hacemos algo: la pregunta es \textit{cuál} de las dos cosas.}
+
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{pyblock}
+bopd = 750
+
+if bopd >= 500:
+    estado = "activo"
+else:
+    estado = "cerrado"
+
+print("Pozo:", estado)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Pozo: activo
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.46\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Se ejecuta \textbf{exactamente una} de las
+          dos ramas. Nunca ambas, nunca ninguna.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{else} \textbf{no} lleva condición:
+          es ``todos los demás casos''.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Después del bloque, \texttt{estado}
+          siempre tiene un valor.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── if / elif / else ─────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{\texttt{if / elif / else} --- Cadena de Casos}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Varios caminos posibles. Python evalúa \textbf{de arriba abajo} y ejecuta \textbf{solo el primero} que sea \texttt{True}.}
+
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{pyblock}
+bopd = 1250
+
+if bopd >= 1000:
+    nivel = "alto"
+elif bopd >= 300:
+    nivel = "medio"
+else:
+    nivel = "workover"
+
+print(nivel)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+alto
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.46\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{elif} = ``else if''. Se repite
+          tantas veces como haga falta.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{bopd >= 1000} es \texttt{True} $\to$
+          asigna \texttt{"alto"} y \textbf{sale} de
+          la cadena.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          El \texttt{elif} de abajo ni se prueba,
+          aunque también sería \texttt{True}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Trampa if/if/if vs elif ─────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Trampa: \texttt{if / if / if} \(\neq\) \texttt{if / elif / elif}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Tres \texttt{if} sueltos son \textbf{independientes}. Una cadena \texttt{if / elif} es \textbf{una sola} decisión.}
+
+  \vspace{4pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{arcaRed}\bfseries\faTimes\hspace{3pt}Antipatrón: \texttt{if} sueltos}
+      \begin{pyblock}
+bopd = 1500
+
+if bopd >= 300:
+    print("medio")
+if bopd >= 800:
+    print("alto")
+if bopd >= 1200:
+    print("muy alto")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+medio
+alto
+muy alto
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{3pt}Correcto: cadena \texttt{elif}}
+      \begin{pyblock}
+bopd = 1500
+
+if bopd >= 1200:
+    print("muy alto")
+elif bopd >= 800:
+    print("alto")
+elif bopd >= 300:
+    print("medio")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+muy alto
+      \end{outputblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{3pt}
+  {\scriptsize\color{arcaDark}
+    \faExclamationTriangle\hspace{3pt}%
+    Con \texttt{if} sueltos salen las \textbf{tres} etiquetas (cada \texttt{if} se evalúa por separado).
+    En cadena sale \textbf{solo una}.}
+\end{frame}
+
+% ── else como catch-all ─────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{\texttt{else} como ``Catch-all''}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{else} atrapa \textbf{todo lo que no capturaron} los casos anteriores.}
+
+  \vspace{4pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{3pt}Útil: garantizar un valor}
+      \begin{pyblock}
+if bopd >= 1000:
+    nivel = "alto"
+elif bopd >= 300:
+    nivel = "medio"
+else:
+    nivel = "revisar"
+      \end{pyblock}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}\itshape
+        Sin \texttt{else}, si ningún caso aplica,
+        \texttt{nivel} nunca se crea y el
+        \texttt{print(nivel)} de después falla.}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{3pt}Riesgo: esconder errores}
+      \begin{pyblock}
+tipo = "geolgico"
+
+if tipo == "geologico":
+    accion = "revisar corte"
+else:
+    accion = "nada"
+      \end{pyblock}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}\itshape
+        El error de tipeo cae al \texttt{else} en
+        silencio. A veces conviene \textbf{no}
+        poner \texttt{else} y que Python avise.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── and / or ─────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{Combinar Condiciones: \texttt{and}, \texttt{or}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Cuando la decisión depende de \textbf{más de una} condición. (\texttt{corte} = corte de agua.)}
+
+  \vspace{4pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{arcaDark}\bfseries \texttt{and} --- deben cumplirse \textbf{las dos}}
+      \begin{pyblock}
+bopd = 1250
+corte = 0.32
+
+if bopd >= 1000 and corte < 0.5:
+    print("optimo")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+optimo
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{arcaDark}\bfseries \texttt{or} --- basta con \textbf{una}}
+      \begin{pyblock}
+bopd = 180
+corte = 0.75
+
+if bopd < 200 or corte > 0.9:
+    print("candidato a cierre")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+candidato a cierre
+      \end{outputblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{3pt}
+  {\scriptsize\color{textMuted}
+    \faLightbulb[regular]\hspace{3pt}%
+    \texttt{and} pide \textbf{ambas} verdaderas; \texttt{or} pide \textbf{al menos una}.}
+\end{frame}
+
+% ── not / paréntesis ─────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Negar con \texttt{not} y Agrupar con Paréntesis}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      {\scriptsize\color{arcaDark}\bfseries \texttt{not} invierte \texttt{True}/\texttt{False}}
+      \begin{pyblock}
+activo = False
+
+if not activo:
+    print("pozo inactivo")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+pozo inactivo
+      \end{outputblock}
+      \vspace{3pt}
+      {\scriptsize\color{textMuted}\itshape
+        \texttt{not True} $\to$ \texttt{False}\quad
+        \texttt{not False} $\to$ \texttt{True}}
+    \end{column}
+
+    \begin{column}{0.50\textwidth}
+      {\scriptsize\color{arcaDark}\bfseries Paréntesis para agrupar}
+      \begin{pyblock}
+bopd = 1200
+corte = 0.55
+presion = 3100
+
+if (bopd >= 1000 and corte < 0.5) \
+   or presion > 3000:
+    print("alerta operativa")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+alerta operativa
+      \end{outputblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{3pt}
+  {\scriptsize\color{textMuted}
+    \faLightbulb[regular]\hspace{3pt}%
+    Los paréntesis dejan claro qué se agrupa; la \texttt{\textbackslash} al final permite partir una línea larga en dos.}
+\end{frame}
+
+% ── Práctica: alertas ────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=6]{Práctica Guiada: Alertas de Pozo \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}6 min}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Del pozo Sacha-042 llegan cuatro mediciones:}
+
+  \vspace{3pt}
+  \begin{pyblock}
+bopd = 1250
+corte = 0.32
+presion = 3200
+temperatura = 95
+  \end{pyblock}
+
+  \vspace{3pt}
+  {\footnotesize\color{textMuted}Escriban las alertas (son \textbf{independientes}, pueden dispararse varias):}
+
+  \vspace{2pt}
+  {\footnotesize
+  \begin{itemize}\setlength{\itemsep}{1pt}
+    \item[{\color{arcaRed}\scriptsize\faExclamationCircle}]
+      \texttt{presion > 3000} $\to$ \textbf{``ALERTA: presion alta''}
+    \item[{\color{arcaRed}\scriptsize\faExclamationCircle}]
+      \texttt{corte > 0.7} $\to$ \textbf{``AVISO: alto corte de agua''}
+    \item[{\color{arcaRed}\scriptsize\faExclamationCircle}]
+      \texttt{bopd < 300 and corte > 0.5} $\to$ \textbf{``CRITICO: cierre''}
+    \item[{\color{arcaRed}\scriptsize\faExclamationCircle}]
+      \texttt{temperatura > 100} $\to$ \textbf{``AVISO: temperatura alta''}
+  \end{itemize}
+  }
+
+  \vspace{3pt}
+  {\scriptsize\color{textMuted}\itshape
+    \faLightbulb[regular]\hspace{3pt}%
+    ¿Son \texttt{if} sueltos o una cadena \texttt{if/elif}? Piénsenlo antes de escribir.}
+\end{frame}
+
+% ── Solución: alertas ────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=28]{Solución --- Alertas de Pozo}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \begin{pyblock}
+bopd = 1250
+corte = 0.32
+presion = 3200
+temperatura = 95
+
+if presion > 3000:
+    print("ALERTA: presion alta")
+
+if corte > 0.7:
+    print("AVISO: alto corte de agua")
+
+if bopd < 300 and corte > 0.5:
+    print("CRITICO: cierre")
+
+if temperatura > 100:
+    print("AVISO: temperatura alta")
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.38\textwidth}
+      \begin{outputblock}
+ALERTA: presion alta
+      \end{outputblock}
+      \vspace{4pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Son \texttt{if} \textbf{sueltos}: las alertas
+          son independientes.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Con estos datos solo se dispara una,
+          pero otro pozo podría disparar dos o tres.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Práctica: semáforo ───────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=6]{Su Turno: Semáforo de Producción \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}6 min}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Clasificar cada pozo con \textbf{un solo} color según su producción.}
+
+  \vspace{3pt}
+  {\footnotesize\color{textMuted}Reglas (mutuamente excluyentes):}
+
+  \vspace{2pt}
+  {\footnotesize
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{codeGreen}\bfseries \(\bullet\)}]
+      \textbf{VERDE}: \texttt{bopd >= 1000}
+    \item[{\color{codeOrange}\bfseries \(\bullet\)}]
+      \textbf{AMARILLO}: entre 500 y 999
+    \item[{\color{arcaRed}\bfseries \(\bullet\)}]
+      \textbf{ROJO}: menos de 500
+  \end{itemize}
+  }
+
+  \vspace{3pt}
+  \begin{pyblock}
+bopd = int(input("BOPD del pozo: "))
+      \end{pyblock}
+
+  \vspace{3pt}
+  {\scriptsize\color{textMuted}\itshape
+    \faLightbulb[regular]\hspace{3pt}%
+    Un pozo tiene \textbf{un} color $\to$ es cadena \texttt{if/elif/else}, no \texttt{if} sueltos.}
+\end{frame}
+
+% ── Solución: semáforo ───────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Solución --- Semáforo de Producción}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{pyblock}
+bopd = int(input("BOPD del pozo: "))
+
+if bopd >= 1000:
+    color = "VERDE"
+elif bopd >= 500:
+    color = "AMARILLO"
+else:
+    color = "ROJO"
+
+print("Semaforo:", color)
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Cadena \texttt{if/elif/else}: corre
+          solo una rama.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          No hace falta escribir \texttt{bopd < 500}:
+          si no fue $\geq$ 1000 ni $\geq$ 500,
+          el \texttt{else} lo atrapa.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Listas}{Cuando el dato no es uno, son muchos}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ── ¿Qué es una lista? (problema real) ───────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{¿Qué es una Lista?}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    En la Clase 1 teníamos \textbf{un} pozo. Hoy el supervisor pide la producción de los \textbf{5 pozos} de la batería.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{arcaRed}\bfseries\faTimes\hspace{3pt}Sin listas: una variable por pozo}
+      \begin{pyblock}
+bopd_1 = 1250
+bopd_2 = 780
+bopd_3 = 340
+bopd_4 = 1600
+bopd_5 = 950
+      \end{pyblock}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}\itshape
+        5 pozos, 5 variables. ¿Y si son 500?
+        Imposible de manejar.}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{3pt}Con una lista: un solo nombre}
+      \begin{pyblock}
+bopd = [1250, 780, 340, 1600, 950]
+      \end{pyblock}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{2pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Los corchetes \texttt{[ ]} delimitan la lista.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Las comas separan los elementos.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Es \textbf{ordenada}: cada valor tiene
+          una posición fija.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Acceder por índice ───────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=20]{Acceder a un Elemento: el Índice}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Cada elemento tiene una \textbf{posición} (índice). Python cuenta \textbf{desde 0}.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{pyblock}
+bopd = [1250, 780, 340, 1600, 950]
+
+print(bopd[0])    # primer pozo
+print(bopd[2])    # tercero
+print(bopd[-1])   # ultimo
+print(len(bopd))  # cuantos hay
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+1250
+340
+950
+5
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \centering
+      {\scriptsize\color{textMuted} índice de cada elemento:}\\[3pt]
+      {\scriptsize\ttfamily
+      \begin{tabular}{cccccc}
+        \texttt{1250} & \texttt{780} & \texttt{340} & \texttt{1600} & \texttt{950}\\
+        \midrule
+        0 & 1 & 2 & 3 & 4\\
+      \end{tabular}}
+
+      \vspace{6pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{3pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          El primer elemento es \texttt{[0]}, no \texttt{[1]}.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{[-1]} es el último (cuenta desde el final).
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{len()} dice cuántos elementos hay.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Slicing ──────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{Slicing: Cortar un Pedazo de la Lista}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{lista[a:b]} devuelve desde el índice \texttt{a} hasta \texttt{b-1} (incluye \texttt{a}, excluye \texttt{b}).}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{pyblock}
+prod = [1250, 1180, 1220, 1150, 1300]
+
+print(prod[0:3])   # indices 0,1,2
+print(prod[2:])    # del 2 al final
+print(prod[:2])    # los 2 primeros
+print(prod[-2:])   # los 2 ultimos
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \begin{outputblock}[]
+[1250, 1180, 1220]
+[1220, 1150, 1300]
+[1250, 1180]
+[1150, 1300]
+      \end{outputblock}
+
+      \vspace{4pt}
+      {\scriptsize\color{textMuted}\itshape
+        Omitir el primer número = ``desde el
+        inicio''. Omitir el segundo = ``hasta
+        el final''.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Métodos ──────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{Modificar una Lista: los Métodos}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Un \textbf{método} es una acción que se llama con la sintaxis \texttt{lista.metodo(\ldots)}.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+pozos = ["Sacha-042", "Sacha-108"]
+
+pozos.append("Auca-63")
+pozos.insert(0, "Auca-91")
+pozos.remove("Sacha-108")
+
+print(pozos)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}[]
+['Auca-91', 'Sacha-042',
+ 'Auca-63']
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize
+      \renewcommand{\arraystretch}{1.35}
+      \begin{tabular}{@{}l l@{}}
+        \toprule
+        {\bfseries\color{arcaRed} Método} & {\bfseries\color{arcaDark} Qué hace} \\
+        \midrule
+        \texttt{.append(x)} & agrega \texttt{x} al final \\
+        \texttt{.insert(i,x)} & inserta en posición \texttt{i} \\
+        \texttt{.remove(x)} & borra la primera \texttt{x} \\
+        \texttt{.pop()} & quita y devuelve el último \\
+        \bottomrule
+      \end{tabular}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Operador in ──────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=20]{Operador \texttt{in}: ¿Está el Valor en la Lista?}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{valor in lista} devuelve \texttt{True} si aparece; \texttt{False} si no.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+ruta = ["Sacha-042", "Auca-63"]
+
+print("Sacha-042" in ruta)
+print("Auca-91" in ruta)
+
+if "Sacha-042" in ruta:
+    print("visitar hoy")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+True
+False
+visitar hoy
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Sirve para \textbf{decidir} sin escribir
+          un ciclo.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Combina muy bien con \texttt{if}:
+          ``si este pozo está en la ruta\ldots''
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          También funciona en texto:
+          \texttt{"gas" in "gas condensado"}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Listas paralelas ─────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{Listas Paralelas: Una Tabla Sin Librerías}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Dos o más listas donde la \textbf{posición} conecta la información.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+pozos = ["Sacha-042", "Sacha-108"]
+bopd  = [1250, 780]
+corte = [0.32, 0.55]
+
+# posicion 0 = mismo pozo
+print(pozos[0], bopd[0], corte[0])
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Sacha-042 1250 0.32
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Regla de oro: \textbf{todas las listas
+          deben tener el mismo largo}.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Es la forma más simple de manejar
+          una tabla de datos.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          En la Clase 3 esto se convierte
+          en un \texttt{DataFrame} de pandas.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Práctica: producción semanal ─────────────────────────────────────────────
+\begin{frame}[fragile,shrink=6]{Práctica: Producción Semanal \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}7 min}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Producción diaria del pozo Sacha-042 en los últimos 7 días:}
+
+  \vspace{3pt}
+  \begin{pyblock}
+prod = [1250, 1180, 1220, 1150, 1300, 1280, 1240]
+  \end{pyblock}
+
+  \vspace{3pt}
+  {\footnotesize\color{textMuted}Sin usar \texttt{for} todavía, con lo que ya sabemos:}
+
+  \vspace{2pt}
+  {\footnotesize
+  \begin{enumerate}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\bfseries 1.}]
+      Imprimir la producción del \textbf{lunes} (\texttt{[0]}) y del \textbf{domingo} (\texttt{[-1]}).
+    \item[{\color{arcaRed}\bfseries 2.}]
+      Imprimir \textbf{lunes a miércoles} con un slice.
+    \item[{\color{arcaRed}\bfseries 3.}]
+      Agregar un octavo día con \textbf{1200} usando \texttt{.append()}.
+    \item[{\color{arcaRed}\bfseries 4.}]
+      Preguntar si \textbf{1300} está en la lista (\texttt{in}).
+    \item[{\color{arcaRed}\bfseries 5.}]
+      Imprimir cuántos días hay ahora (\texttt{len()}).
+  \end{enumerate}
+  }
+\end{frame}
+
+% ── Solución: producción semanal ─────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Solución --- Producción Semanal}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+prod = [1250, 1180, 1220, 1150,
+        1300, 1280, 1240]
+
+print(prod[0], prod[-1])
+print(prod[0:3])
+
+prod.append(1200)
+
+print(1300 in prod)
+print(len(prod))
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.40\textwidth}
+      \begin{outputblock}[]
+1250 1240
+[1250, 1180, 1220]
+True
+8
+      \end{outputblock}
+
+      \vspace{4pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{.append()} pasó la lista de 7 a 8.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{len()} lo confirma.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Ciclos \texttt{for}}{Aplicar la misma lógica a muchos datos}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ── Anatomía for ─────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{Anatomía del \texttt{for}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{for} \textbf{recorre} una lista: para \textbf{cada} elemento ejecuta el bloque.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+bopd = [1250, 780, 1600]
+
+for prod in bopd:
+    print(prod, "BOPD")
+
+print("fin")
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+1250 BOPD
+780 BOPD
+1600 BOPD
+fin
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{prod} es la \textbf{variable de bucle}:
+          cambia en cada vuelta.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{in bopd} le dice a Python
+          \textbf{qué recorrer}.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Solo lo \textbf{indentado} se repite;
+          \texttt{print("fin")} corre al final.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── range ────────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{\texttt{range(n)}: Números para Contar}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{range(n)} genera \textbf{0, 1, \ldots, n-1}. Útil para repetir un número fijo de veces.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{pyblock}
+for dia in range(7):
+    print("dia", dia + 1)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+dia 1
+dia 2
+...
+dia 7
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{pyblock}
+for h in range(6, 12):
+    print("hora", h)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+hora 6
+hora 7
+...
+hora 11
+      \end{outputblock}
+    \end{column}
+  \end{columns}
+
+  \vspace{3pt}
+  {\scriptsize\color{textMuted}\itshape
+    \faLightbulb[regular]\hspace{3pt}%
+    \texttt{range} \textbf{no incluye} el número final. \texttt{range(6, 12)} llega hasta 11, no 12.}
+\end{frame}
+
+% ── enumerate ────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{\texttt{enumerate()}: Índice y Valor a la Vez}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Cuando además del valor necesitamos su \textbf{posición} (pozo 1, pozo 2\ldots).}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+pozos = ["Sacha-042", "Auca-63"]
+
+for i, pozo in enumerate(pozos):
+    print(i, "->", pozo)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+0 -> Sacha-042
+1 -> Auca-63
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{i, pozo} son \textbf{dos variables}
+          a la vez: \texttt{i} la posición,
+          \texttt{pozo} el elemento.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Arranca en 0. Para empezar en 1:
+          \texttt{enumerate(pozos, 1)}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── zip ──────────────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{\texttt{zip()}: Recorrer Dos Listas en Paralelo}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    \texttt{zip(a, b)} empareja los elementos de \texttt{a} y \texttt{b} posición por posición.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+pozos = ["Sacha-042", "Sacha-108"]
+bopd  = [1250, 780]
+
+for pozo, prod in zip(pozos, bopd):
+    print(pozo, prod)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Sacha-042 1250
+Sacha-108 780
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{pozo, prod}: otra vez dos
+          variables, una por lista.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Es la forma limpia de recorrer
+          \textbf{listas paralelas}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Patrón acumulador ────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=10]{Patrón Acumulador: Sumar Todo}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Empezamos en \texttt{total = 0} y en cada vuelta \textbf{sumamos} el elemento actual.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+prod = [1250, 1180, 1220, 1150]
+
+total = 0
+for p in prod:
+    total = total + p
+
+print("Total:", total)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Total: 4800
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{total = 0} va \textbf{antes} del
+          ciclo (el estado inicial).
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          \texttt{total = total + p} actualiza
+          en cada vuelta.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Atajo: \texttt{sum(prod)} hace lo mismo
+          en una línea.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Patrón contador ──────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{Patrón Contador: ¿Cuántos Cumplen?}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Empezamos en \texttt{n = 0} y sumamos \texttt{1} cada vez que se cumple una condición.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+bopd = [1250, 780, 1600, 340, 920]
+
+n = 0
+for prod in bopd:
+    if prod >= 1000:
+        n = n + 1
+
+print("Sobre cutoff:", n)
+      \end{pyblock}
+      \vspace{2pt}
+      \begin{outputblock}
+Sobre cutoff: 2
+      \end{outputblock}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Un \texttt{if} \textbf{dentro} del \texttt{for}:
+          revisamos cada pozo por separado.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Solo sumamos al contador cuando la
+          condición es \texttt{True}.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Patrón filtro ────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Patrón Filtro: Guardar los que Cumplen}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Empezamos con una lista \textbf{vacía} y hacemos \texttt{.append()} de los que pasan el filtro.}
+
+  \vspace{5pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+pozos = ["Sacha-042", "Auca-63",
+         "Shushufindi-21"]
+bopd  = [1250, 340, 1600]
+
+altos = []
+for pozo, prod in zip(pozos, bopd):
+    if prod >= 1000:
+        altos.append(pozo)
+
+print(altos)
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.40\textwidth}
+      \begin{outputblock}[]
+['Sacha-042',
+ 'Shushufindi-21']
+      \end{outputblock}
+
+      \vspace{4pt}
+      {\scriptsize\color{textMuted}\itshape
+        \texttt{altos = []} crea la lista vacía.
+        El \texttt{for} recorre, el \texttt{if}
+        filtra y \texttt{.append()} guarda.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Práctica integradora: batería ────────────────────────────────────────────
+\begin{frame}[fragile,shrink=6]{Práctica: Reporte de una Batería \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}15 min}}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Cinco pozos de un campo en la Amazonía. Generemos el reporte del día.}
+
+  \vspace{3pt}
+  \begin{pyblock}
+pozos = ["Sacha-042", "Sacha-108", "Auca-63", "Shushufindi-21", "Auca-91"]
+bopd  = [1250, 780, 340, 1600, 950]
+corte = [0.32, 0.55, 0.78, 0.25, 0.48]
+  \end{pyblock}
+
+  \vspace{3pt}
+  {\footnotesize\color{textMuted}Con lo de hoy, calculen e impriman:}
+
+  \vspace{2pt}
+  {\footnotesize
+  \begin{enumerate}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\bfseries 1.}]
+      \textbf{Producción total} de la batería (acumulador).
+    \item[{\color{arcaRed}\bfseries 2.}]
+      \textbf{Cuántos pozos} son rentables, \texttt{bopd >= 500} (contador).
+    \item[{\color{arcaRed}\bfseries 3.}]
+      \textbf{Lista de pozos} con \texttt{corte > 0.5} (filtro).
+    \item[{\color{arcaRed}\bfseries 4.}]
+      \textbf{Semáforo} de cada pozo con \texttt{if/elif/else}.
+  \end{enumerate}
+  }
+\end{frame}
+
+% ── Solución batería 1/2: total y rentables ──────────────────────────────────
+\begin{frame}[fragile,shrink=12]{Solución (1/2): Total y Rentables}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+bopd = [1250, 780, 340, 1600, 950]
+
+total = 0
+for prod in bopd:
+    total = total + prod
+print("Total:", total, "BOPD")
+
+rentables = 0
+for prod in bopd:
+    if prod >= 500:
+        rentables = rentables + 1
+print("Rentables:", rentables)
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.40\textwidth}
+      \begin{outputblock}
+Total: 4920 BOPD
+Rentables: 4
+      \end{outputblock}
+
+      \vspace{5pt}
+      {\scriptsize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{4pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Parte 1: patrón \textbf{acumulador}
+          para sumar toda la producción.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Parte 2: patrón \textbf{contador}
+          para contar los rentables.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Solución batería 2/2: filtro y semáforo ──────────────────────────────────
+\begin{frame}[fragile,shrink=20]{Solución (2/2): Filtro y Semáforo}
+  \vspace{-4pt}
+  {\scriptsize\color{textMuted}Usando las mismas listas \texttt{pozos}, \texttt{bopd} y \texttt{corte} de la práctica.}
+  \vspace{3pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+con_agua = []
+for pozo, agua in zip(pozos, corte):
+    if agua > 0.5:
+        con_agua.append(pozo)
+print("Alto corte:", con_agua)
+
+for pozo, prod in zip(pozos, bopd):
+    if prod >= 1000:
+        color = "VERDE"
+    elif prod >= 500:
+        color = "AMARILLO"
+    else:
+        color = "ROJO"
+    print(pozo, color)
+      \end{pyblock}
+    \end{column}
+
+    \begin{column}{0.40\textwidth}
+      \begin{outputblock}[]
+Alto corte: ['Sacha-108',
+ 'Auca-63']
+Sacha-042 VERDE
+Sacha-108 AMARILLO
+Auca-63 ROJO
+Shushufindi-21 VERDE
+Auca-91 AMARILLO
+      \end{outputblock}
+
+      \vspace{4pt}
+      {\scriptsize\color{textMuted}\itshape
+        Parte 3: \textbf{filtro}. Parte 4:
+        \textbf{semáforo} con \texttt{if/elif/else}.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Cierre}{Recapitulación y próxima clase}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ── Recap ────────────────────────────────────────────────────────────────────
+\begin{frame}{Lo Que Aprendimos Hoy}
+  \vspace{-6pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\footnotesize\color{arcaDark}\bfseries Condicionales}
+      \vspace{3pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{1pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{if} solo, \texttt{if/else}, \texttt{if/elif/else}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{if/if/if} \textbf{no} es \texttt{if/elif}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{else} como default (y cuándo omitirlo)
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{and}, \texttt{or}, \texttt{not}, paréntesis
+      \end{itemize}
+      }
+
+      \vspace{4pt}
+      {\footnotesize\color{arcaDark}\bfseries Listas}
+      \vspace{3pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{1pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Qué es, sintaxis \texttt{[ ]}, índice desde 0
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Slicing \texttt{[a:b]}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{.append}, \texttt{.insert}, \texttt{.remove}, \texttt{.pop}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Operador \texttt{in}, listas paralelas
+      \end{itemize}
+      }
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      {\footnotesize\color{arcaDark}\bfseries Ciclos \texttt{for}}
+      \vspace{3pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{1pt}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Anatomía e indentación
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{range()} para contar
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{enumerate()} (índice + valor)
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          \texttt{zip()} (dos listas paralelas)
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Patrones: acumulador, contador, filtro
+      \end{itemize}
+      }
+
+      \vspace{5pt}
+      {\footnotesize\color{arcaDark}\bfseries Habilidad clave}
+      \vspace{2pt}
+      {\scriptsize\color{textMuted}\itshape
+        Producir el reporte diario de una
+        \textbf{batería completa} de pozos,
+        combinando listas, \texttt{for} e \texttt{if}.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── Preview clase 3 ──────────────────────────────────────────────────────────
+\begin{frame}{Próxima Clase: Del \texttt{for} al DataFrame}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    Hoy recorrimos 5 pozos con \texttt{for}. ¿Y si fueran \textbf{30 años} de producción diaria?}
+
+  \vspace{8pt}
+  {\footnotesize
+  \begin{itemize}\setlength{\itemsep}{6pt}
+    \item[{\color{arcaRed}\Large\faArrowCircleRight}]
+      \textbf{\texttt{pandas}} --- \texttt{DataFrames}:
+      las listas paralelas de hoy con \textbf{superpoderes}
+      (filtrar, agrupar y sumar en una línea).
+
+    \item[{\color{arcaRed}\Large\faArrowCircleRight}]
+      \textbf{Lectura de datos reales} ---
+      archivos \texttt{.csv}, \texttt{.xlsx} y \texttt{.json}
+      de producción y sensores.
+
+    \item[{\color{arcaRed}\Large\faArrowCircleRight}]
+      \textbf{Well logs LAS} ---
+      leer registros petrofísicos con \texttt{lasio}.
+
+    \item[{\color{arcaRed}\Large\faArrowCircleRight}]
+      \textbf{Limpieza de datos} ---
+      valores faltantes y normalización, con una
+      práctica sobre 30 años de un campo real.
+  \end{itemize}
+  }
+\end{frame}
+
+% ── Cierre / contacto ────────────────────────────────────────────────────────
+\begingroup
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}
+\begin{frame}[plain, noframenumbering]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[arcaDark] (current page.south west) rectangle (current page.north east);
+    \node[anchor=center, text=white, font=\Huge\bfseries]
+      at ([yshift=1.5cm]current page.center) {¡Gracias!};
+    \node[anchor=center, text=white!80, font=\large, text width=10cm, align=center]
+      at ([yshift=0.2cm]current page.center)
+      {Carlos Enrique Mosquera Trujillo};
+    \node[anchor=center, text=white!60, font=\normalsize, text width=10cm, align=center]
+      at ([yshift=-0.6cm]current page.center)
+      {\faEnvelope\hspace{6pt}cmosquerat@unal.edu.co};
+    \node[anchor=center, text=white!60, font=\normalsize, text width=10cm, align=center]
+      at ([yshift=-1.3cm]current page.center)
+      {Diplomado en Data Science Aplicada con Python};
+    \node[anchor=center, text=white!40, font=\small]
+      at ([yshift=-2.0cm]current page.center)
+      {SLB Ecuador \quad$\cdot$\quad UDLA \quad$\cdot$\quad 2026};
+  \end{tikzpicture}
+\end{frame}
+\endgroup
+
+\end{document}

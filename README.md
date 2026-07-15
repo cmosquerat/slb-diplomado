@@ -12,7 +12,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 |-------|------|--------|
 | [Clase 1](clase-01/) | Fundamentos de Python (variables, tipos, `input`, `if` básico) | ✅ Publicada |
 | [Clase 2](clase-02/) | Control de flujo — condicionales, listas y ciclos `for` | ✅ Publicada |
-| Clase 3 | pandas, numpy, matplotlib/seaborn; CSV/Excel/JSON; well logs (LAS); limpieza y normalización (dataset de 30 años) | 🔜 En preparación |
+| [Clase 3](clase-03/) | pandas y carga de datos: librerías/pip, CSV, well logs (LAS) y limpieza — campo Volve | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -46,6 +46,28 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 6. Ciclos `for`: `range()`, `enumerate()`, `zip()`
 7. Patrones **acumulador**, **contador** y **filtro**
 8. **Práctica integradora:** reporte de una batería de 5 pozos
+
+## Clase 3: pandas y carga de datos — campo Volve
+
+- [`clase-03/presentacion.pdf`](clase-03/presentacion.pdf) — slides de la sesión.
+- [`clase-03/Clase_03_Pandas_Carga_Datos.ipynb`](clase-03/Clase_03_Pandas_Carga_Datos.ipynb) — cuaderno Colab (ejercicios en blanco).
+- [`clase-03/presentacion.tex`](clase-03/presentacion.tex) — fuente LaTeX (Beamer).
+- [`datos/volve_produccion.csv`](datos/volve_produccion.csv) — producción diaria real del campo Volve (Equinor, 15 634 filas, 7 pozos, 2007–2016).
+- [`datos/volve_15-9-19.LAS`](datos/volve_15-9-19.LAS) — well log real del pozo 15/9-19 (29 754 profundidades, 7 curvas).
+
+**Contenidos cubiertos:**
+
+1. Qué es un dato / dataset / datos tabulares; qué es un CSV
+2. Librerías: qué son, `pip` (instalar) e `import` (usar)
+3. pandas: DataFrame y Series; paréntesis de diccionarios; primer DataFrame
+4. Cargar archivos en Colab: URL, subida manual y Google Drive
+5. Métodos básicos: `head/tail/shape/info`, `describe`, seleccionar, filtrar, columnas calculadas, `groupby`
+6. Gráficos con pandas: `.plot()` (línea, barras)
+7. Well logs: qué son, el formato LAS (dimensiones, curvas GR/DEN/NEU/AC/RDEP), `lasio`
+8. Limpieza breve: `NaN`, `isna`, `dropna`, `fillna`
+9. **Práctica integradora:** reporte de producción del campo Volve
+
+*Datos: campo Volve, Equinor (dataset abierto, 2018).*
 
 ### Abrir el notebook en Colab
 

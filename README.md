@@ -1,4 +1,4 @@
-# Diplomado en Data Science Aplicada con Python
+# Machine Learning for Petroleum Engineers Using Python
 
 **Cliente:** SLB Ecuador
 **Institución:** Universidad de las Américas (UDLA)
@@ -13,6 +13,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Clase 1](clase-01/) | Fundamentos de Python (variables, tipos, `input`, `if` básico) | ✅ Publicada |
 | [Clase 2](clase-02/) | Control de flujo — condicionales, listas y ciclos `for` | ✅ Publicada |
 | [Clase 3](clase-03/) | pandas y carga de datos: librerías/pip, CSV, well logs (LAS) y limpieza — campo Volve | ✅ Publicada |
+| [Módulo 3 · Clase 1](modulo3-clase1/) | ML supervisado — Regresión lineal: predecir el registro sónico (Volve) | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -68,6 +69,14 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 9. **Práctica integradora:** reporte de producción del campo Volve
 
 *Datos: campo Volve, Equinor (dataset abierto, 2018).*
+
+## Módulo 3 · Clase 1: Regresión lineal — predecir el sónico
+
+- [`modulo3-clase1/presentacion.pdf`](modulo3-clase1/presentacion.pdf) — slides (47 págs).
+- [`modulo3-clase1/Modulo3_Clase1_Regresion_Lineal.ipynb`](modulo3-clase1/Modulo3_Clase1_Regresion_Lineal.ipynb) — cuaderno Colab (prácticas en blanco).
+- [`datos/volve_registros.csv`](datos/volve_registros.csv) — registros del pozo 15/9-19 listos para ML (6 893 profundidades × 6 columnas, sin NaN).
+
+**Contenidos:** qué es ML (supervisado/regresión) · relaciones entre variables · correlación (dirección + firmeza) · linealidad y sus límites · regresión simple y múltiple (sklearn) · métricas RMSE/MAE/R² con criterios y valores aceptables · estandarización y data leakage · train/test split y overfitting · caso: reconstruir el registro sónico cuando el sensor falla.
 
 ### Abrir el notebook en Colab
 

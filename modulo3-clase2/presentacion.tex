@@ -690,9 +690,247 @@ Sandstone    10781
   \end{columns}
 \end{frame}
 
+% ── CROSSPLOT ────────────────────────────────────────────────────────────────
+\begin{frame}{El Crossplot Neutrón--Densidad}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    El gráfico que un petrofísico mira todos los días: \texttt{NPHI} contra \texttt{RHOB}.}
+
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \includegraphics[width=0.96\textwidth]{fig_crossplot.png}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          El eje de densidad va \textbf{invertido} (convención: la roca
+          ligera arriba).
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          La \textbf{arenisca} se agrupa a la \textbf{izquierda}:
+          poca respuesta de neutrón.
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          La \textbf{lutita} se corre a la derecha: la arcilla
+          retiene agua ligada y \textbf{finge} porosidad.
+        \item[{\color{arcaRed}\scriptsize\faExclamationTriangle}]
+          Otra vez: separan\ldots pero con una \textbf{zona de mezcla}
+          en el medio.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── BOXPLOTS ─────────────────────────────────────────────────────────────────
+\begin{frame}{¿Cuánto Separa Cada Registro?}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    Un vistazo rápido a las cinco variables a la vez.}
+
+  \vspace{4pt}
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig_box_clases.png}
+
+  \vspace{6pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{3pt}
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \texttt{GR}, \texttt{NPHI} y \texttt{DTC}: las cajas están
+      \textbf{claramente desplazadas} \(\to\) separan bien.
+    \item[{\color{arcaRed}\scriptsize\faTimes}]
+      \texttt{RHOB} y \texttt{RDEP}: las cajas casi se superponen
+      \(\to\) aportan poco \textbf{por sí solas}.
+  \end{itemize}
+  }
+\end{frame}
+
+% ── CORRELACIÓN ──────────────────────────────────────────────────────────────
+\begin{frame}{La Matriz de Correlación}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    Además de mirar el target, conviene ver \textbf{cómo se relacionan las variables entre sí}.}
+
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \centering
+      \includegraphics[width=0.94\textwidth]{fig_corr_heatmap.png}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Con el target: \texttt{NPHI} es la más ligada
+          (\(-0.52\)), luego \texttt{DTC} y \texttt{GR}.
+        \item[{\color{arcaRed}\scriptsize\faLink}]
+          Entre features: \texttt{NPHI} y \texttt{DTC} están muy
+          correlacionadas \textbf{entre ellas} --- las dos hablan
+          de porosidad.
+        \item[{\color{arcaRed}\scriptsize\faExclamationTriangle}]
+          Eso se llama \textbf{colinealidad}: información repetida.
+          No arruina el modelo, pero vuelve
+          \textbf{inestables} los coeficientes.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── PERFIL DE POZO ───────────────────────────────────────────────────────────
+\begin{frame}{Cómo se Ve Esto en un Pozo Real}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    Los mismos datos, en el formato en que los lee un geólogo: contra la profundidad.}
+
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[height=0.62\textheight]{fig_perfil_pozo.png}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{6pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Las tres primeras pistas son los \textbf{registros};
+          la cuarta, la \textbf{interpretación del geólogo}.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Miren la coincidencia: donde el \texttt{GR}
+          \textbf{baja}, aparece una barra amarilla.
+        \item[{\color{codeGreen}\scriptsize\faBullseye}]
+          \textbf{Eso} es lo que el modelo tiene que aprender:
+          reproducir esa cuarta pista a partir de las
+          tres primeras.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ── BALANCE POR POZO ─────────────────────────────────────────────────────────
+\begin{frame}{Un Detalle que Casi Nadie Mira: el Balance por Pozo}
+  \vspace{-6pt}
+  {\small\color{arcaDark}\bfseries
+    El 17\,\% global esconde diferencias enormes entre pozos.}
+
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{fig_balance_pozo.png}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{5pt}
+        \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+          Hay pozos con \textbf{8\,\%} de arenisca y otros
+          con \textbf{72\,\%}. Son geologías distintas.
+        \item[{\color{arcaRed}\scriptsize\faExclamationTriangle}]
+          Al partir train/test \textbf{al azar}, mezclamos
+          profundidades del mismo pozo en ambos lados:
+          el modelo ya ``conoce'' ese pozo.
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Lo más honesto sería \textbf{dejar pozos completos
+          por fuera} para probar. Es una decisión
+          metodológica real.
+      \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
 % ═════════════════════════════════════════════════════════════════════════════
 \sectionframe{De la Recta a la Probabilidad}{Regresión logística}
 % ═════════════════════════════════════════════════════════════════════════════
+
+% ── BINARIZACIÓN ─────────────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=15]{Preprocesamiento: el Modelo No Entiende Texto}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+    Nuestro target es una \textbf{palabra}. Antes de entrenar hay que volverlo número.}
+
+  \vspace{4pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{outputblock}[title={\small\faTable\hspace{6pt}como viene el dato}]
+LITH
+Sandstone
+Shale
+Shale
+Sandstone
+      \end{outputblock}
+      \vspace{3pt}
+      {\scriptsize\color{arcaRed}
+        \faTimes\hspace{3pt}\texttt{LogisticRegression} no puede
+        multiplicar la palabra ``Shale'' por un coeficiente.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{outputblock}[title={\small\faCheck\hspace{6pt}como lo necesitamos}]
+LITH        es_reservorio
+Sandstone   1
+Shale       0
+Shale       0
+Sandstone   1
+      \end{outputblock}
+      \vspace{3pt}
+      {\scriptsize\color{codeGreen}
+        \faCheck\hspace{3pt}\textbf{Binarizar}: convertir dos
+        categorías en \texttt{0} y \texttt{1}.}
+    \end{column}
+  \end{columns}
+
+  \vspace{5pt}
+  {\scriptsize\color{textMuted}
+    \faLightbulb[regular]\hspace{3pt}%
+    Es parte del \textbf{preprocesamiento}: todo lo que hay que hacerle al dato
+    \textbf{antes} de que el modelo lo pueda usar (junto con estandarizar y limpiar).}
+\end{frame}
+
+% ── CÓMO Y CUÁL ES EL 1 ──────────────────────────────────────────────────────
+\begin{frame}[fragile,shrink=18]{Binarizar: Cómo se Hace y Por Qué Importa Cuál es el \texttt{1}}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pyblock}
+lito["es_reservorio"] = (
+    lito["LITH"] == "Sandstone"
+).astype(int)
+      \end{pyblock}
+      \vspace{3pt}
+      {\scriptsize\color{textMuted}
+        La comparación da \texttt{True}/\texttt{False};
+        \texttt{.astype(int)} lo vuelve \texttt{1}/\texttt{0}.}
+      \vspace{5pt}
+      {\scriptsize\color{arcaDark}\bfseries ¿Y si hubiera más de dos clases?}\\[2pt]
+      {\scriptsize\color{textMuted}
+        Con 3 o más categorías se usa \textbf{one-hot encoding}
+        (\texttt{pd.get\_dummies}): una columna \texttt{0/1} por
+        categoría.}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=3pt,
+        arc=3pt, left=6pt, right=6pt, top=5pt, bottom=5pt]
+        {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{4pt}La decisión que define todo}\\[4pt]
+        {\scriptsize\color{textMuted}
+          Elegimos \textbf{arenisca = 1} porque es lo que
+          \textbf{queremos detectar}: la \textbf{clase positiva}.\\[5pt]
+          Eso fija el significado de todo lo que viene:
+          \textbf{recall} será ``\%\ de \textbf{areniscas}
+          encontradas''.\\[5pt]
+          Si pusiéramos lutita = 1, las mismas métricas
+          medirían \textbf{otra cosa}.}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \vspace{4pt}
+  {\scriptsize\color{arcaDark}
+    \faLightbulb[regular]\hspace{3pt}%
+    Regla: la \textbf{clase positiva} (\texttt{1}) es siempre \textbf{el evento raro que queremos cazar}
+    --- la zona productiva, la falla del equipo, la fuga.}
+\end{frame}
 
 % ── POR QUÉ NO UNA RECTA ─────────────────────────────────────────────────────
 \begin{frame}{¿Por Qué No Usar la Recta de la Clase Pasada?}

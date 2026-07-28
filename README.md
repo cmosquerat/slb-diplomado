@@ -81,11 +81,11 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 
 ## Módulo 3 · Clase 2: Clasificación — métricas y costo de negocio
 
-- [`modulo3-clase2/presentacion.pdf`](modulo3-clase2/presentacion.pdf) — slides (42 págs).
+- [`modulo3-clase2/presentacion.pdf`](modulo3-clase2/presentacion.pdf) — slides (49 págs).
 - [`modulo3-clase2/Modulo3_Clase2_Clasificacion.ipynb`](modulo3-clase2/Modulo3_Clase2_Clasificacion.ipynb) — cuaderno Colab (prácticas en blanco).
-- [`datos/litologia_force2020.csv`](datos/litologia_force2020.csv) — registros de 11 pozos del Mar del Norte con litología interpretada por geólogos (62 792 filas).
+- [`datos/litologia_force2020.csv`](datos/litologia_force2020.csv) — registros de 11 pozos del Mar del Norte con litología interpretada por geólogos (62 792 filas). La etiqueta viene **como texto** (`Sandstone`/`Shale`): binarizarla es parte del ejercicio.
 
-**Contenidos:** el mapa del ML (supervisado vs no supervisado; regresión vs clasificación) · el problema: ¿roca reservorio o sello? · por qué la recta falla con sí/no · sigmoide y **regresión logística** (qué es, para qué sirve, cómo leerla) · desbalance de clases · **métricas a fondo**: la analogía del detector de gas, matriz de confusión con nombres de negocio, precision vs recall (de dónde sale cada una), F1, criterios y valores aceptables · **el costo de negocio**: matriz de costos, el umbral como perilla de decisión y el modelo con peor accuracy que le conviene a la empresa.
+**Contenidos:** el mapa del ML (supervisado vs no supervisado; regresión vs clasificación) · el problema: ¿roca reservorio o sello? · por qué la recta falla con sí/no · sigmoide y **regresión logística** (qué es, para qué sirve, cómo leerla) · exploración a fondo (crossplot neutrón–densidad, matriz de correlación, boxplots por clase, perfil de pozo, balance por pozo) · desbalance de clases · **binarización del target** (preprocesamiento: por qué el modelo no entiende texto y por qué importa cuál clase es el `1`) · **métricas a fondo**: la analogía del detector de gas, matriz de confusión con nombres de negocio, precision vs recall (de dónde sale cada una), F1, criterios y valores aceptables · **el costo de negocio**: matriz de costos, el umbral como perilla de decisión y el modelo con peor accuracy que le conviene a la empresa.
 
 *Datos: FORCE 2020 Machine Learning Contest (Noruega) — dataset abierto.*
 

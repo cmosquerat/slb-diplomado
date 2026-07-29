@@ -15,6 +15,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Clase 3](clase-03/) | pandas y carga de datos: librerías/pip, CSV, well logs (LAS) y limpieza — campo Volve | ✅ Publicada |
 | [Módulo 3 · Clase 1](modulo3-clase1/) | ML supervisado — Regresión lineal: predecir el registro sónico (Volve) | ✅ Publicada |
 | [Módulo 3 · Clase 2](modulo3-clase2/) | Clasificación — Regresión logística, métricas y **costo de negocio** (FORCE 2020) | ✅ Publicada |
+| [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -88,6 +89,16 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 **Contenidos:** el mapa del ML (supervisado vs no supervisado; regresión vs clasificación) · el problema: ¿roca reservorio o sello? · por qué la recta falla con sí/no · sigmoide y **regresión logística** (qué es, para qué sirve, cómo leerla) · exploración a fondo (crossplot neutrón–densidad, matriz de correlación, boxplots por clase, perfil de pozo, balance por pozo) · desbalance de clases · **binarización del target** (preprocesamiento: por qué el modelo no entiende texto y por qué importa cuál clase es el `1`) · **métricas a fondo**: la analogía del detector de gas, matriz de confusión con nombres de negocio, precision vs recall (de dónde sale cada una), F1, criterios y valores aceptables · **el costo de negocio**: matriz de costos, el umbral como perilla de decisión y el modelo con peor accuracy que le conviene a la empresa.
 
 *Datos: FORCE 2020 Machine Learning Contest (Noruega) — dataset abierto.*
+
+## Módulo 3 · Clase 3: No linealidad — Árboles y Random Forest
+
+- [`modulo3-clase3/presentacion.pdf`](modulo3-clase3/presentacion.pdf) — slides (42 págs).
+- [`modulo3-clase3/Modulo3_Clase3_Arboles_RandomForest.ipynb`](modulo3-clase3/Modulo3_Clase3_Arboles_RandomForest.ipynb) — cuaderno Colab (prácticas en blanco).
+- [`datos/operacion_pozos_volve.csv`](datos/operacion_pozos_volve.csv) — operación diaria de 5 pozos productores de Volve (7 862 días: presiones, temperatura, choke → oil medido).
+
+**Contenidos:** qué es la no linealidad (el paso deja de ser parejo; ejemplos de campo) · las dos lunas y el fracaso de la frontera recta · árboles de decisión desde cero (ejemplo cotidiano de operación, anatomía raíz/hojas/profundidad, cómo la máquina elige cada corte, el primer corte real GR=49) · overfitting visible (train 1.000) · Random Forest (diversidad + voto) · **métricas a fondo del bosque** (matriz de confusión, precision/recall, marcador completo, umbral por costo: logística 5 953 → RF+umbral 1 150, −81 %) · cómo reportarlo al que decide · bonus regresión: medidor virtual de flujo (MAE 583 → 78 Sm³/día).
+
+*Datos: FORCE 2020 y campo Volve (Equinor) — datasets abiertos.*
 
 ### Abrir el notebook en Colab
 

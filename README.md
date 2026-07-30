@@ -16,6 +16,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Módulo 3 · Clase 1](modulo3-clase1/) | ML supervisado — Regresión lineal: predecir el registro sónico (Volve) | ✅ Publicada |
 | [Módulo 3 · Clase 2](modulo3-clase2/) | Clasificación — Regresión logística, métricas y **costo de negocio** (FORCE 2020) | ✅ Publicada |
 | [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
+| [Módulo 3 · Clase 4](modulo3-clase4/) | Clasificación multiclase — codificación, métricas macro/weighted y matriz de penalización (facies Hugoton, SEG 2016) | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -99,6 +100,16 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 **Contenidos:** qué es la no linealidad (el paso deja de ser parejo; ejemplos de campo) · las dos lunas y el fracaso de la frontera recta · árboles de decisión desde cero (ejemplo cotidiano de operación, anatomía raíz/hojas/profundidad, cómo la máquina elige cada corte, el primer corte real GR=49) · overfitting visible (train 1.000) · Random Forest (diversidad + voto) · **métricas a fondo del bosque** (matriz de confusión, precision/recall, marcador completo, umbral por costo: logística 5 953 → RF+umbral 1 150, −81 %) · cómo reportarlo al que decide · bonus regresión: medidor virtual de flujo (MAE 583 → 78 Sm³/día).
 
 *Datos: FORCE 2020 y campo Volve (Equinor) — datasets abiertos.*
+
+## Módulo 3 · Clase 4: Clasificación multiclase — el mapa de facies
+
+- [`modulo3-clase4/presentacion.pdf`](modulo3-clase4/presentacion.pdf) — slides (54 págs).
+- [`modulo3-clase4/Modulo3_Clase4_Multiclase_Facies.ipynb`](modulo3-clase4/Modulo3_Clase4_Multiclase_Facies.ipynb) — cuaderno Colab (mini-ejercicios y prácticas en blanco).
+- [`datos/hugoton_facies.csv`](datos/hugoton_facies.csv) — facies del campo Hugoton, Kansas (concurso SEG 2016: 4 149 intervalos, 10 pozos, 5 registros + contexto, 9 facies).
+
+**Contenidos:** qué es una facies y por qué es un mapa de calidad de roca · exploración a fondo (registros uno a uno, perfil de pozo, balance 7:1) · datos faltantes e **imputación** (menú de métodos y cómo la distribución decide media vs mediana) · **codificación** completa: binarizar / LabelEncoder / one-hot, la trampa del orden falso (la facies 4.37 no existe) · RF multiclase (mismo código, acc 0.764 vs tonto 0.229) · **métricas multiclase**: matriz 9×9 leída geológicamente (67 % de errores en facies vecinas), precision/recall por clase, **macro vs weighted** y el modelo perezoso ciego a clases raras · **matriz de penalización** (costo 1 718 → 379) y cómo reportarlo al que decide · parámetros vs hiperparámetros y **GridSearchCV** básico.
+
+*Datos: SEG 2016 Machine Learning Contest (Hall, 2016) — dataset abierto.*
 
 ### Abrir el notebook en Colab
 

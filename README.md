@@ -17,6 +17,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Módulo 3 · Clase 2](modulo3-clase2/) | Clasificación — Regresión logística, métricas y **costo de negocio** (FORCE 2020) | ✅ Publicada |
 | [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
 | [Módulo 3 · Clase 4](modulo3-clase4/) | Clasificación multiclase — codificación, métricas macro/weighted y matriz de penalización (facies Hugoton, SEG 2016) | ✅ Publicada |
+| [Módulo 3 · Clase 5](modulo3-clase5/) | SVM y kernel trick, pipelines, validación honesta (CV, GroupKFold, fuga de información) y SMOTE — integridad de gasoductos (PHMSA) | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -110,6 +111,16 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 **Contenidos:** qué es una facies y por qué es un mapa de calidad de roca · exploración a fondo (registros uno a uno, perfil de pozo, balance 7:1) · datos faltantes e **imputación** (menú de métodos y cómo la distribución decide media vs mediana) · **codificación** completa: binarizar / LabelEncoder / one-hot, la trampa del orden falso (la facies 4.37 no existe) · RF multiclase (mismo código, acc 0.764 vs tonto 0.229) · **métricas multiclase**: matriz 9×9 leída geológicamente (67 % de errores en facies vecinas), precision/recall por clase, **macro vs weighted** y el modelo perezoso ciego a clases raras · **matriz de penalización** (costo 1 718 → 379) y cómo reportarlo al que decide · parámetros vs hiperparámetros y **GridSearchCV** básico.
 
 *Datos: SEG 2016 Machine Learning Contest (Hall, 2016) — dataset abierto.*
+
+## Módulo 3 · Clase 5: SVM, pipelines y validación honesta — cierre del módulo
+
+- [`modulo3-clase5/presentacion.pdf`](modulo3-clase5/presentacion.pdf) — slides (47 págs).
+- [`modulo3-clase5/Modulo3_Clase5_SVM_Pipelines_Validacion.ipynb`](modulo3-clase5/Modulo3_Clase5_SVM_Pipelines_Validacion.ipynb) — cuaderno Colab (mini-ejercicios y prácticas en blanco).
+- [`datos/phmsa_gasoductos.csv`](datos/phmsa_gasoductos.csv) — 638 incidentes reales en gasoductos de transmisión (PHMSA/DOT EE. UU., 2010–hoy): características de la línea, causa investigada, ignición y costo en dólares.
+
+**Contenidos:** problema nuevo de integridad de ductos (¿fue corrosión? ¿la fuga se enciende?) con costos reales · **SVM**: margen máximo y vectores de soporte (la carretera más ancha) · el desastre de no escalar (0.776) y **pipelines** como honestidad automatizada (0.823, el tubo con `make_pipeline`) · **kernel trick** gráfico: círculos 58 %→100 % con la dimensión creada a mano y el plano 3D, las lunas por última vez, perillas `gamma` y `C` · la lección honesta (el lineal empata en datos tabulares reales) · **validación honesta**: `cross_val_score`, `GridSearchCV` sobre el tubo (`svc__C`), la **fuga de información medida en vivo** (0.823→0.906 con una columna post-incidente) y **GroupKFold** — la deuda del módulo pagada: facies con pozos por fuera **0.78→0.53** · **SMOTE** para la ignición (12 %): recall 0.00→0.35 con el trade-off en dólares · cierre del módulo: marcador y mapa de modelos.
+
+*Datos: PHMSA (U.S. DOT) — datos públicos del gobierno de EE. UU.*
 
 ### Abrir el notebook en Colab
 

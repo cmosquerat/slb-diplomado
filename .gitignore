@@ -21,3 +21,8 @@ Thumbs.db
 # Editores
 .vscode/
 .idea/
+
+# minted (sin guion) y cache de Python
+_minted/
+__pycache__/
+*.listing

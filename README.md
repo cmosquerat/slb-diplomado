@@ -18,6 +18,8 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
 | [Módulo 3 · Clase 4](modulo3-clase4/) | Clasificación multiclase — codificación, métricas macro/weighted y matriz de penalización (facies Hugoton, SEG 2016) | ✅ Publicada |
 | [Módulo 3 · Clase 5](modulo3-clase5/) | SVM y kernel trick, pipelines, validación honesta (CV, GroupKFold, fuga de información) y SMOTE — integridad de gasoductos (PHMSA) | ✅ Publicada |
+| [Módulo 5 · Clase 1](modulo5-clase1/) | Pronosticar la producción de un pozo — series de tiempo, exploración y el primer pronóstico (campo Volve) | ✅ Publicada |
+| [Módulo 5 · Clase 2](modulo5-clase2/) | El pozo avisa antes de romperse — detección temprana de incrustación en el choke con señales de sensores (3W, Petrobras) | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -125,6 +127,47 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 ### Abrir el notebook en Colab
 
 Dentro de Colab: `File → Open notebook → GitHub → cmosquerat/slb-diplomado` y selecciona el `.ipynb` de la clase.
+
+
+---
+
+## Módulo 5 · Clase 2: el pozo avisa antes de romperse
+
+- [`modulo5-clase2/presentacion.pdf`](modulo5-clase2/presentacion.pdf) — slides (49 láminas).
+- [`modulo5-clase2/Modulo5_Clase2_Deteccion_En_Senales.ipynb`](modulo5-clase2/Modulo5_Clase2_Deteccion_En_Senales.ipynb) — cuaderno Colab (118 celdas, EDA de 15–20 min al inicio).
+- [`modulo5-clase2/figuras.py`](modulo5-clase2/figuras.py) — genera las 15 figuras **y todas las cifras** de las láminas.
+- [`modulo5-clase2/preparar_datos.py`](modulo5-clase2/preparar_datos.py) — arma el CSV desde la fuente original.
+- [`datos/pozos_3w_incrustacion.csv`](datos/pozos_3w_incrustacion.csv) — 315 horas de sensores de 5 pozos submarinos, etiquetadas segundo a segundo.
+
+Un pozo submarino a 1 200 m de profundidad. El choke de producción se incrusta con sal y
+se va cerrando solo. Cuando la alarma de la sala de control suena, el pozo ya está en
+falla. **¿Cuánto antes se puede saber?**
+
+La clase explica desde cero qué es un choke, por qué al taparse la presión de arriba sube
+y la temperatura de abajo baja (Joule–Thomson), y qué es exactamente una serie de tiempo.
+Después mide la alarma que ya existe —**8 de 10 casos, 101 minutos tarde**— y la usa como
+récord a batir, obligando a todo lo demás al mismo presupuesto de falsas alarmas.
+
+**Contenidos cubiertos:**
+
+1. El choke: qué es, por qué existe y por qué no se deja abierto · el efecto Joule–Thomson
+2. Qué es una serie de tiempo, y qué es una etiqueta puesta por una persona
+3. EDA completo: qué sensores existen de verdad (un pozo tiene solo dos), en qué rango
+   trabaja cada pozo, cuánto dura la ventana de aviso
+4. La alarma de umbral de 3 desviaciones, medida sobre las 10 grabaciones
+5. De la señal a una tabla: nivel, ruido y pendiente sobre ventanas de 30 minutos
+6. Random Forest validado con `GroupKFold` **por pozo** — un pozo que el modelo nunca vio
+7. **La escalera:** los números crudos detectan 2 de 10; compararlos con la propia hora
+   normal del pozo detecta **10 de 10 y avisa 74 minutos antes**. Promediar y agregar
+   ruido/pendiente **no mejoran**, y se dice
+8. El umbral como decisión de negocio, no técnica
+9. Las «falsas alarmas» que no lo eran: se concentran justo antes de la etiqueta
+10. **Práctica:** el pozo con solo dos sensores, con el primer paso resuelto
+
+*Datos: 3W Dataset v2.0.0, Petrobras — CC BY 4.0. Vargas et al. (2019), JPSE 181, 106223.*
+
+Ver también [`docs/modulo5-retrospectiva-y-ruta.md`](docs/modulo5-retrospectiva-y-ruta.md):
+retrospectiva de la Clase 1, reglas de diseño del módulo y hoja de ruta de las 10 h.
 
 ### Compilar la presentación localmente
 

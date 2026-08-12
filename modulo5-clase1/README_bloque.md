@@ -16,7 +16,7 @@
 - [`modulo5-clase1/presentacion.pptx`](modulo5-clase1/presentacion.pptx) — la misma presentación, editable en PowerPoint.
 - [`modulo5-clase1/Modulo5_Clase1_Pronosticar_Produccion.ipynb`](modulo5-clase1/Modulo5_Clase1_Pronosticar_Produccion.ipynb) — cuaderno Colab; los datos se cargan solos desde GitHub (la práctica se deja en blanco).
 - [`modulo5-clase1/chuleta_series_tiempo.md`](modulo5-clase1/chuleta_series_tiempo.md) — referencia rápida de una página.
-- [`modulo5-clase1/fuentes-presentacion/`](modulo5-clase1/fuentes-presentacion/) — generador del deck (`build_v3.js`, pptxgenjs), scripts de figuras y logotipos.
+- [`fuentes-presentacion/`](fuentes-presentacion/) — generador del deck (`build_v3.js`, pptxgenjs), scripts de figuras y logotipos.
 - [`datos/volve_produccion.csv`](datos/volve_produccion.csv) — producción diaria real del campo Volve (Equinor, 15 634 filas, 7 pozos, 2007–2016).
 
 Primera clase del Módulo 5. Toda la sesión gira alrededor de un encargo con fecha:
@@ -55,7 +55,7 @@ Módulo 4 deciden con qué historia entrenar.
 A diferencia de las clases anteriores (Beamer/LaTeX), esta presentación se genera con
 pptxgenjs. Para regenerarla:
 
-    cd modulo5-clase1/fuentes-presentacion
+    cd fuentes-presentacion
     python3 figs_v3_conceptos.py     # figuras explicativas
     python3 figs_v3_datos.py         # figuras sobre los datos reales + fórmulas
     node build_v3.js                 # produce presentacion.pptx

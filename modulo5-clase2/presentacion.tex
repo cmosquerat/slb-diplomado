@@ -375,7 +375,7 @@
 \end{frame}
 
 % ── EL ENCARGO ───────────────────────────────────────────────────────────────
-\begin{frame}[shrink=6]{El Encargo}
+\begin{frame}[shrink=14]{El Encargo}
   \vspace{-4pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=6pt, bottom=6pt]
@@ -419,7 +419,7 @@
 \end{frame}
 
 % ── ACOTAR EL PROBLEMA ───────────────────────────────────────────────────────
-\begin{frame}[shrink=10]{Acotar el Problema (Regla de la Casa)}
+\begin{frame}[shrink=18]{Acotar el Problema (Regla de la Casa)}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Ninguna línea de código antes de llenar esta tabla. Ninguna. Nunca.}
@@ -457,7 +457,7 @@
 \begin{frame}[shrink=6]{Un Pozo que Nadie Puede Ir a Mirar}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.60\textheight]{fig_pozo.png}
+    \includegraphics[height=0.48\textheight]{fig_pozo.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{textMuted}
@@ -470,7 +470,7 @@
   \end{itemize}}
 \end{frame}
 
-\begin{frame}[shrink=8]{¿Qué es un Choke? La Pieza de Toda la Clase}
+\begin{frame}[shrink=16]{¿Qué es un Choke? La Pieza de Toda la Clase}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Empecemos por acá, porque si esta pieza no queda clara, nada de lo que
@@ -520,7 +520,7 @@
 \begin{frame}[shrink=6]{Lo que le Hace el Choke al Fluido}
   \vspace{-8pt}
   \begin{center}
-    \includegraphics[height=0.70\textheight]{fig_choke.png}
+    \includegraphics[height=0.58\textheight]{fig_choke.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -529,7 +529,7 @@
    \textbf{también}.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Por Qué se Enfría: el Efecto Joule--Thomson}
+\begin{frame}[shrink=16]{Por Qué se Enfría: el Efecto Joule--Thomson}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Este es el fenómeno físico que hace posible toda la clase de hoy.
@@ -620,14 +620,14 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}[shrink=8]{Qué es, Exactamente, una Serie de Tiempo}
+\begin{frame}[shrink=16]{Qué es, Exactamente, una Serie de Tiempo}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Una tabla donde cada fila es un instante, y las filas están en orden.
    Eso es todo. Lo difícil es lo que implica.}
   \vspace{5pt}
   \begin{center}
-    \includegraphics[height=0.50\textheight]{fig_que_es_serie.png}
+    \includegraphics[height=0.32\textheight]{fig_que_es_serie.png}
   \end{center}
   \vspace{-2pt}
   \begin{columns}[T]
@@ -662,17 +662,14 @@
       \begin{pyblock}
 import pandas as pd
 
-URL = ("https://raw.githubusercontent.com/"
-       "cmosquerat/slb-diplomado/main/"
-       "datos/pozos_3w_incrustacion.csv")
+URL = ("https://raw.githubusercontent"
+       ".com/cmosquerat/slb-diplomado"
+       "/main/datos/"
+       "pozos_3w_incrustacion.csv")
 
-# leemos el archivo (se baja solo)
-d = pd.read_csv(URL)
+d = pd.read_csv(URL)   # se baja solo
 
-# ¿cuantas filas y cuantas columnas?
-print(d.shape)
-
-# ¿cuantas grabaciones hay, y de que pozos?
+print(d.shape)         # filas, columnas
 print(d.pozo.value_counts())
       \end{pyblock}
     \end{column}
@@ -782,7 +779,7 @@ WELL-00001     2443
 \begin{frame}[shrink=6]{La Señal, de Verdad}
   \vspace{-8pt}
   \begin{center}
-    \includegraphics[height=0.72\textheight]{fig_senal_cruda.png}
+    \includegraphics[height=0.60\textheight]{fig_senal_cruda.png}
   \end{center}
   \vspace{-6pt}
   {\footnotesize\color{arcaDark}
@@ -865,21 +862,17 @@ WELL-00001     2443
     \begin{column}{0.60\textwidth}
       \begin{pyblock}
 pozo = "WELL-00001_20170226130146"
-g = d[d.instancia == pozo]    # tomamos UN pozo
+g = d[d.instancia == pozo]
 
-# la primera hora es su "normal"
+# la 1a hora es su "normal"
 # (120 filas = 120 x 30 s = 1 hora)
-primera_hora = g.p_antes_choke.iloc[:120]
+base = g.p_antes_choke.iloc[:120]
+centro = base.median()  # valor tipico
+ancho  = base.std()     # cuanto varia
 
-centro = primera_hora.median()   # valor tipico
-ancho  = primera_hora.std()      # cuanto se mueve
-
-# cuantas desviaciones de distancia hay
-# en cada instante
+# a cuantas desviaciones esta cada punto
 z = (g.p_antes_choke - centro) / ancho
-
-# la alarma suena si se pasa de 3
-suena = z.abs() > 3
+suena = z.abs() > 3     # la alarma
       \end{pyblock}
     \end{column}
     \begin{column}{0.38\textwidth}
@@ -909,7 +902,7 @@ suena = z.abs() > 3
 \begin{frame}[shrink=6]{La Alarma, Puesta a Prueba en un Pozo}
   \vspace{-8pt}
   \begin{center}
-    \includegraphics[height=0.66\textheight]{fig_alarma.png}
+    \includegraphics[height=0.60\textheight]{fig_alarma.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{textMuted}
@@ -918,7 +911,7 @@ suena = z.abs() > 3
    no lo hace mal.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Cómo se Mide «Bien» o «Mal»: Tres Números}
+\begin{frame}[shrink=16]{Cómo se Mide «Bien» o «Mal»: Tres Números}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Si no definimos esto ahora, después cada uno defiende el número que le
@@ -1038,7 +1031,7 @@ suena = z.abs() > 3
   \end{center}
 \end{frame}
 
-\begin{frame}[shrink=8]{Las Tres Componentes, Una a Una}
+\begin{frame}[shrink=24]{Las Tres Componentes, Una a Una}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Ninguna es «la buena»: son tres preguntas distintas sobre el pozo.}
@@ -1081,7 +1074,7 @@ suena = z.abs() > 3
   \end{center}
 \end{frame}
 
-\begin{frame}[shrink=6]{Pero Hay un Problema: Cada Pozo Vive en Otro Mundo}
+\begin{frame}[shrink=22]{Pero Hay un Problema: Cada Pozo Vive en Otro Mundo}
   \vspace{-6pt}
   \begin{center}
     \includegraphics[width=0.98\textwidth]{fig_lineas_base.png}
@@ -1104,23 +1097,14 @@ suena = z.abs() > 3
     \begin{column}{0.58\textwidth}
       \begin{pyblock}
 def preparar(g):
-    """Traduce una grabacion a filas de tabla."""
     X = pd.DataFrame(index=g.index)
     for s in SENSORES:
         v = g[s]
-
-        # 1) su propia normal: la primera hora
+        # su propia normal: la 1a hora
         centro = v.iloc[:120].median()
         ancho  = v.iloc[:120].std()
-
-        # 2) la senal en "desviaciones propias"
-        z = (v - centro) / ancho
-        X[s + "__base"] = z
-
-        # 3) las tres componentes, sobre z
-        X[s + "__nivel"] = z.rolling(60).mean()
-        X[s + "__ruido"] = z.rolling(60).std()
-        X[s + "__pend"]  = z.diff(60)
+        # la senal en "desviaciones"
+        X[s+"__base"] = (v-centro)/ancho
     return X
       \end{pyblock}
     \end{column}
@@ -1233,7 +1217,7 @@ def preparar(g):
   \end{center}
 \end{frame}
 
-\begin{frame}[shrink=8]{Lo que Dice la Escalera, Leído Despacio}
+\begin{frame}[shrink=16]{Lo que Dice la Escalera, Leído Despacio}
   \vspace{-4pt}
   {\scriptsize
   \renewcommand{\arraystretch}{1.3}
@@ -1271,7 +1255,7 @@ def preparar(g):
 \begin{frame}[shrink=6]{Cuánto Tarda Cada Uno en Darse Cuenta}
   \vspace{-8pt}
   \begin{center}
-    \includegraphics[height=0.72\textheight]{fig_resultado.png}
+    \includegraphics[height=0.66\textheight]{fig_resultado.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -1377,7 +1361,7 @@ def preparar(g):
 \begin{frame}[shrink=6]{Las Falsas Alarmas que No lo Eran}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.66\textheight]{fig_falsas.png}
+    \includegraphics[height=0.54\textheight]{fig_falsas.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{textMuted}
@@ -1426,7 +1410,7 @@ def preparar(g):
 \sectionframe{Su Turno}{El pozo que dejamos afuera \\[6pt] \normalsize 102 -- 118 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=8]{Su Turno: el Pozo con Dos Sensores \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}18 min}}
+\begin{frame}[shrink=16]{Su Turno: el Pozo con Dos Sensores \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}18 min}}
   \vspace{-4pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]

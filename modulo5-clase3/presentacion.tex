@@ -377,7 +377,7 @@
 \end{frame}
 
 % ── EL ENCARGO ───────────────────────────────────────────────────────────────
-\begin{frame}[shrink=6]{El Encargo}
+\begin{frame}[shrink=14]{El Encargo}
   \vspace{-2pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=7pt, bottom=7pt]
@@ -519,7 +519,7 @@
 \begin{frame}[shrink=6]{Qué es una Curva de Declinación}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.62\textheight]{fig_que_es_declinacion.png}
+    \includegraphics[height=0.44\textheight]{fig_que_es_declinacion.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -572,7 +572,7 @@
 \begin{frame}[shrink=6]{El Encargo, en una Figura}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.68\textheight]{fig_el_encargo.png}
+    \includegraphics[height=0.56\textheight]{fig_el_encargo.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -587,17 +587,14 @@
       \begin{pyblock}
 import pandas as pd
 
-URL = ("https://raw.githubusercontent.com/"
-       "cmosquerat/slb-diplomado/main/datos/"
+URL = ("https://raw.githubusercontent"
+       ".com/cmosquerat/slb-diplomado"
+       "/main/datos/"
        "campos_noruega_declinacion.csv")
 
 d = pd.read_csv(URL)
 
-# cuantos campos y cuanta historia
 print(d.campo.nunique(), "campos")
-print(len(d), "filas (una por campo y mes)")
-
-# los anios de historia de cada campo
 meses = d.groupby("campo").size()
 print((meses / 12).describe().round(0))
       \end{pyblock}
@@ -660,7 +657,7 @@ max      49
 \sectionframe{Arps, 1945}{La fórmula que la industria firma hace ochenta años --- y su defecto medible \\[6pt] \normalsize 35 -- 62 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=8]{Quién Fue Arps, y Qué Escribió}
+\begin{frame}[shrink=16]{Quién Fue Arps, y Qué Escribió}
   \vspace{-4pt}
   \begin{columns}[T]
     \begin{column}{0.50\textwidth}
@@ -709,7 +706,7 @@ max      49
 \begin{frame}[shrink=6]{La Exponencial: la Recta de la Clase 1, Con Nombre}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.62\textheight]{fig_que_es_arps.png}
+    \includegraphics[height=0.56\textheight]{fig_que_es_arps.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -755,34 +752,25 @@ max      49
   \begin{columns}[T]
     \begin{column}{0.58\textwidth}
       \begin{pyblock}
-import numpy as np
+q = campos["DRAUGEN"]     # bbl/dia
+y = q.iloc[:60].values    # 5 anios
+t = np.arange(60)         # 0 ... 59
 
-q = campos["DRAUGEN"]        # bbl/dia, desde el pico
-y = q.iloc[:60].values       # los primeros 5 anios
-t = np.arange(60)            # 0, 1, 2, ... 59
-
-# ajustamos una RECTA sobre el logaritmo.
-# polyfit con grado 1 devuelve [pendiente, altura]
+# una RECTA sobre el LOGARITMO
 b = np.polyfit(t, np.log(y), 1)
+D = 100 * (1 - np.exp(b[0] * 12))
+print("declina", round(D), "% al anio")
 
-# la pendiente es -D mensual: la pasamos a anual
-D_anual = 100 * (1 - np.exp(b[0] * 12))
-print("declina", round(D_anual), "% al anio")
-
-# proyectamos 12 anios = 144 meses
-pron = np.exp(np.polyval(b, np.arange(144)))
-
-# ojo: pron es un CAUDAL (bbl/dia). Para acumular
-# barriles hay que multiplicar por los dias del mes
-acum = pron.sum() * 30.4
-print("acumulado:", round(acum / 1e6, 1), "MMbbl")
+m = np.arange(144)        # 12 anios
+acum = np.exp(np.polyval(b, m)).sum()
+print(round(acum*30.4/1e6, 1), "MMbbl")
       \end{pyblock}
     \end{column}
     \begin{column}{0.40\textwidth}
       \vspace{2pt}
       \begin{outputblock}
 declina 18 % al anio
-acumulado: 346.6 MMbbl
+346.6 MMbbl
       \end{outputblock}
       \vspace{6pt}
       {\footnotesize\color{textMuted}
@@ -807,7 +795,7 @@ acumulado: 346.6 MMbbl
 \begin{frame}[shrink=6]{Ahora Destapamos: ¿Cuánto se Equivocó?}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.62\textheight]{fig_sesgo.png}
+    \includegraphics[height=0.50\textheight]{fig_sesgo.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{arcaDark}
@@ -817,7 +805,7 @@ acumulado: 346.6 MMbbl
    \textbf{siempre para el mismo lado}.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Error y Sesgo No Son lo Mismo}
+\begin{frame}[shrink=16]{Error y Sesgo No Son lo Mismo}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Esta distinción vale para todo lo que hagan con datos, no solo para
@@ -861,7 +849,7 @@ acumulado: 346.6 MMbbl
 \begin{frame}[shrink=6]{La Hiperbólica: Qué es b}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.62\textheight]{fig_que_es_b.png}
+    \includegraphics[height=0.56\textheight]{fig_que_es_b.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -909,29 +897,22 @@ acumulado: 346.6 MMbbl
       \begin{pyblock}
 from scipy.optimize import curve_fit
 
-# la formula de Arps, tal cual la escribio en 1945
+# la formula de Arps, de 1945
 def hiperbolica(t, qi, Di, b):
-    return qi / (1 + b * Di * t) ** (1 / b)
+    return qi / (1+b*Di*t) ** (1/b)
 
-# curve_fit busca los tres numeros que mejor
-# ajustan. Le damos un punto de partida (p0) y
-# limites para que no se vaya a valores absurdos
-p, _ = curve_fit(
-    hiperbolica, t, y,
+# bounds = barandas: b entre 0 y 2
+p, _ = curve_fit(hiperbolica, t, y,
     p0=[y[0], 0.02, 0.5],
-    bounds=([0, 1e-6, 1e-3], [np.inf, 1.0, 2.0]),
-)
+    bounds=([0, 1e-6, 1e-3],
+            [np.inf, 1.0, 2.0]))
 print("b =", round(p[2], 2))
-
-pron = hiperbolica(np.arange(144), *p)
-print("acumulado:", round(pron.sum() * 30.4 / 1e6, 1))
       \end{pyblock}
     \end{column}
     \begin{column}{0.40\textwidth}
       \vspace{2pt}
       \begin{outputblock}
 b = 0.91
-acumulado: 395.8
       \end{outputblock}
       \vspace{6pt}
       {\footnotesize\color{textMuted}
@@ -952,7 +933,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{Las Dos Curvas, y lo que Pasó}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.66\textheight]{fig_ajuste_comparado.png}
+    \includegraphics[height=0.54\textheight]{fig_ajuste_comparado.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -964,7 +945,7 @@ acumulado: 395.8
 \sectionframe{Y Ahora, en Dólares}{Un campo no produce hasta cero: produce hasta que deja de pagar \\[6pt] \normalsize 62 -- 80 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=8]{El Campo No Produce Hasta Cero}
+\begin{frame}[shrink=16]{El Campo No Produce Hasta Cero}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Todo lo que hicimos hasta acá pronostica barriles. Pero nadie produce
@@ -1014,7 +995,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{La Curva Elegida Decide el Año de Cierre}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.66\textheight]{fig_limite_economico.png}
+    \includegraphics[height=0.54\textheight]{fig_limite_economico.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -1023,7 +1004,7 @@ acumulado: 395.8
    No es un matiz técnico: es cuándo se despide a la gente.}
 \end{frame}
 
-\begin{frame}[shrink=8]{La Trampa de la Cola: Campos Inmortales}
+\begin{frame}[shrink=16]{La Trampa de la Cola: Campos Inmortales}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Y acá aparece el defecto de la hiperbólica, que es tan grave como el de
@@ -1066,7 +1047,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{El Sesgo del 7 \%, en el Idioma de Gerencia}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.60\textheight]{fig_dolares.png}
+    \includegraphics[height=0.54\textheight]{fig_dolares.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -1075,7 +1056,7 @@ acumulado: 395.8
    el mismo lado, en la cartera \textbf{no se compensa: se suma}.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Qué Cambia una Decisión, y Qué No}
+\begin{frame}[shrink=24]{Qué Cambia una Decisión, y Qué No}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Tres números salieron de esta clase. Solo dos mueven una decisión.}
@@ -1118,7 +1099,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{El Marcador de los 54 Campos}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.64\textheight]{fig_marcador.png}
+    \includegraphics[height=0.58\textheight]{fig_marcador.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{arcaDark}
@@ -1127,7 +1108,7 @@ acumulado: 395.8
    41 \% a \textbf{29 \%}. Pero sigue errando un 10 \%.}
 \end{frame}
 
-\begin{frame}[shrink=8]{La Pregunta Incómoda}
+\begin{frame}[shrink=16]{La Pregunta Incómoda}
   \vspace{6pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=4pt,
     arc=3pt, left=10pt, right=10pt, top=8pt, bottom=8pt]
@@ -1157,7 +1138,7 @@ acumulado: 395.8
    de la clase que no van a encontrar en un curso de DCA.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Qué Significan P10, P50 y P90}
+\begin{frame}[shrink=24]{Qué Significan P10, P50 y P90}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Un percentil es una promesa sobre con qué frecuencia uno se equivoca.}
@@ -1190,7 +1171,7 @@ acumulado: 395.8
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=8]{De Dónde Sale la Banda: la Experiencia Ajena}
+\begin{frame}[shrink=16]{De Dónde Sale la Banda: la Experiencia Ajena}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
    Y acá está la idea de la clase, que es de sentido común antes que de
@@ -1225,7 +1206,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{Los Análogos, en Dos Figuras}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.62\textheight]{fig_analogos.png}
+    \includegraphics[height=0.56\textheight]{fig_analogos.png}
   \end{center}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -1238,7 +1219,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{Las Tres Respuestas, y el Resultado}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.66\textheight]{fig_banda.png}
+    \includegraphics[height=0.54\textheight]{fig_banda.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -1286,7 +1267,7 @@ acumulado: 395.8
 \begin{frame}[shrink=6]{¿Cumple lo que Promete?}
   \vspace{-6pt}
   \begin{center}
-    \includegraphics[height=0.68\textheight]{fig_calibracion.png}
+    \includegraphics[height=0.56\textheight]{fig_calibracion.png}
   \end{center}
   \vspace{-4pt}
   {\footnotesize\color{arcaDark}
@@ -1295,7 +1276,7 @@ acumulado: 395.8
    80 \%.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Cómo Reportarlo al que Decide}
+\begin{frame}[shrink=16]{Cómo Reportarlo al que Decide}
   \vspace{-4pt}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
@@ -1359,7 +1340,7 @@ acumulado: 395.8
 \sectionframe{Su Turno}{Un campo, de punta a punta \\[6pt] \normalsize 100 -- 118 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=8]{Su Turno: Firmen un Número \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}25 min}}
+\begin{frame}[shrink=16]{Su Turno: Firmen un Número \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}25 min}}
   \vspace{-4pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]

@@ -20,6 +20,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Módulo 3 · Clase 5](modulo3-clase5/) | SVM y kernel trick, pipelines, validación honesta (CV, GroupKFold, fuga de información) y SMOTE — integridad de gasoductos (PHMSA) | ✅ Publicada |
 | [Módulo 5 · Clase 1](modulo5-clase1/) | Pronosticar la producción de un pozo — series de tiempo, exploración y el primer pronóstico (campo Volve) | ✅ Publicada |
 | [Módulo 5 · Clase 2](modulo5-clase2/) | El pozo avisa antes de romperse — detección temprana de incrustación en el choke con señales de sensores (3W, Petrobras) | ✅ Publicada |
+| [Módulo 5 · Clase 3](modulo5-clase3/) | ¿Cuánto queda? — curvas de declinación de Arps, sesgo medido en 54 campos y DCA probabilístico auditado | ✅ Publicada |
 
 ## Clase 1: Fundamentos de Python + Control de Flujo
 
@@ -168,6 +169,52 @@ récord a batir, obligando a todo lo demás al mismo presupuesto de falsas alarm
 
 Ver también [`docs/modulo5-retrospectiva-y-ruta.md`](docs/modulo5-retrospectiva-y-ruta.md):
 retrospectiva de la Clase 1, reglas de diseño del módulo y hoja de ruta de las 10 h.
+
+
+---
+
+## Módulo 5 · Clase 3: ¿cuánto queda?
+
+- [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (49 láminas).
+- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (94 celdas, EDA de 15–20 min al inicio).
+- [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 12 figuras **y todas las cifras** de las láminas.
+- [`modulo5-clase3/preparar_datos.py`](modulo5-clase3/preparar_datos.py) — arma el CSV desde la fuente original.
+- [`datos/campos_noruega_declinacion.csv`](datos/campos_noruega_declinacion.csv) — 54 campos del Mar del Norte alineados desde su pico, hasta 49 años de historia.
+
+Un campo pasó su pico hace cinco años. Gerencia decide si sigue invirtiendo o lo prepara
+para abandono. **¿Cuánto petróleo le queda en los próximos siete años?**
+
+Lo que hace especial a esta clase: los 54 campos **ya produjeron** esos doce años. Se
+puede tapar la mitad, pronosticar, destapar y ver quién tenía razón. Es una auditoría,
+no una simulación.
+
+**Contenidos cubiertos:**
+
+1. Por qué declina un campo: presión, agua y gas liberado — las tres causas, desde cero
+2. Alinear desde el **pico** y no por calendario · comparar cada campo consigo mismo
+3. **Arps (1945)**: la exponencial es la recta sobre el logaritmo de la Clase 1, ahora
+   con nombre y autor. Qué es **D**, la tasa de declinación
+4. **El defecto, medido en 54 campos:** la exponencial no falla al azar, falla siempre
+   para el mismo lado — sesgo de **−7 %**. Error y sesgo no son lo mismo
+5. La **hiperbólica** y el exponente **b**, que es la cola del campo. Se gana su lugar:
+   mata el sesgo (−7 % → +1 %) y baja el peor caso de 41 % a **29 %**
+6. **El límite económico**: un campo no produce hasta cero, produce hasta que deja de
+   pagar sus costos fijos. La curva elegida decide **el año de cierre** — en Draugen,
+   19 años con la exponencial contra 54 con la hiperbólica frenada
+7. **La trampa de la cola**: sin freno, la hiperbólica dice que **12 de 54 campos no se
+   mueren nunca**. La corrección estándar (declinación terminal del 5 %/año) los baja a 4
+8. **El sesgo, en dólares**: ese −7 % son **USD 264 millones** por campo y
+   **USD 11.400 millones** en los 54 juntos — y como va siempre para el mismo lado,
+   en una cartera no se compensa, se suma
+9. **P10 / P50 / P90** explicados como lo que son: una promesa verificable
+10. La banda construida con **análogos**, dejando siempre el propio campo fuera del grupo
+11. **Calibración** — la única prueba de que un intervalo es honesto. La banda prometía
+    80 % y cumplió **76 %** en 41 de 54 campos
+12. Lo que el método **no** autoriza a decir
+13. **Práctica:** el campo Gullfaks de punta a punta, con el primer paso resuelto
+
+*Datos: Sokkeldirektoratet (Norwegian Offshore Directorate), datos abiertos. Arps, J. J.
+(1945), Analysis of Decline Curves, Trans. AIME 160(01), 228–247.*
 
 ### Compilar la presentación localmente
 

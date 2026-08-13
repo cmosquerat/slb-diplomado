@@ -100,17 +100,53 @@ Verificables antes de dictar. Cada clase nueva se revisa contra esta lista.
 
 ## Parte D · Hoja de ruta de las 10 h
 
-| Clase | Pregunta de ingeniería | Dataset | Temas contratados que cubre | Estado |
-|---|---|---|---|---|
-| **C1** | ¿Cuánto producirá este pozo? | Volve (Equinor) | — *(deuda: Arps prometido)* | Dictada |
-| **C2** | **¿Cuánto antes se puede saber que el pozo se está tapando?** | 3W (Petrobras) | Fallas de equipo mediante ML **usando series de tiempo** *(práctica contratada)* | **Lista** |
-| **C3** | ¿Cuánto queda, y con cuánta confianza? | Volve / Mar del Norte | ML aplicado a **DCA probabilístico** · Integración volumétrica + ML para forecasting · **paga la deuda de Arps** | Pendiente |
-| **C4** | ¿Qué me está diciendo el agua y el gas? | Mar del Norte (Sokkeldirektoratet) | **Predicción de WOR** *(práctica contratada)* · Predicción de **breakthrough de agua** · Predicción de **GOR** | Pendiente |
-| **C5** | ¿Está enfermo el yacimiento o el equipo? | 3W + Volve | **Fallas de bombas ESP** · Optimización de **levantamiento artificial** · Presión promedio de yacimiento · Daño de formación | Pendiente |
+### La aritmética, sin maquillaje
 
-*Feature selection para EOR* y *pruebas de presión (DST/RFT/Buildup)* quedan
-explícitamente diferidos al Módulo 7 (proyecto integrador): con 10 horas no entran, y es
-mejor decirlo que dejarlos sin mencionar.
+El temario contratado tiene **9 temas avanzados y 3 prácticas** para **10 horas**. Las
+clases C1 y C2 ya consumieron 4 h y entre las dos cubrieron **un** compromiso (el método
+de la práctica de series de tiempo). Quedan **6 h para 9 temas**.
+
+A la profundidad a la que este curso enseña —donde nada se da por sabido— eso no entra.
+Son ~2 h por tema real. **Criterio adoptado: garantizar las tres prácticas comprometidas**,
+que son la parte contractualmente verificable, y declarar por escrito lo que se difiere.
+
+### Lo que se cubre
+
+| Clase | Pregunta de ingeniería | Temas y prácticas contratadas | Estado |
+|---|---|---|---|
+| **C1** | ¿Cuánto producirá este pozo? | — *(ninguno; deuda: Arps prometido)* | Dictada |
+| **C2** | ¿Cuánto antes se puede saber que el pozo se está tapando? | El **método** de la práctica *«ML para fallas usando series de tiempo»* — aplicado a un choke, no a una bomba | **Lista** |
+| **C3** | **¿Cuánto queda, y con cuánta confianza?** | Tema 1 · **DCA probabilístico** · Práctica 3 · **Integración volumétrica + ML para forecasting** · **paga la deuda de Arps** | **Lista** |
+| **C4** | **¿Qué me está avisando el agua y el gas?** | Tema 2 · **GOR y WOR** · Tema 3 · **breakthrough de agua** · Práctica 1 · **Modelo ML para predicción de WOR** | Pendiente |
+| **C5** | **¿Cuándo se rompe la bomba, y cómo la hago rendir?** | Tema 8 · **Fallas de bombas ESP** · Tema 9 · **Optimización de levantamiento artificial** · Práctica 2 · cierra sobre ESP real | Pendiente |
+
+Resultado: **5 de los 9 temas** y **las 3 prácticas comprometidas**.
+
+### Lo que se difiere, explícitamente
+
+Estos cuatro temas **no entran en 10 horas** y se declaran diferidos al **Módulo 7
+(proyecto integrador)**, donde el alumno los aplica sobre su propio dataset:
+
+- Tema 4 · Feature selection para análisis de **EOR**
+- Tema 5 · Predicción de **presión promedio de yacimiento** con ML
+- Tema 6 · ML para análisis de **pruebas de presión** (DST, RFT, Buildup)
+- Tema 7 · Modelos para identificar **daño de formación**
+
+Se dice en la lámina de cierre de la C5, no se deja sin mencionar.
+
+### Principio de diseño heredado de la C2
+
+La lección estructural de la Clase 2 no fue sobre incrustación: fue que **el ML cobra
+cuando hay muchas unidades y muchas variables**. Con una sola serie, el modelo tonto
+empata (ver Parte B). Por eso las tres clases que faltan se plantean **a nivel de flota**,
+no de un solo pozo:
+
+- **C3** — Arps ajustado al propio pozo es el **modelo tonto**; el modelo aprende de miles
+  de pozos análogos, y el P10/P50/P90 sale de la dispersión de esos análogos. Así el DCA
+  probabilístico deja de ser una fórmula y pasa a ser una medición.
+- **C4** — «de estos N pozos, ¿cuáles hacen agua el año que viene?», no «cuánta agua hace
+  este pozo».
+- **C5** — el método de la C2 aplicado a una flota de bombas.
 
 ---
 

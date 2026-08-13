@@ -522,6 +522,92 @@ def fig_doblar(campos):
     guardar(fig, "fig_doblar.png")
 
 
+def fig_dos_caminos(campos):
+    """Los dos caminos, sin algebra: doblar el eje y ajustar una RECTA,
+    o dejar el eje como esta y ajustar una CURVA."""
+    q = campos[EJEMPLO].iloc[:AJUSTE]
+    y = q.values
+    t = np.arange(len(y))
+    be = np.polyfit(t, np.log(y), 1)
+    ph = ajustar(q)["hip_par"]
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4))
+
+    ax = axes[0]
+    ax.plot(t / 12, y / 1000, "o", ms=3, color=GRAY)
+    ax.plot(t / 12, np.exp(np.polyval(be, t)) / 1000, color=RED, lw=2.8)
+    ax.set_yscale("log")
+    ax.set_xlabel("años desde el pico", fontsize=9.5)
+    ax.set_ylabel("producción [miles de bbl/día]", fontsize=9.5)
+    ax.set_title("CAMINO 1 · doblo el eje y ajusto una RECTA", fontsize=11.5,
+                 fontweight="bold", loc="left", color=RED)
+    ax.text(0.03, 0.06, "eje logarítmico", transform=ax.transAxes,
+            fontsize=10, color=MUTED, style="italic")
+
+    ax = axes[1]
+    ax.plot(t / 12, y / 1000, "o", ms=3, color=GRAY)
+    ax.plot(t / 12, curva_hip(ph, len(t)) / 1000, color=GREEN, lw=2.8)
+    ax.set_xlabel("años desde el pico", fontsize=9.5)
+    ax.set_ylabel("producción [miles de bbl/día]", fontsize=9.5)
+    ax.set_title("CAMINO 2 · dejo el eje y ajusto una CURVA", fontsize=11.5,
+                 fontweight="bold", loc="left", color=GREEN)
+    ax.text(0.03, 0.06, "eje normal, en barriles", transform=ax.transAxes,
+            fontsize=10, color=MUTED, style="italic")
+
+    fig.tight_layout(w_pad=2.4)
+    guardar(fig, "fig_dos_caminos.png")
+
+
+def fig_dos_zonas():
+    """Por que la recta no alcanza: un campo no es una sola roca. La suma de
+    dos declinaciones rectas NO es una recta -- y eso es la hiperbolica."""
+    t = np.arange(0, 20 * 12)
+    buena = 85 * np.exp(-0.035 * t)      # roca buena: mucha, y se agota rapido
+    apretada = 15 * np.exp(-0.006 * t)   # roca apretada: poca, pero dura
+    total = buena + apretada
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.3), sharey=True)
+
+    ax = axes[0]
+    ax.plot(t / 12, buena, color=RED, lw=2.4, label="zona buena (se agota rápido)")
+    ax.plot(t / 12, apretada, color=BLUE, lw=2.4, label="zona apretada (dura)")
+    ax.set_yscale("log")
+    ax.set_ylim(0.4, 130)
+    ax.set_xlabel("años", fontsize=9.5)
+    ax.set_ylabel("producción  [% del inicio]", fontsize=9.5)
+    ax.set_title("Cada zona, por separado: dos rectas", fontsize=11.5,
+                 fontweight="bold", loc="left")
+    ax.legend(fontsize=9)
+
+    ax = axes[1]
+    ax.plot(t / 12, buena, color=RED, lw=1.2, alpha=.45)
+    ax.plot(t / 12, apretada, color=BLUE, lw=1.2, alpha=.45)
+    ax.plot(t / 12, total, color=INK, lw=3.0, label="lo que mide el pozo (la suma)")
+    # la recta ajustada a los primeros 5 anios de la suma
+    n = 5 * 12
+    b = np.polyfit(t[:n], np.log(total[:n]), 1)
+    ax.plot(t / 12, np.exp(np.polyval(b, t)), color=GREEN, lw=2.2, ls="--",
+            label="la recta ajustada a los primeros 5 años")
+    ax.fill_between(t / 12, np.exp(np.polyval(b, t)), total,
+                    where=(total > np.exp(np.polyval(b, t))),
+                    color=AMBER, alpha=.30)
+    ax.axvspan(0, 5, color=AMBER, alpha=.12)
+    ax.set_yscale("log")
+    ax.set_ylim(0.4, 130)
+    ax.set_xlabel("años", fontsize=9.5)
+    ax.set_title("Sumadas: ya no es una recta, se dobla", fontsize=11.5,
+                 fontweight="bold", loc="left", color=AMBER)
+    ax.legend(fontsize=9, loc="lower left")
+    ax.annotate("todo esto es lo que\nla recta NO ve venir",
+                xy=(13, 6.5), xytext=(8.2, 28), fontsize=10, color=AMBER,
+                fontweight="bold", linespacing=1.25,
+                arrowprops=dict(arrowstyle="->", color=AMBER, lw=1.6))
+    ax.text(2.5, 0.62, "lo único\nque uno ve", ha="center", fontsize=9,
+            color=MUTED, fontweight="bold", linespacing=1.2)
+    fig.tight_layout(w_pad=2.2)
+    guardar(fig, "fig_dos_zonas.png")
+
+
 def fig_que_es_b():
     """Que significa b: no cuanto declina HOY, sino cuanto va a declinar
     MANANA. Con b=0 la tasa de declinacion nunca afloja."""
@@ -807,6 +893,7 @@ def main():
     fig_que_es_ajustar(campos)
     fig_dos_ajustes(campos)
     fig_doblar(campos)
+    fig_dos_caminos(campos)
     fig_que_es_b()
     fig_ajuste_comparado(campos)
     fig_sesgo(r)

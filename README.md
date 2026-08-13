@@ -176,7 +176,7 @@ retrospectiva de la Clase 1, reglas de diseño del módulo y hoja de ruta de las
 ## Módulo 5 · Clase 3: ¿cuánto queda?
 
 - [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (56 láminas).
-- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (121 celdas, EDA de 15–20 min al inicio y una **animación** que dobla el eje en vivo).
+- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (118 celdas, EDA de 15–20 min al inicio y una **animación** que dobla el eje en vivo).
 - [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 17 figuras **y todas las cifras** de las láminas.
 - [`modulo5-clase3/preparar_datos.py`](modulo5-clase3/preparar_datos.py) — arma el CSV desde la fuente original.
 - [`datos/campos_noruega_declinacion.csv`](datos/campos_noruega_declinacion.csv) — 54 campos del Mar del Norte alineados desde su pico, hasta 49 años de historia.

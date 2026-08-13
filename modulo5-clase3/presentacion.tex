@@ -440,6 +440,79 @@
 \end{frame}
 
 % ── ACOTAR ───────────────────────────────────────────────────────────────────
+\begin{frame}[fragile, shrink=22]{El Archivo}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+import pandas as pd
+
+URL = ("https://raw.githubusercontent"
+       ".com/cmosquerat/slb-diplomado"
+       "/main/datos/"
+       "campos_noruega_declinacion.csv")
+
+d = pd.read_csv(URL)
+
+print(d.campo.nunique(), "campos")
+meses = d.groupby("campo").size()
+print((meses / 12).describe().round(0))
+      \end{pyblock}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \vspace{2pt}
+      \begin{outputblock}
+54 campos
+16312 filas
+
+count    54
+mean     28
+min      15
+50%      25
+max      49
+      \end{outputblock}
+      \vspace{4pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{3pt}
+        \item[{\color{arcaRed}\scriptsize\faDatabase}]
+          \textbf{54 campos} del Mar del Norte noruego
+        \item[{\color{arcaRed}\scriptsize\faClock}]
+          Mediana de \textbf{25 años} después del pico
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          El más viejo, \textbf{49 años}: Ekofisk, que sigue produciendo
+      \end{itemize}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=10]{Las Variables, Una a Una}
+  \vspace{-4pt}
+  {\footnotesize
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{@{}p{3.3cm}p{2.0cm}p{9.4cm}@{}}
+    \toprule
+    {\color{arcaDark}\bfseries columna} &
+    {\color{arcaDark}\bfseries unidad} &
+    {\color{arcaDark}\bfseries qué es} \\
+    \midrule
+    \texttt{campo} & --- & Nombre del campo. Es nuestra \textbf{unidad de análisis} \\
+    \texttt{fecha} & --- & El mes de calendario \\
+    \texttt{mes\_desde\_pico} & meses & \textbf{El reloj que importa}: 0 es el mes de máxima producción \\
+    \texttt{dias} & días & Días que tuvo ese mes. Sirve para pasar de volumen a caudal \\
+    \texttt{oil\_bpd} & bbl/día & \textbf{Lo que vamos a modelar}: producción media de petróleo \\
+    \texttt{agua\_bpd} & bbl/día & Agua producida. Hoy no se usa --- es la Clase 4 \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{8pt}
+
+  {\scriptsize\color{textMuted}\itshape
+   El dato original del regulador noruego viene en \textbf{millones de metros
+   cúbicos estándar por mes}. La conversión a barriles por día está en
+   \texttt{preparar\_datos.py}, a la vista: un Sm³ son 6{,}2898 barriles, y se
+   divide por los días del mes. Se dice porque su gerente piensa en barriles,
+   no en metros cúbicos.}
+\end{frame}
+
 \begin{frame}[shrink=10]{Acotar el Problema (Regla de la Casa)}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
@@ -611,79 +684,6 @@
   {\footnotesize\color{arcaDark}
    Todo lo que sigue es un intento de adivinar lo que hay debajo de esa
    mancha gris. Y al final la vamos a levantar.}
-\end{frame}
-
-\begin{frame}[fragile, shrink=22]{El Archivo}
-  \vspace{-4pt}
-  \begin{columns}[T]
-    \begin{column}{0.56\textwidth}
-      \begin{pyblock}
-import pandas as pd
-
-URL = ("https://raw.githubusercontent"
-       ".com/cmosquerat/slb-diplomado"
-       "/main/datos/"
-       "campos_noruega_declinacion.csv")
-
-d = pd.read_csv(URL)
-
-print(d.campo.nunique(), "campos")
-meses = d.groupby("campo").size()
-print((meses / 12).describe().round(0))
-      \end{pyblock}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-      \vspace{2pt}
-      \begin{outputblock}
-54 campos
-16312 filas
-
-count    54
-mean     28
-min      15
-50%      25
-max      49
-      \end{outputblock}
-      \vspace{4pt}
-      {\footnotesize\color{textMuted}
-      \begin{itemize}\setlength{\itemsep}{3pt}
-        \item[{\color{arcaRed}\scriptsize\faDatabase}]
-          \textbf{54 campos} del Mar del Norte noruego
-        \item[{\color{arcaRed}\scriptsize\faClock}]
-          Mediana de \textbf{25 años} después del pico
-        \item[{\color{codeGreen}\scriptsize\faCheck}]
-          El más viejo, \textbf{49 años}: Ekofisk, que sigue produciendo
-      \end{itemize}}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}[shrink=10]{Las Variables, Una a Una}
-  \vspace{-4pt}
-  {\footnotesize
-  \renewcommand{\arraystretch}{1.25}
-  \begin{tabular}{@{}p{3.3cm}p{2.0cm}p{9.4cm}@{}}
-    \toprule
-    {\color{arcaDark}\bfseries columna} &
-    {\color{arcaDark}\bfseries unidad} &
-    {\color{arcaDark}\bfseries qué es} \\
-    \midrule
-    \texttt{campo} & --- & Nombre del campo. Es nuestra \textbf{unidad de análisis} \\
-    \texttt{fecha} & --- & El mes de calendario \\
-    \texttt{mes\_desde\_pico} & meses & \textbf{El reloj que importa}: 0 es el mes de máxima producción \\
-    \texttt{dias} & días & Días que tuvo ese mes. Sirve para pasar de volumen a caudal \\
-    \texttt{oil\_bpd} & bbl/día & \textbf{Lo que vamos a modelar}: producción media de petróleo \\
-    \texttt{agua\_bpd} & bbl/día & Agua producida. Hoy no se usa --- es la Clase 4 \\
-    \bottomrule
-  \end{tabular}}
-  \vspace{8pt}
-
-  {\scriptsize\color{textMuted}\itshape
-   El dato original del regulador noruego viene en \textbf{millones de metros
-   cúbicos estándar por mes}. La conversión a barriles por día está en
-   \texttt{preparar\_datos.py}, a la vista: un Sm³ son 6{,}2898 barriles, y se
-   divide por los días del mes. Se dice porque su gerente piensa en barriles,
-   no en metros cúbicos.}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
@@ -935,31 +935,50 @@ declina 18 % al anio
    porcentaje que pierde va bajando: el campo se resiste a morir.}
 \end{frame}
 
-\begin{frame}[shrink=6]{Antes de Ajustar Nada: ¿Qué Quiere Decir «Ajustar»?}
-  \vspace{-8pt}
+\begin{frame}[shrink=4]{Dos Caminos, y Hay que Elegir Uno}
+  \vspace{-10pt}
   \begin{center}
-    \includegraphics[height=0.52\textheight]{fig_que_es_ajustar.png}
+    \includegraphics[height=0.54\textheight]{fig_dos_caminos.png}
   \end{center}
-  \vspace{-4pt}
-  {\footnotesize\color{arcaDark}
-   No hay magia: se prueban rectas y se elige la que deja las barras de abajo
-   lo más chicas posible. Los errores se \textbf{elevan al cuadrado} para que
-   un error grande pese mucho más que dos chicos --- porque en ingeniería una
-   equivocación grande no se compensa con dos aciertos.}
+  \vspace{-6pt}
+  {\footnotesize\color{textMuted}
+   A la izquierda se ajusta con \texttt{polyfit} y sale la
+   {\color{arcaRed}\bfseries exponencial}; a la derecha con \texttt{curve\_fit}
+   y sale la {\color{codeGreen}\bfseries hiperbólica}.
+   {\color{arcaDark}La recta es más simple, pero \textbf{obliga} al campo a perder
+   el mismo porcentaje todos los años; la curva le permite ir frenando.}}
 \end{frame}
 
-\begin{frame}[shrink=6]{Dos Formas de Buscar el Fondo}
+\begin{frame}[shrink=6]{Dos Caminos, y Hay que Elegir Uno}
   \vspace{-8pt}
   \begin{center}
-    \includegraphics[height=0.52\textheight]{fig_dos_ajustes.png}
+    \includegraphics[height=0.54\textheight]{fig_dos_caminos.png}
   \end{center}
   \vspace{-4pt}
-  {\footnotesize\color{textMuted}
-   Cada punto del mapa es una combinación de parámetros; el color es el error
-   que da. \textbf{Ajustar es encontrar el fondo.} A la izquierda el fondo se
-   despeja con álgebra; a la derecha hay que caminar cuesta abajo desde algún
-   lado.}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      {\footnotesize\color{textMuted}
+      {\color{arcaRed}\bfseries Camino 1.} Doblo el eje con el logaritmo, la curva
+      se endereza, y ajusto una \textbf{recta}. Eso es la \textbf{exponencial},
+      y se hace con \texttt{polyfit}.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      {\footnotesize\color{textMuted}
+      {\color{codeGreen}\bfseries Camino 2.} Dejo el eje en barriles y ajusto
+      directamente una \textbf{curva}. Eso es la \textbf{hiperbólica}, y se hace
+      con \texttt{curve\_fit}.}
+    \end{column}
+  \end{columns}
+  \vspace{6pt}
+  {\footnotesize\color{arcaDark}
+   La recta es más simple, pero \textbf{obliga} al campo a perder el mismo
+   porcentaje todos los años. La curva le permite ir frenando --- y ya vimos
+   que \textbf{un tercio de los campos no se endereza} ni doblando el eje.}
 \end{frame}
+
+
+
+
 
 \begin{frame}[shrink=8]{Por Qué Existe la Cola (y no es un truco matemático)}
   \vspace{-4pt}
@@ -1025,12 +1044,13 @@ declina 18 % al anio
 
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
-    {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{4pt}Y MIREN EL VALLE DE LA LÁMINA ANTERIOR}\\[4pt]
+    {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{4pt}Y UNA CONSECUENCIA INCÓMODA}\\[4pt]
     {\scriptsize\color{textMuted}
-     Es \textbf{largo y torcido}: hay combinaciones de $D_i$ y $b$ muy distintas
-     con casi el mismo error. Un $D_i$ más alto se compensa con un $b$ más alto.
-     Por eso dos ingenieros pueden ajustar el mismo campo y reportar
-     \emph{b} distintos sin que ninguno se haya equivocado.}
+     Como $b$ y $D_i$ aparecen \textbf{multiplicados} dentro del paréntesis, se
+     compensan: un $D_i$ más alto con un $b$ más alto da casi la misma curva.
+     Con solo cinco años de datos el ajuste no los distingue bien.\\[3pt]
+     Por eso dos ingenieros pueden ajustar el mismo campo, reportar \emph{b}
+     distintos, y ninguno estar equivocado.}
   \end{tcolorbox}
 \end{frame}
 

@@ -419,6 +419,87 @@
 \end{frame}
 
 % ── ACOTAR EL PROBLEMA ───────────────────────────────────────────────────────
+\begin{frame}[fragile, shrink=20]{El Archivo: Qué Hay Adentro}
+  \vspace{-4pt}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{pyblock}
+import pandas as pd
+
+URL = ("https://raw.githubusercontent"
+       ".com/cmosquerat/slb-diplomado"
+       "/main/datos/"
+       "pozos_3w_incrustacion.csv")
+
+d = pd.read_csv(URL)   # se baja solo
+
+print(d.shape)         # filas, columnas
+print(d.pozo.value_counts())
+      \end{pyblock}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \vspace{2pt}
+      \begin{outputblock}
+(37822, 9)
+
+WELL-00023    16901
+WELL-00024    11772
+WELL-00022     3780
+WELL-00021     2926
+WELL-00001     2443
+      \end{outputblock}
+      \vspace{4pt}
+      {\footnotesize\color{textMuted}
+      \begin{itemize}\setlength{\itemsep}{3pt}
+        \item[{\color{arcaRed}\scriptsize\faDatabase}]
+          \textbf{315 horas} de pozo grabadas
+        \item[{\color{arcaRed}\scriptsize\faIndustry}]
+          \textbf{5 pozos}, \textbf{12 grabaciones}
+        \item[{\color{codeGreen}\scriptsize\faCheck}]
+          Datos \textbf{reales}: ni simulados ni dibujados
+      \end{itemize}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=18]{Las Variables, Una a Una}
+  \vspace{-4pt}
+  {\footnotesize
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}p{3.1cm}p{2.5cm}p{9.1cm}@{}}
+    \toprule
+    {\color{arcaDark}\bfseries columna} &
+    {\color{arcaDark}\bfseries tag de campo} &
+    {\color{arcaDark}\bfseries qué es} \\
+    \midrule
+    \texttt{p\_antes\_choke} & P-MON-CKP &
+      Presión justo \emph{antes} de la válvula. Sube si la válvula se tapa \\
+    \texttt{t\_despues\_choke} & T-JUS-CKP &
+      Temperatura justo \emph{después}. Baja si la válvula se tapa \\
+    \texttt{p\_arbol} & P-TPT &
+      Presión en el árbol submarino, en la boca del pozo \\
+    \texttt{p\_anular} & P-ANULAR &
+      Presión en el espacio entre tuberías. Vigila la integridad \\
+    \texttt{p\_gaslift} & P-JUS-CKGL &
+      Presión del gas que se inyecta para aligerar la columna \\
+    \midrule
+    \rowcolor{arcaGray}
+    \texttt{etiqueta} & \emph{class} &
+      {\color{arcaRed}\bfseries Lo que hay que predecir.} La puso una persona,
+      no un sensor \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{8pt}
+
+  {\scriptsize\color{textMuted}\itshape
+   Cinco columnas, y las cinco se explican en una línea. Ese fue un criterio
+   para elegir este dataset: si una variable necesita un párrafo, la clase
+   se va a hablar de la variable y no del problema.\\[4pt]
+   {\color{arcaDark}Dos de ellas nombran el \textbf{choke}. Qué es exactamente
+   esa pieza, y por qué al taparse una presión sube y una temperatura baja,
+   es lo primero que vamos a ver.}}
+\end{frame}
+
 \begin{frame}[shrink=18]{Acotar el Problema (Regla de la Casa)}
   \vspace{-4pt}
   {\small\color{arcaDark}\bfseries
@@ -653,84 +734,6 @@
       \end{tcolorbox}
     \end{column}
   \end{columns}
-\end{frame}
-
-\begin{frame}[fragile, shrink=20]{El Archivo: Qué Hay Adentro}
-  \vspace{-4pt}
-  \begin{columns}[T]
-    \begin{column}{0.56\textwidth}
-      \begin{pyblock}
-import pandas as pd
-
-URL = ("https://raw.githubusercontent"
-       ".com/cmosquerat/slb-diplomado"
-       "/main/datos/"
-       "pozos_3w_incrustacion.csv")
-
-d = pd.read_csv(URL)   # se baja solo
-
-print(d.shape)         # filas, columnas
-print(d.pozo.value_counts())
-      \end{pyblock}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-      \vspace{2pt}
-      \begin{outputblock}
-(37822, 9)
-
-WELL-00023    16901
-WELL-00024    11772
-WELL-00022     3780
-WELL-00021     2926
-WELL-00001     2443
-      \end{outputblock}
-      \vspace{4pt}
-      {\footnotesize\color{textMuted}
-      \begin{itemize}\setlength{\itemsep}{3pt}
-        \item[{\color{arcaRed}\scriptsize\faDatabase}]
-          \textbf{315 horas} de pozo grabadas
-        \item[{\color{arcaRed}\scriptsize\faIndustry}]
-          \textbf{5 pozos}, \textbf{12 grabaciones}
-        \item[{\color{codeGreen}\scriptsize\faCheck}]
-          Datos \textbf{reales}: ni simulados ni dibujados
-      \end{itemize}}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}[shrink=10]{Las Variables, Una a Una}
-  \vspace{-4pt}
-  {\footnotesize
-  \renewcommand{\arraystretch}{1.2}
-  \begin{tabular}{@{}p{3.1cm}p{2.5cm}p{9.1cm}@{}}
-    \toprule
-    {\color{arcaDark}\bfseries columna} &
-    {\color{arcaDark}\bfseries tag de campo} &
-    {\color{arcaDark}\bfseries qué es} \\
-    \midrule
-    \texttt{p\_antes\_choke} & P-MON-CKP &
-      Presión justo \emph{antes} de la válvula. Sube si la válvula se tapa \\
-    \texttt{t\_despues\_choke} & T-JUS-CKP &
-      Temperatura justo \emph{después}. Baja si la válvula se tapa \\
-    \texttt{p\_arbol} & P-TPT &
-      Presión en el árbol submarino, en la boca del pozo \\
-    \texttt{p\_anular} & P-ANULAR &
-      Presión en el espacio entre tuberías. Vigila la integridad \\
-    \texttt{p\_gaslift} & P-JUS-CKGL &
-      Presión del gas que se inyecta para aligerar la columna \\
-    \midrule
-    \rowcolor{arcaGray}
-    \texttt{etiqueta} & \emph{class} &
-      {\color{arcaRed}\bfseries Lo que hay que predecir.} La puso una persona,
-      no un sensor \\
-    \bottomrule
-  \end{tabular}}
-  \vspace{8pt}
-
-  {\scriptsize\color{textMuted}\itshape
-   Cinco columnas, y las cinco se explican en una línea. Ese fue un criterio
-   para elegir este dataset: si una variable necesita un párrafo, la clase
-   se va a hablar de la variable y no del problema.}
 \end{frame}
 
 \begin{frame}[shrink=8]{Qué es una Etiqueta, y Quién la Puso}

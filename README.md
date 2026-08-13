@@ -175,9 +175,9 @@ retrospectiva de la Clase 1, reglas de diseño del módulo y hoja de ruta de las
 
 ## Módulo 5 · Clase 3: ¿cuánto queda?
 
-- [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (49 láminas).
-- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (94 celdas, EDA de 15–20 min al inicio).
-- [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 12 figuras **y todas las cifras** de las láminas.
+- [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (51 láminas).
+- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (100 celdas, EDA de 15–20 min al inicio y una **animación** que dobla el eje en vivo).
+- [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 13 figuras **y todas las cifras** de las láminas.
 - [`modulo5-clase3/preparar_datos.py`](modulo5-clase3/preparar_datos.py) — arma el CSV desde la fuente original.
 - [`datos/campos_noruega_declinacion.csv`](datos/campos_noruega_declinacion.csv) — 54 campos del Mar del Norte alineados desde su pico, hasta 49 años de historia.
 
@@ -194,6 +194,10 @@ no una simulación.
 2. Alinear desde el **pico** y no por calendario · comparar cada campo consigo mismo
 3. **Arps (1945)**: la exponencial es la recta sobre el logaritmo de la Clase 1, ahora
    con nombre y autor. Qué es **D**, la tasa de declinación
+4. **Por qué sirve doblar el eje**, mostrado en movimiento: una animación deforma el eje
+   de forma continua (λ de 1 a 0) y se ve cómo la «panza» del residuo se aplana, de
+   **0,50 a 0,06**. Y el resultado honesto: el logaritmo endereza en **33 de 53 campos**
+   — el tercio que falla es el que tiene cola, y es la razón de que exista la hiperbólica
 4. **El defecto, medido en 54 campos:** la exponencial no falla al azar, falla siempre
    para el mismo lado — sesgo de **−7 %**. Error y sesgo no son lo mismo
 5. La **hiperbólica** y el exponente **b**, que es la cola del campo. Se gana su lugar:

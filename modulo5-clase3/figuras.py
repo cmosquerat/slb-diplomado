@@ -268,6 +268,55 @@ def fig_que_es_arps(campos):
     guardar(fig, "fig_que_es_arps.png")
 
 
+def fig_doblar(campos):
+    """La version estatica de la animacion del cuaderno: se dobla el eje y se
+    mira lo que le sobra a la recta."""
+    y = campos[EJEMPLO].iloc[:AJUSTE].values
+    t = np.arange(len(y))
+
+    def doblar(y, lam):
+        return np.log(y) if abs(lam) < 1e-9 else (y ** lam - 1) / lam
+
+    fig, axes = plt.subplots(2, 3, figsize=(11.6, 4.6), sharex=True,
+                             gridspec_kw=dict(height_ratios=[2, 1]))
+    for j, (lam, nom) in enumerate([(1.0, "escala normal"),
+                                    (0.5, "a medio doblar"),
+                                    (0.0, "escala logarítmica")]):
+        z = doblar(y, lam)
+        z = (z - z.mean()) / z.std()
+        tt = np.linspace(-1, 1, len(z))
+        recta = np.polyval(np.polyfit(tt, z, 1), tt)
+        resto = z - recta
+        arco = np.polyval(np.polyfit(tt, resto, 2), tt)
+        curv = abs(np.polyfit(tt, resto, 2)[0])
+
+        a = axes[0, j]
+        a.plot(t / 12, z, "o", ms=2.6, color=GRAY)
+        a.plot(t / 12, recta, color=RED, lw=2.2)
+        a.set_ylim(-2.6, 2.6)
+        a.set_title(f"λ = {lam:.1f}   ·   {nom}", fontsize=10.5,
+                    fontweight="bold", loc="left", color=DARK)
+        if j == 0:
+            a.set_ylabel("producción\n(eje doblado)", fontsize=9)
+
+        b = axes[1, j]
+        b.axhline(0, color=INK, lw=1.2)
+        b.plot(t / 12, resto, "o", ms=2.2, color=GRAY)
+        b.fill_between(t / 12, 0, arco, color=RED, alpha=.35)
+        b.plot(t / 12, arco, color=RED, lw=1.8)
+        b.set_ylim(-1.5, 1.5)
+        b.set_xlabel("años desde el pico", fontsize=9)
+        b.text(0.97, 0.08, f"{curv:.2f}", transform=b.transAxes, ha="right",
+               fontsize=13, fontweight="bold",
+               color=GREEN if curv < 0.2 else RED)
+        if j == 0:
+            b.set_ylabel("lo que le sobra\na la recta", fontsize=9)
+    fig.suptitle("Doblando el eje: la panza del residuo se aplana",
+                 fontsize=12.5, fontweight="bold", color=DARK, x=0.005, ha="left")
+    fig.tight_layout(h_pad=0.5, w_pad=1.6)
+    guardar(fig, "fig_doblar.png")
+
+
 def fig_que_es_b():
     """Que hace el exponente b: la cola."""
     t = np.arange(0, 12 * 12)
@@ -530,6 +579,7 @@ def main():
     fig_que_es_declinacion(campos)
     fig_el_encargo(campos)
     fig_que_es_arps(campos)
+    fig_doblar(campos)
     fig_que_es_b()
     fig_ajuste_comparado(campos)
     fig_sesgo(r)

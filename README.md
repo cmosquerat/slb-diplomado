@@ -175,9 +175,9 @@ retrospectiva de la Clase 1, reglas de diseño del módulo y hoja de ruta de las
 
 ## Módulo 5 · Clase 3: ¿cuánto queda?
 
-- [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (51 láminas).
-- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (100 celdas, EDA de 15–20 min al inicio y una **animación** que dobla el eje en vivo).
-- [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 13 figuras **y todas las cifras** de las láminas.
+- [`modulo5-clase3/presentacion.pdf`](modulo5-clase3/presentacion.pdf) — slides (56 láminas).
+- [`modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb`](modulo5-clase3/Modulo5_Clase3_Curvas_De_Declinacion.ipynb) — cuaderno Colab (121 celdas, EDA de 15–20 min al inicio y una **animación** que dobla el eje en vivo).
+- [`modulo5-clase3/figuras.py`](modulo5-clase3/figuras.py) — genera las 17 figuras **y todas las cifras** de las láminas.
 - [`modulo5-clase3/preparar_datos.py`](modulo5-clase3/preparar_datos.py) — arma el CSV desde la fuente original.
 - [`datos/campos_noruega_declinacion.csv`](datos/campos_noruega_declinacion.csv) — 54 campos del Mar del Norte alineados desde su pico, hasta 49 años de historia.
 
@@ -194,7 +194,16 @@ no una simulación.
 2. Alinear desde el **pico** y no por calendario · comparar cada campo consigo mismo
 3. **Arps (1945)**: la exponencial es la recta sobre el logaritmo de la Clase 1, ahora
    con nombre y autor. Qué es **D**, la tasa de declinación
-4. **Por qué sirve doblar el eje**, mostrado en movimiento: una animación deforma el eje
+4. **Cómo se encuentra el pico**, que no es «el mes de mayor producción»: el máximo crudo
+   y el suavizado coinciden en solo **2 de 66 campos**, y se separan hasta 58 meses.
+   Cuando hay meseta o redesarrollo, el pico **no es un dato: es una decisión**
+5. **Qué quiere decir «ajustar»**: minimizar la suma de errores al cuadrado, mostrado con
+   barras. Y la diferencia real entre `polyfit` y `curve_fit` — el primero **despeja** una
+   fórmula (se resuelve a mano en el cuaderno y da idéntico), el segundo **camina** cuesta
+   abajo por un valle largo donde `Di` y `b` se compensan entre sí
+6. **Qué es b**, por donde se entiende: no cambia cuánto declina el campo hoy, cambia
+   cuánto va a declinar mañana
+7. **Por qué sirve doblar el eje**, mostrado en movimiento: una animación deforma el eje
    de forma continua (λ de 1 a 0) y se ve cómo la «panza» del residuo se aplana, de
    **0,50 a 0,06**. Y el resultado honesto: el logaritmo endereza en **33 de 53 campos**
    — el tercio que falla es el que tiene cola, y es la razón de que exista la hiperbólica

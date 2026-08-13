@@ -26,3 +26,6 @@ Thumbs.db
 _minted/
 __pycache__/
 *.listing
+
+# intermedios de los generadores de figuras
+_crudo_sodir.csv

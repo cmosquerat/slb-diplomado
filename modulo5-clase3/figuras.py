@@ -19,6 +19,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from matplotlib.lines import Line2D
 from scipy.optimize import curve_fit
 
 warnings.filterwarnings("ignore")
@@ -63,6 +64,10 @@ def guardar(fig, nombre):
 AJUSTE = 5 * 12        # con cuanta historia ajustamos: 5 anios
 OBJETIVO = 12 * 12     # que predecimos: el acumulado a 12 anios
 EJEMPLO = "DRAUGEN"    # el campo que sigue toda la clase
+URL_SODIR = ("https://factpages.sodir.no/public?/Factpages/external/tableview/"
+             "field_production_monthly&rs:Command=Render&rc:Toolbar=false"
+             "&rc:Parameters=f&IpAddress=not_used&CultureCode=en"
+             "&rs:Format=CSV&Top100=false")
 DIAS_MES = 30.4        # dias promedio de un mes: pasa de bbl/dia a barriles
 
 # --- supuestos economicos. Estos numeros los pone finanzas, no el ingeniero:
@@ -190,6 +195,102 @@ def calibracion(r):
 
 
 # =========================================================== FIGURAS ========
+def fig_encontrar_pico():
+    """Como se encuentra el pico, y por que hay que suavizar antes.
+    Lee el archivo crudo del regulador porque necesita lo ANTERIOR al pico."""
+    import urllib.request, io
+    ruta = "_crudo_sodir.csv"
+    if not os.path.exists(ruta):
+        with urllib.request.urlopen(URL_SODIR, timeout=300) as r:
+            open(ruta, "wb").write(r.read())
+    d = pd.read_csv(ruta)
+    d.columns = [c.strip() for c in d.columns]
+    d = d.rename(columns={"prfInformationCarrier": "campo", "prfYear": "anio",
+                          "prfMonth": "mes", "prfPrdOilNetMillSm3": "oil"})
+    d["fecha"] = pd.to_datetime(dict(year=d.anio, month=d.mes, day=1))
+    d["q"] = d.oil * 1e6 * 6.2898 / d.fecha.dt.days_in_month
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.3))
+
+    # ---- izquierda: un campo con pico limpio ----
+    for ax, campo in zip(axes, ["DRAUGEN", "STATFJORD"]):
+        g = d[d.campo == campo].sort_values("fecha").reset_index(drop=True)
+        suave = g.q.rolling(6, center=True, min_periods=1).mean()
+        i_crudo, i_liso = int(g.q.idxmax()), int(suave.idxmax())
+        t = np.arange(len(g)) / 12
+        ax.plot(t, g.q / 1000, color=LGRAY, lw=1.0)
+        ax.plot(t, suave / 1000, color=INK, lw=2.0)
+        ax.plot([t[i_crudo]], [g.q[i_crudo] / 1000], "o", ms=11, mfc="none",
+                mec=RED, mew=2.4)
+        ax.plot([t[i_liso]], [suave[i_liso] / 1000], "*", ms=20, color=GREEN,
+                mec="white", mew=1.2)
+        sep = abs(i_crudo - i_liso)
+        ax.set_xlabel("años desde el primer barril", fontsize=9.5)
+        ax.set_ylabel("producción [miles de bbl/día]", fontsize=9.5)
+        rotulo = ("el pico se ve, pero el mes exacto no"
+                  if campo == "DRAUGEN" else "¿cuál de las dos jorobas?")
+        ax.set_title(f"{campo.title()}  ·  {rotulo}",
+                     fontsize=11.5, fontweight="bold", loc="left",
+                     color=DARK if campo == "DRAUGEN" else RED)
+        ax.annotate(f"{sep} meses\nde diferencia",
+                    xy=((t[i_crudo] + t[i_liso]) / 2, suave.max() / 1000 * 1.02),
+                    xytext=((t[i_crudo] + t[i_liso]) / 2, suave.max() / 1000 * 0.62),
+                    ha="center", fontsize=9.5, color=RED, fontweight="bold",
+                    linespacing=1.2,
+                    arrowprops=dict(arrowstyle="->", color=RED, lw=1.3))
+    axes[0].legend(handles=[
+        Line2D([], [], color=LGRAY, lw=1.6, label="mes a mes"),
+        Line2D([], [], color=INK, lw=2.0, label="suavizado a 6 meses"),
+        Line2D([], [], marker="o", color=RED, lw=0, mfc="none", mew=2,
+               ms=9, label="máximo del dato crudo"),
+        Line2D([], [], marker="*", color=GREEN, lw=0, ms=14,
+               label="el pico que usamos")], fontsize=8.5, loc="upper right")
+    fig.suptitle("Encontrar el pico: por qué hay que suavizar primero",
+                 fontsize=12.5, fontweight="bold", color=DARK, x=0.005, ha="left")
+    fig.tight_layout(w_pad=2.4)
+    guardar(fig, "fig_encontrar_pico.png")
+
+
+def fig_alinear(campos):
+    """Por que se alinea desde el pico y no por calendario."""
+    import urllib.request
+    d = pd.read_csv("_crudo_sodir.csv")
+    d.columns = [c.strip() for c in d.columns]
+    d = d.rename(columns={"prfInformationCarrier": "campo", "prfYear": "anio",
+                          "prfMonth": "mes", "prfPrdOilNetMillSm3": "oil"})
+    d["fecha"] = pd.to_datetime(dict(year=d.anio, month=d.mes, day=1))
+    d["q"] = d.oil * 1e6 * 6.2898 / d.fecha.dt.days_in_month
+    elegidos = ["EKOFISK", "GULLFAKS", "GRANE", "DRAUGEN"]
+    cols = [RED, BLUE, GREEN, ORANGE]
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.1))
+    ax = axes[0]
+    for c, col in zip(elegidos, cols):
+        g = d[d.campo == c].sort_values("fecha")
+        ax.plot(g.fecha, g.q / 1000, color=col, lw=1.5, label=c.title())
+    ax.set_xlabel("año de calendario", fontsize=9.5)
+    ax.set_ylabel("producción [miles de bbl/día]", fontsize=9.5)
+    ax.set_title("Por calendario: uno muere cuando el otro nace",
+                 fontsize=11.5, fontweight="bold", loc="left")
+    ax.legend(fontsize=8.5, ncol=2)
+
+    ax = axes[1]
+    for c, col in zip(elegidos, cols):
+        q = campos[c].iloc[:20 * 12]
+        ax.plot(np.arange(len(q)) / 12, 100 * q / q.iloc[:6].mean(),
+                color=col, lw=1.8)
+    ax.axvline(0, color=INK, lw=1.6, ls="--")
+    ax.text(0.15, 8, "el pico de\ncada uno", fontsize=9, color=INK,
+            fontweight="bold", linespacing=1.2)
+    ax.set_yscale("log")
+    ax.set_xlabel("años desde SU pico", fontsize=9.5)
+    ax.set_ylabel("% de su propio pico", fontsize=9.5)
+    ax.set_title("Desde el pico: ahora se pueden comparar",
+                 fontsize=11.5, fontweight="bold", loc="left", color=GREEN)
+    fig.tight_layout(w_pad=2.4)
+    guardar(fig, "fig_alinear.png")
+
+
 def fig_que_es_declinacion(campos):
     fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.0))
     ax = axes[0]
@@ -268,6 +369,110 @@ def fig_que_es_arps(campos):
     guardar(fig, "fig_que_es_arps.png")
 
 
+def fig_que_es_ajustar(campos):
+    """Que quiere decir 'ajustar': elegir los numeros que hacen el error chico,
+    y por que se elevan al cuadrado los errores."""
+    y = campos[EJEMPLO].iloc[:AJUSTE:6].values / 1000.0
+    t = np.arange(len(y)) * 0.5
+    mejor = np.polyfit(t, y, 1)
+    peor = (mejor[0] * 0.45, mejor[1] + 40)
+
+    fig, axes = plt.subplots(2, 2, figsize=(11.2, 5.2), sharex="col",
+                             gridspec_kw=dict(height_ratios=[2, 1]))
+    for j, (coef, titulo, color) in enumerate([
+            (peor, "Una recta cualquiera", GRAY),
+            (tuple(mejor), "La que minimiza el error", RED)]):
+        recta = np.polyval(coef, t)
+        res = y - recta
+        ax = axes[0, j]
+        ax.plot(t, recta, color=color, lw=2.6, zorder=3)
+        ax.vlines(t, recta, y, color=color, lw=1.6, zorder=2)
+        ax.plot(t, y, "o", ms=6, color=INK, zorder=4)
+        ax.set_title(f"{titulo}\nerror total = {(res**2).sum():,.0f}"
+                     .replace(",", "."), fontsize=11.5, fontweight="bold",
+                     loc="left", color=color)
+        ax.set_ylim(60, 265)
+
+        ax = axes[1, j]
+        ax.bar(t, res ** 2, width=0.34, color=color, alpha=.8)
+        ax.set_ylim(0, max((y - np.polyval(peor, t)) ** 2) * 1.1)
+        ax.set_xlabel("años desde el pico", fontsize=9.5)
+    axes[0, 0].set_ylabel("producción\n[miles de bbl/día]", fontsize=9.5)
+    axes[1, 0].set_ylabel("cada error,\nal cuadrado", fontsize=9.5)
+    fig.text(0.5, -0.03, "«Ajustar» es mover la recta hasta que la suma de las barras "
+             "de abajo sea lo más chica posible. Se elevan al cuadrado para que un "
+             "error grande pese mucho más que dos chicos.",
+             ha="center", fontsize=10, color=DARK, style="italic")
+    fig.tight_layout(w_pad=2.0, h_pad=0.6)
+    guardar(fig, "fig_que_es_ajustar.png")
+
+
+def fig_dos_ajustes(campos):
+    """La diferencia real entre polyfit y curve_fit: la forma del paisaje
+    de error. En la recta hay formula; en la hiperbolica hay que caminar."""
+    from scipy.optimize import least_squares
+    y = campos[EJEMPLO].iloc[:AJUSTE].values
+    t = np.arange(AJUSTE)
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.5))
+
+    # ---- izquierda: la recta sobre el logaritmo ----
+    ly = np.log(y)
+    b0 = np.polyfit(t, ly, 1)
+    P = np.linspace(b0[0] - 0.010, b0[0] + 0.010, 90)
+    A = np.linspace(b0[1] - 0.30, b0[1] + 0.30, 90)
+    E = np.array([[((ly - (p * t + a)) ** 2).sum() for p in P] for a in A])
+    ax = axes[0]
+    ax.grid(False)
+    ax.contourf(P * 12 * 100, A, E, levels=22, cmap="Blues_r")
+    ax.contour(P * 12 * 100, A, E, levels=12, colors="white", linewidths=.5, alpha=.5)
+    ax.plot([b0[0] * 12 * 100], [b0[1]], "*", ms=22, color=RED, mec="white", mew=1.5)
+    ax.set_xlabel("pendiente  [% por año]", fontsize=9.5)
+    ax.set_ylabel("altura de la recta", fontsize=9.5)
+    ax.set_title("La RECTA: un cuenco perfecto", fontsize=12,
+                 fontweight="bold", loc="left", color=BLUE)
+    ax.text(0.97, 0.94, "el fondo tiene fórmula: se calcula\nde una → eso hace polyfit",
+            transform=ax.transAxes, fontsize=9.5, color=INK, ha="right", va="top",
+            fontweight="bold", linespacing=1.3)
+
+    # ---- derecha: la hiperbolica, y el camino que recorre curve_fit ----
+    qi = y[0]
+    camino = []
+
+    def residuo(par):
+        camino.append(tuple(par))
+        return y - hiperbolica(t, qi, par[0], par[1])
+
+    least_squares(residuo, [0.006, 0.10], bounds=([1e-4, 1e-3], [0.08, 1.8]))
+    camino = np.array(camino)
+    DI = np.linspace(0.004, 0.06, 90)
+    BB = np.linspace(0.02, 1.6, 90)
+    E2 = np.array([[np.log10(((y - hiperbolica(t, qi, di, bb)) ** 2).sum())
+                    for di in DI] for bb in BB])
+    ax = axes[1]
+    ax.grid(False)
+    ax.contourf(DI, BB, E2, levels=22, cmap="Blues_r")
+    ax.contour(DI, BB, E2, levels=14, colors="white", linewidths=.5, alpha=.5)
+    ax.plot(camino[:, 0], camino[:, 1], "-o", color=AMBER, lw=1.8, ms=3.5,
+            mec="white", mew=.6, zorder=4)
+    ax.plot([camino[0, 0]], [camino[0, 1]], "s", ms=10, color=GREEN,
+            mec="white", mew=1.5, zorder=5)
+    ax.plot([camino[-1, 0]], [camino[-1, 1]], "*", ms=22, color=RED,
+            mec="white", mew=1.5, zorder=5)
+    ax.annotate("p0: donde empieza a buscar", xy=(camino[0, 0], camino[0, 1]),
+                xytext=(camino[0, 0] + .009, camino[0, 1] + .30), color=GREEN,
+                fontsize=9.5, fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color=GREEN, lw=1.4))
+    ax.set_xlabel("$D_i$   (qué tan rápido arranca)", fontsize=9.5)
+    ax.set_ylabel("$b$   (cuánta cola tiene)", fontsize=9.5)
+    ax.set_title("La HIPERBÓLICA: un valle largo", fontsize=12,
+                 fontweight="bold", loc="left", color=AMBER)
+    ax.text(0.97, 0.94, "no hay fórmula: hay que caminar\n→ eso hace curve_fit",
+            transform=ax.transAxes, fontsize=9.5, color=INK, ha="right", va="top",
+            fontweight="bold", linespacing=1.3)
+    fig.tight_layout(w_pad=2.4)
+    guardar(fig, "fig_dos_ajustes.png")
+
+
 def fig_doblar(campos):
     """La version estatica de la animacion del cuaderno: se dobla el eje y se
     mira lo que le sobra a la recta."""
@@ -318,28 +523,46 @@ def fig_doblar(campos):
 
 
 def fig_que_es_b():
-    """Que hace el exponente b: la cola."""
-    t = np.arange(0, 12 * 12)
-    fig, axes = plt.subplots(1, 2, figsize=(11.2, 3.9))
-    cols = [INK, BLUE, GREEN]
-    for ax, log in zip(axes, [False, True]):
-        for (b, c, et) in zip([0.001, 0.5, 1.0], cols,
-                              ["b = 0   (exponencial)", "b = 0,5  (lo habitual)",
-                               "b = 1   (armónica)"]):
-            ax.plot(t / 12, hiperbolica(t, 100, 0.02, b), color=c, lw=2.2, label=et)
-        if log:
-            ax.set_yscale("log")
-            ax.set_title("En logaritmo: solo b = 0 es recta", fontsize=11.5,
-                         fontweight="bold", loc="left")
-        else:
-            ax.set_title("Todas arrancan igual; se separan en la cola",
-                         fontsize=11.5, fontweight="bold", loc="left")
-        ax.set_xlabel("años", fontsize=9.5)
-        ax.set_ylabel("producción [% del inicio]", fontsize=9.5)
-    axes[0].legend(fontsize=9)
-    fig.text(0.5, -0.03, "b mide cuánta cola tiene el campo. Y la cola es "
-             "justamente lo que uno no ve en los primeros cinco años.",
-             ha="center", fontsize=10, color=DARK, style="italic")
+    """Que significa b: no cuanto declina HOY, sino cuanto va a declinar
+    MANANA. Con b=0 la tasa de declinacion nunca afloja."""
+    t = np.arange(0, 20 * 12)
+    Di = 0.02
+    casos = [(0.001, INK, "b = 0   ·   exponencial"),
+             (0.5, BLUE, "b = 0,5  ·  lo habitual"),
+             (1.0, GREEN, "b = 1   ·   armónica")]
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.2))
+    ax = axes[0]
+    for b, c, et in casos:
+        ax.plot(t / 12, hiperbolica(t, 100, Di, b), color=c, lw=2.4, label=et)
+    ax.set_yscale("log")
+    ax.set_xlabel("años", fontsize=9.5)
+    ax.set_ylabel("producción  [% del inicio]", fontsize=9.5)
+    ax.set_title("Las tres arrancan igual. Se separan en la cola.",
+                 fontsize=11.5, fontweight="bold", loc="left")
+    ax.legend(fontsize=9.5)
+    ax.axvspan(0, 5, color=AMBER, alpha=.13)
+    ax.text(2.5, ax.get_ylim()[0] * 1.7, "lo único\nque uno ve", ha="center",
+            fontsize=9, color=AMBER, fontweight="bold", linespacing=1.2)
+
+    ax = axes[1]
+    for b, c, et in casos:
+        D_inst = 100 * (1 - np.exp(-12 * Di / (1 + b * Di * t)))
+        ax.plot(t / 12, D_inst, color=c, lw=2.4)
+    ax.set_xlabel("años", fontsize=9.5)
+    ax.set_ylabel("cuánto declina ESE año  [%]", fontsize=9.5)
+    ax.set_ylim(0, 26)
+    ax.set_title("Y esto es lo que b de verdad controla",
+                 fontsize=11.5, fontweight="bold", loc="left", color=RED)
+    ax.annotate("con b = 0 la caída\nnunca afloja", xy=(17, 21.5), xytext=(12.5, 16.5),
+                fontsize=9.5, color=INK, fontweight="bold", linespacing=1.25,
+                arrowprops=dict(arrowstyle="->", color=INK, lw=1.3))
+    ax.annotate("con b = 1 el campo\nse va frenando", xy=(12, 5.4), xytext=(3.0, 2.2),
+                fontsize=9.5, color=GREEN, fontweight="bold", linespacing=1.25,
+                arrowprops=dict(arrowstyle="->", color=GREEN, lw=1.3))
+    fig.text(0.5, -0.04, "b no cambia cuánto declina el campo HOY: cambia cuánto va a "
+             "declinar MAÑANA. Por eso no se puede ver en los primeros años.",
+             ha="center", fontsize=10.5, color=DARK, style="italic")
     fig.tight_layout(w_pad=2.4)
     guardar(fig, "fig_que_es_b.png")
 
@@ -576,9 +799,13 @@ def main():
     print(f"  {len(r)} campos evaluables")
 
     print("\ngenerando figuras ...")
+    fig_encontrar_pico()
+    fig_alinear(campos)
     fig_que_es_declinacion(campos)
     fig_el_encargo(campos)
     fig_que_es_arps(campos)
+    fig_que_es_ajustar(campos)
+    fig_dos_ajustes(campos)
     fig_doblar(campos)
     fig_que_es_b()
     fig_ajuste_comparado(campos)

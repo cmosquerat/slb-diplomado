@@ -535,39 +535,72 @@
   \end{itemize}}
 \end{frame}
 
-\begin{frame}[shrink=8]{Alinear Desde el Pico (y Por Qué)}
+\begin{frame}[shrink=6]{Encontrar el Pico No es Buscar el Máximo}
+  \vspace{-8pt}
+  \begin{center}
+    \includegraphics[height=0.50\textheight]{fig_encontrar_pico.png}
+  \end{center}
   \vspace{-4pt}
+  {\footnotesize\color{textMuted}
+   El mes de mayor producción es casi siempre un \textbf{mes con suerte}: un pozo
+   nuevo que entró, un mes sin paradas. Por eso buscamos el máximo sobre la
+   producción \textbf{suavizada a seis meses}, que es la que refleja al campo
+   y no al calendario.}
+\end{frame}
+
+\begin{frame}[shrink=8]{Cuánto Importa Esta Decisión}
+  \vspace{-4pt}
+  {\small\color{arcaDark}\bfseries
+   Lo medimos en los 66 campos del archivo original. No es un detalle.}
+  \vspace{9pt}
   \begin{columns}[T]
-    \begin{column}{0.50\textwidth}
-      {\small\color{arcaDark}\bfseries\faQuestion\hspace{5pt}El problema}
-      \vspace{4pt}
-      {\footnotesize\color{textMuted}
-      Ekofisk arrancó en 1971 y Grane en 2003. Si los ponemos en el mismo eje
-      de calendario, no se parecen en nada: uno está muriendo cuando el otro
-      todavía no nació.\\[6pt]
-      Pero \textbf{la declinación no empieza en una fecha: empieza en el
-      pico.} Antes del pico el campo todavía se está desarrollando ---
-      se perforan pozos, se conecta capacidad.}
-    \end{column}
-    \begin{column}{0.46\textwidth}
-      {\small\color{arcaDark}\bfseries\faCheck\hspace{5pt}Lo que hacemos}
-      \vspace{4pt}
-      {\footnotesize\color{textMuted}
-      A cada campo le buscamos su mes de \textbf{producción máxima} y le
-      ponemos ahí el cero de su reloj. De ahí en adelante, todos hablan el
-      mismo idioma: \emph{«mes 37 después del pico»}.}
-      \vspace{6pt}
+    \begin{column}{0.31\textwidth}
       \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=3pt,
-        arc=3pt, left=6pt, right=6pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{4pt}UN DETALLE QUE NO ES DETALLE}\\[3pt]
-        {\scriptsize\color{textMuted}
-         El pico lo buscamos sobre la producción \textbf{suavizada a seis
-         meses}. Si no, un solo mes bueno --- un pozo nuevo que entró ---
-         se lleva el pico a un lugar equivocado.}
+        arc=3pt, left=6pt, right=6pt, top=6pt, bottom=6pt]
+        \centering
+        {\scriptsize\color{textMuted}EL MÁXIMO CRUDO Y EL\\SUAVIZADO COINCIDEN EN}\\[4pt]
+        {\LARGE\color{arcaRed}\bfseries 2 de 66}\\[4pt]
+        {\scriptsize\color{textMuted}campos. En Statfjord\\se separan 58 meses}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=codeOrange, boxrule=0pt, leftrule=3pt,
+        arc=3pt, left=6pt, right=6pt, top=6pt, bottom=6pt]
+        \centering
+        {\scriptsize\color{textMuted}NO TIENEN PICO,\\TIENEN MESETA}\\[4pt]
+        {\LARGE\color{codeOrange}\bfseries 11 de 66}\\[4pt]
+        {\scriptsize\color{textMuted}más de un año dentro\\del 95 \% del máximo}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3pt,
+        arc=3pt, left=6pt, right=6pt, top=6pt, bottom=6pt]
+        \centering
+        {\scriptsize\color{textMuted}VUELVEN A SUBIR\\3+ AÑOS DESPUÉS}\\[4pt]
+        {\LARGE\color{arcaDark}\bfseries 7 de 66}\\[4pt]
+        {\scriptsize\color{textMuted}pozos nuevos: el campo\\tiene dos picos}
       \end{tcolorbox}
     \end{column}
   \end{columns}
+  \vspace{9pt}
+  {\footnotesize\color{arcaDark}\itshape
+   En esos casos «el pico» \textbf{no es un dato: es una decisión}. Y de esa
+   decisión salen los cinco años que vamos a ver y los análogos con los que
+   nos vamos a comparar. Conviene tomarla despierto.}
 \end{frame}
+
+\begin{frame}[shrink=6]{Por Eso se Alinea Desde el Pico}
+  \vspace{-8pt}
+  \begin{center}
+    \includegraphics[height=0.56\textheight]{fig_alinear.png}
+  \end{center}
+  \vspace{-4pt}
+  {\footnotesize\color{textMuted}
+   Ekofisk arrancó en 1971 y Grane en 2003: por calendario, uno se está
+   muriendo cuando el otro nace. Poniendo el cero en \textbf{el pico de cada
+   uno}, los cuatro cuentan la misma historia.}
+\end{frame}
+
 
 \begin{frame}[shrink=6]{El Encargo, en una Figura}
   \vspace{-6pt}
@@ -902,6 +935,32 @@ declina 18 % al anio
    porcentaje que pierde va bajando: el campo se resiste a morir.}
 \end{frame}
 
+\begin{frame}[shrink=6]{Antes de Ajustar Nada: ¿Qué Quiere Decir «Ajustar»?}
+  \vspace{-8pt}
+  \begin{center}
+    \includegraphics[height=0.52\textheight]{fig_que_es_ajustar.png}
+  \end{center}
+  \vspace{-4pt}
+  {\footnotesize\color{arcaDark}
+   No hay magia: se prueban rectas y se elige la que deja las barras de abajo
+   lo más chicas posible. Los errores se \textbf{elevan al cuadrado} para que
+   un error grande pese mucho más que dos chicos --- porque en ingeniería una
+   equivocación grande no se compensa con dos aciertos.}
+\end{frame}
+
+\begin{frame}[shrink=6]{Dos Formas de Buscar el Fondo}
+  \vspace{-8pt}
+  \begin{center}
+    \includegraphics[height=0.52\textheight]{fig_dos_ajustes.png}
+  \end{center}
+  \vspace{-4pt}
+  {\footnotesize\color{textMuted}
+   Cada punto del mapa es una combinación de parámetros; el color es el error
+   que da. \textbf{Ajustar es encontrar el fondo.} A la izquierda el fondo se
+   despeja con álgebra; a la derecha hay que caminar cuesta abajo desde algún
+   lado.}
+\end{frame}
+
 \begin{frame}[shrink=8]{Por Qué Existe la Cola (y no es un truco matemático)}
   \vspace{-4pt}
   \begin{columns}[T]
@@ -932,6 +991,47 @@ declina 18 % al anio
         Si el ajuste les da eso, está mal.}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=40]{Por Eso \texttt{curve\_fit} Pide Cosas que \texttt{polyfit} No}
+  \vspace{-4pt}
+  {\footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabular}{@{}p{3.0cm}p{5.4cm}p{5.9cm}@{}}
+    \toprule
+    &
+    {\color{codeBlue}\bfseries \texttt{polyfit} (la recta)} &
+    {\color{codeOrange}\bfseries \texttt{curve\_fit} (la hiperbólica)} \\
+    \midrule
+    {\color{arcaDark}\bfseries Qué minimiza} &
+      La suma de errores al cuadrado &
+      Exactamente lo mismo \\
+    {\color{arcaDark}\bfseries Cómo lo hace} &
+      Con una \textbf{fórmula}: lo despeja &
+      \textbf{Caminando} cuesta abajo, paso a paso \\
+    {\color{arcaDark}\bfseries ¿Punto de partida?} &
+      No hace falta &
+      Sí: \texttt{p0}. Si arranca lejos, puede terminar en otro lado \\
+    {\color{arcaDark}\bfseries ¿Límites?} &
+      No hace falta &
+      Sí: \texttt{bounds}. Sin ellos se va a valores sin sentido físico \\
+    \rowcolor{arcaGray}
+    {\color{arcaDark}\bfseries ¿Siempre da lo mismo?} &
+      {\color{codeGreen}\bfseries Sí, siempre} &
+      {\color{arcaRed}\bfseries No necesariamente} \\
+    \bottomrule
+  \end{tabular}}
+  \vspace{8pt}
+
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=3pt,
+    arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+    {\scriptsize\color{arcaRed}\bfseries\faExclamationTriangle\hspace{4pt}Y MIREN EL VALLE DE LA LÁMINA ANTERIOR}\\[4pt]
+    {\scriptsize\color{textMuted}
+     Es \textbf{largo y torcido}: hay combinaciones de $D_i$ y $b$ muy distintas
+     con casi el mismo error. Un $D_i$ más alto se compensa con un $b$ más alto.
+     Por eso dos ingenieros pueden ajustar el mismo campo y reportar
+     \emph{b} distintos sin que ninguno se haya equivocado.}
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}[fragile, shrink=20]{La Hiperbólica, en Código}

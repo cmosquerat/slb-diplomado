@@ -29,3 +29,6 @@ __pycache__/
 
 # intermedios de los generadores de figuras
 _crudo_sodir.csv
+
+# fuentes de figuras (se bajan con las instrucciones del handoff)
+_fuentes/

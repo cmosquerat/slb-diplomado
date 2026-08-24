@@ -244,8 +244,8 @@
 %  DOCUMENTO
 % =============================================================================
 % =============================================================================
-%  Bloques de PROMPT: lo que el alumno copia y pega al agente.
-%  Se usa tcolorbox (no minted) para que el texto largo se ajuste solo.
+%  Bloques de PROMPT (lo que el alumno copia al agente) y de ENCARGO (los
+%  ejercicios espejo: sin solucion en ninguna parte del material).
 % =============================================================================
 \newtcolorbox{prompt}[1][]{%
   colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3.5pt,
@@ -257,6 +257,23 @@
   attach boxed title to top left={xshift=8pt, yshift=-7pt},
   boxed title style={arc=2pt, boxrule=0pt,
     top=1.5pt, bottom=1.5pt, left=6pt, right=6pt}}
+
+\newtcolorbox{encargo}[1][]{%
+  colback=white, colframe=arcaRed, boxrule=1.4pt,
+  arc=3pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\hspace{-2pt}\faTools\hspace{5pt}#1},
+  fonttitle=\scriptsize\bfseries\sffamily,
+  colbacktitle=arcaRed, coltitle=white,
+  attach boxed title to top left={xshift=8pt, yshift=-7pt},
+  boxed title style={arc=2pt, boxrule=0pt,
+    top=1.5pt, bottom=1.5pt, left=6pt, right=6pt}}
+
+% un logo con su nombre debajo, para las laminas de herramientas
+\newcommand{\herramienta}[3][1.1cm]{%
+  \begin{minipage}[t]{#3}\centering
+    \raisebox{0pt}[0.9cm][0pt]{%
+      \includegraphics[height=#1, width=0.9\linewidth, keepaspectratio]{#2}}%
+  \end{minipage}}
 
 \begin{document}
 % ── PORTADA ──────────────────────────────────────────────────────────────────
@@ -318,7 +335,7 @@
         \item[{\color{codeGreen}\scriptsize\faCheck}]
           Y a entregar una \textbf{banda}, no un número solo
       \end{itemize}}
-      \vspace{5pt}
+      \vspace{4pt}
       {\scriptsize\color{textMuted}\itshape
        Todo eso es criterio de ingeniería. No caduca.}
     \end{column}
@@ -330,22 +347,22 @@
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
           Ya no preguntamos \emph{«¿qué modelo uso?»}
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-          Preguntamos \textbf{«¿cómo construyo la herramienta que hace falta?»}
+          Preguntamos \textbf{«¿cómo construyo la herramienta que hace
+          falta?»}
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-          Y la construimos \textbf{dirigiendo a un agente}, no escribiendo
-          cada línea
+          Y la construimos \textbf{dirigiendo a un agente}
         \item[{\color{arcaRed}\scriptsize\faStar}]
-          Al final de hoy, cada uno tiene una \textbf{aplicación con un link}
+          Hoy: \textbf{tres demos mías, tres ejercicios suyos}, y una app
+          con link al final
       \end{itemize}}
     \end{column}
   \end{columns}
-  \vspace{5pt}
+  \vspace{4pt}
   {\scriptsize\color{arcaDark}\itshape
-   Y como siempre: nada se da por sabido. Nadie tiene que haber programado
-   antes.}
+   Los ejercicios no tienen solución escrita en ninguna parte. Se resuelven
+   acá, en vivo --- así que pregunten sin pena.}
 \end{frame}
 
-% ── ANDRAGOGÍA ───────────────────────────────────────────────────────────────
 \begin{frame}[shrink=5]{Ustedes Ya Dirigen Trabajo Técnico}
   \vspace{-2pt}
   {\footnotesize\color{textMuted}
@@ -367,8 +384,8 @@
         leftrule=3pt, arc=3pt, left=6pt, right=6pt, top=5pt, bottom=5pt]
         {\scriptsize\color{arcaDark}\bfseries 2 · Reciben y revisan}\\[3pt]
         {\scriptsize\color{textMuted}
-         No firman el acta sin mirar. Revisan contra lo que pidieron,
-         no contra lo que les entregaron.}
+         No firman el acta sin mirar. Revisan contra lo que pidieron, no
+         contra lo que les entregaron.}
       \end{tcolorbox}
     \end{column}
     \begin{column}{0.31\textwidth}
@@ -381,10 +398,10 @@
       \end{tcolorbox}
     \end{column}
   \end{columns}
-  \vspace{9pt}
+  \vspace{8pt}
   {\footnotesize\color{arcaDark}\itshape
    Un agente de código es un contratista muy rápido, muy barato y muy seguro
-   de sí mismo. Todo lo que ya saben sobre dirigir contratistas aplica ---
+   de sí mismo. Todo lo que saben de dirigir contratistas aplica ---
    incluida la parte de que la firma sigue siendo suya.}
 \end{frame}
 
@@ -394,15 +411,15 @@
 
 \begin{frame}[shrink=8]{La Foto de 2026}
   \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.95\textwidth, height=0.46\textheight, keepaspectratio]{fig_adopcion.png}\end{center}
+  \begin{center}\includegraphics[width=0.88\textwidth, height=0.50\textheight, keepaspectratio]{fig_adopcion.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   Esto ya no es una tendencia ni una moda: es cómo se trabaja. El
-   \textbf{93\,\%} de los desarrolladores usa alguna herramienta de IA, y más
-   de la mitad usa \textbf{agentes} con regularidad.}
+   El \textbf{93\,\%} lo usa, y solo el \textbf{3\,\%} le cree del todo. Las
+   dos cosas son ciertas a la vez --- y esa brecha es exactamente la
+   habilidad que se paga: usarlo \textbf{sin} creerle a ciegas.}
 \end{frame}
 
-\begin{frame}[shrink=6]{El Dato que le Conviene a Esta Sala}
+\begin{frame}[shrink=5]{El Dato que le Conviene a Esta Sala}
   \vspace{4pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
     leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=8pt, bottom=8pt]
@@ -410,264 +427,235 @@
      Los ingenieros \textbf{más senior} son los que \textbf{más} usan
      agentes: 63,5\,\% contra 55\,\% del promedio.}
   \end{tcolorbox}
-  \vspace{9pt}
+  \vspace{8pt}
   {\footnotesize\color{textMuted}
    No es una herramienta para el que no sabe. Es una herramienta que
-   \textbf{rinde más cuanto más criterio tiene quien la usa} --- porque el que
-   sabe reconoce al instante cuándo la respuesta está mal.
-   \vspace{7pt}
+   \textbf{rinde más cuanto más criterio tiene quien la usa} --- porque el
+   que sabe reconoce al instante cuándo la respuesta está mal.
+   \vspace{6pt}
 
-   Y hay un segundo dato en la misma dirección: quien usa agentes tiene
-   \textbf{el doble de probabilidad} de estar entusiasmado con ellos. Quien no
-   los usa, el doble de escéptico.}
-  \vspace{9pt}
+   Y quien usa agentes tiene \textbf{el doble de probabilidad} de estar
+   entusiasmado; quien no los usa, el doble de escéptico. La frustración
+   \#1, con el 66\,\%: \emph{«soluciones casi correctas, pero no del todo»}.}
+  \vspace{7pt}
   {\footnotesize\color{arcaDark}\bfseries\itshape
-   El escepticismo, en esto, se cura usándolo. No leyendo sobre ello.}
-\end{frame}
-
-\begin{frame}[shrink=6]{Lo que No Dicen los Titulares}
-  \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Todo el mundo lo usa. Pero casi nadie le cree del todo, y eso también está
-   medido:}
-  \vspace{3pt}
-  \begin{columns}[T]
-    \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaRed}\bfseries LA CONFIANZA}\\[4pt]
-        {\footnotesize\color{textMuted}
-         Solo el \textbf{3\,\%} confía plenamente en lo que produce.\\[4pt]
-         El \textbf{46\,\%} desconfía de su precisión, contra un 33\,\% que
-         confía.}
-      \end{tcolorbox}
-    \end{column}
-    \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaRed}\bfseries LA FRUSTRACIÓN \#1}\\[4pt]
-        {\footnotesize\color{textMuted}
-         El \textbf{66\,\%} dice que lo que más le molesta son las
-         \emph{«soluciones casi correctas, pero no del todo»}.\\[4pt]
-         Y el \textbf{45\,\%} dice que depurarlas tarda \textbf{más} que
-         escribir el código a mano.}
-      \end{tcolorbox}
-    \end{column}
-  \end{columns}
-  \vspace{3pt}
-  {\footnotesize\color{arcaDark}\bfseries
-   «Casi correcto, pero no» es el problema central de esta clase --- y es
-   justo donde hace falta alguien que sepa del tema.}
+   El escepticismo, en esto, se cura usándolo. Por eso hoy se usa.}
 \end{frame}
 
 \begin{frame}[shrink=8]{El Cuello de Botella se Movió}
   \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.90\textwidth, height=0.46\textheight, keepaspectratio]{fig_cuello_botella.png}\end{center}
+  \begin{center}\includegraphics[width=0.88\textwidth, height=0.48\textheight, keepaspectratio]{fig_cuello_botella.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   Escribir código dejó de ser lo caro. Lo caro ahora es \textbf{verificar}:
-   los cambios hechos con IA esperan más tiempo en revisión, y meten más
-   errores si nadie los mira.}
+   Escribir código dejó de ser lo caro. Lo caro ahora es \textbf{verificar}.
+   Y verificar exige saber del negocio --- que es lo que ustedes traen.}
 \end{frame}
 
-\begin{frame}[shrink=6]{Y Por Eso Ustedes Valen Más, No Menos}
-  \vspace{4pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=9pt, bottom=9pt]
-    {\large\color{arcaDark}\bfseries
-     Lo que se volvió barato es \emph{escribir}. Lo que sigue siendo escaso es
-     \textbf{saber si el resultado tiene sentido}.}
-  \end{tcolorbox}
-  \vspace{9pt}
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Las Herramientas}{El panorama de 2026, y las cinco que usamos hoy \\[6pt] \normalsize 15 -- 32 min}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[shrink=5]{El Panorama a 2026}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Estos son los agentes de código que dominan el mercado. Los nombres van a
+   cambiar; \textbf{la manera de dirigirlos, no} --- y eso es lo que se
+   aprende hoy:}
+  \vspace{2pt}
+  \begin{center}
+  \herramienta[0.62cm]{_logos/copilot.png}{0.30\textwidth}\hfill
+  \herramienta[1.0cm]{_logos/cursor.png}{0.30\textwidth}\hfill
+  \herramienta[0.55cm]{_logos/anthropic.png}{0.30\textwidth}\\[-4pt]
+  {\scriptsize\color{textMuted}
+  \begin{minipage}[t]{0.30\textwidth}\centering GitHub Copilot\\dentro del editor\end{minipage}\hfill
+  \begin{minipage}[t]{0.30\textwidth}\centering Cursor\\un editor entero con IA\end{minipage}\hfill
+  \begin{minipage}[t]{0.30\textwidth}\centering Claude Code\\agente en la terminal\end{minipage}}\\[5pt]
+  \herramienta[1.0cm]{_logos/openai.png}{0.30\textwidth}\hfill
+  \herramienta[0.72cm]{_logos/gemini.png}{0.30\textwidth}\hfill
+  \herramienta[1.0cm]{_logos/colab.png}{0.30\textwidth}\\[-4pt]
+  {\scriptsize\color{textMuted}
+  \begin{minipage}[t]{0.30\textwidth}\centering OpenAI Codex\\agente en la nube\end{minipage}\hfill
+  \begin{minipage}[t]{0.30\textwidth}\centering Gemini\\el de Google\end{minipage}\hfill
+  \begin{minipage}[t]{0.30\textwidth}\centering \textbf{Colab + Gemini}\\el nuestro: ya lo tienen\end{minipage}}
+  \end{center}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\itshape
+   Todos hacen lo mismo por dentro. Usamos el de Colab: cero instalación,
+   cero pago.}
+\end{frame}
+
+\begin{frame}[shrink=5]{Las Cinco de Hoy, y Qué Hace Cada Una}
+  \vspace{2pt}
+  \begin{center}
+  \herramienta[0.95cm]{_logos/colab.png}{0.18\textwidth}\hfill
+  \herramienta[0.68cm]{_logos/gemini.png}{0.18\textwidth}\hfill
+  \herramienta[0.62cm]{_logos/pandas.png}{0.18\textwidth}\hfill
+  \herramienta[0.95cm]{_logos/seaborn.png}{0.18\textwidth}\hfill
+  \herramienta[0.95cm]{_logos/gradio.png}{0.18\textwidth}
+  \end{center}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \textbf{Colab} --- el taller: un cuaderno de Python en el navegador,
+      gratis, sin instalar nada.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \textbf{Gemini} --- el contratista: el agente que vive dentro de Colab
+      (el ícono \faIcon{magic} del panel). A él le vamos a dictar los
+      encargos.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \textbf{pandas} --- la mesa de trabajo: carga los datos y los deja en
+      \emph{tablas} que se manipulan con código.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \textbf{seaborn} --- el dibujante: gráficas con las decisiones de
+      diseño ya tomadas. Además trae los datos de práctica de hoy.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \textbf{Gradio} --- la vitrina: convierte una función en una página web
+      con controles y un \textbf{link} para compartir.
+  \end{itemize}}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\itshape
+   Las cinco ya están en Colab. Hoy no se instala absolutamente nada.}
+\end{frame}
+
+\begin{frame}[shrink=5]{Qué Es un Agente (y Qué No)}
+  \vspace{2pt}
   {\footnotesize\color{textMuted}
-   Un agente puede escribir en treinta segundos el código que ajusta una curva
-   de declinación. Lo que no puede hacer es saber que ese campo tuvo un
-   \emph{workover} en 2018, que el medidor estuvo descalibrado seis meses, o
-   que ese pozo no debería estar en la muestra.
-   \vspace{7pt}
-
-   \textbf{Eso lo saben ustedes.} Y hasta hoy, para convertir ese
-   conocimiento en una herramienta, había que esperar a que alguien de
-   sistemas tuviera tiempo.}
-  \vspace{8pt}
-  {\footnotesize\color{arcaDark}\bfseries\itshape
-   Eso es lo que se acabó. Y de eso se trata este módulo.}
+  Tres cosas distintas que la gente llama «la IA»:
+  \begin{enumerate}\setlength{\itemsep}{6pt}
+    \item[{\color{textMuted}\scriptsize\faCircle}]
+      \textbf{Autocompletado.} Sugiere el final de la línea. Entiende el
+      patrón, no el problema.
+    \item[{\color{arcaRed}\scriptsize\faCircle}]
+      \textbf{Asistente.} Uno pregunta, él contesta con código para copiar.
+      \emph{Él no ve el resultado.}
+    \item[{\color{codeGreen}\scriptsize\faCircle}]
+      \textbf{Agente.} Escribe el código, \textbf{lo ejecuta}, \textbf{mira
+      lo que salió} --- incluidos los errores --- y \textbf{corrige solo}.
+      Repite hasta que corre.
+  \end{enumerate}}
+  \vspace{7pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=6pt, bottom=6pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     La diferencia no es que adivine mejor: es que \textbf{itera}.}\\[4pt]
+    {\footnotesize\color{textMuted}
+     Y por eso, cuando se equivoca, se equivoca con más convicción: ya
+     probó, ya corrigió, y entrega algo que \emph{corre}. Que corra no
+     significa que esté bien --- esa es la lección grande de hoy.}
+  \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=6]{Acotar el Problema}
+\begin{frame}[shrink=5]{Los Cuatro Fundamentos de un Encargo}
+  \vspace{-2pt}
+  {\scriptsize\color{textMuted}
+   Las cuatro cosas que se le dicen a cualquiera a quien uno le encarga un
+   trabajo:}
   \vspace{2pt}
   \begin{columns}[T]
     \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=6pt, bottom=6pt]
-        {\scriptsize\color{codeGreen}\bfseries LO QUE SÍ VAMOS A HACER}\\[5pt]
-        {\footnotesize\color{textMuted}
-        \begin{itemize}\setlength{\itemsep}{3pt}
-          \item[{\color{codeGreen}\scriptsize\faCheck}]
-            Gráficas que se entienden solas
-          \item[{\color{codeGreen}\scriptsize\faCheck}]
-            Dirigir un agente para que las haga
-          \item[{\color{codeGreen}\scriptsize\faCheck}]
-            \textbf{Verificar} lo que devuelve
-          \item[{\color{codeGreen}\scriptsize\faCheck}]
-            Convertirlo en una app con link
-        \end{itemize}}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+        {\scriptsize\color{arcaDark}\bfseries 1 · OBJETIVO}\\[3pt]
+        {\scriptsize\color{textMuted}
+         Qué pregunta quiero responder. \textbf{No} qué gráfico quiero: qué
+         quiero \emph{saber}.}
+      \end{tcolorbox}
+      \vspace{3pt}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+        {\scriptsize\color{arcaDark}\bfseries 2 · CONTEXTO}\\[3pt]
+        {\scriptsize\color{textMuted}
+         Qué datos hay, cómo se llaman las columnas, en qué unidades, para
+         quién es el resultado.}
       \end{tcolorbox}
     \end{column}
     \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=6pt, bottom=6pt]
-        {\scriptsize\color{arcaRed}\bfseries LO QUE NO}\\[5pt]
-        {\footnotesize\color{textMuted}
-        \begin{itemize}\setlength{\itemsep}{3pt}
-          \item[{\color{arcaRed}\scriptsize\faTimes}]
-            Convertirlos en programadores
-          \item[{\color{arcaRed}\scriptsize\faTimes}]
-            Enseñar a memorizar sintaxis
-          \item[{\color{arcaRed}\scriptsize\faTimes}]
-            Instalar nada: todo corre en Colab
-          \item[{\color{arcaRed}\scriptsize\faTimes}]
-            Modelos nuevos --- hoy es sobre
-            \textbf{construir}, no sobre predecir
-        \end{itemize}}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+        {\scriptsize\color{arcaDark}\bfseries 3 · RESTRICCIONES}\\[3pt]
+        {\scriptsize\color{textMuted}
+         Qué herramientas usar, en qué idioma, qué NO hacer. Sin esto,
+         inventa lo que le parezca.}
+      \end{tcolorbox}
+      \vspace{3pt}
+      \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+        {\scriptsize\color{codeGreen}\bfseries 4 · CRITERIO DE ACEPTACIÓN}\\[3pt]
+        {\scriptsize\color{textMuted}
+         \textbf{Cómo sabemos que quedó bien.} El que casi nadie escribe, y
+         el que más cambia el resultado.}
       \end{tcolorbox}
     \end{column}
   \end{columns}
-  \vspace{8pt}
-  {\footnotesize\color{arcaDark}\itshape
-   Regla de la casa para hoy: si algo no lo entienden, es culpa del material,
-   no de ustedes. Pregunten en el momento.}
+  \vspace{3pt}
+  {\scriptsize\color{arcaDark}\bfseries\itshape
+   El cuarto convierte un pedido en un encargo de ingeniería. En los
+   ejercicios de hoy, ustedes lo escriben.}
+\end{frame}
+
+\begin{frame}[shrink=8]{La Escalera: el Mismo Agente, Tres Pedidos}
+  \vspace{-2pt}
+  \begin{center}\includegraphics[width=0.97\textwidth, height=0.46\textheight, keepaspectratio]{fig_escalera_prompt.png}\end{center}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   \emph{«hazme un gráfico»} $\to$ \emph{«grafica los viajes por hora»}
+   $\to$ \emph{«...marcando el pico y el promedio»}. \textbf{La calidad de
+   la salida es la calidad de la especificación.}}
+\end{frame}
+
+\begin{frame}[shrink=8]{Los Cuatro Datos de Hoy}
+  \vspace{-2pt}
+  \begin{center}\includegraphics[width=0.99\textwidth, height=0.46\textheight, keepaspectratio]{fig_cuatro_datasets.png}\end{center}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Todos vienen \textbf{dentro de seaborn}: se cargan con una línea. Con
+   \texttt{taxis} hago yo las demos; \texttt{mpg}, \texttt{car\_crashes} y
+   \texttt{diamonds} son \textbf{de ustedes}. A propósito no hay ninguno de
+   petróleo: la habilidad es la misma, y el proyecto final es con SU dato.}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Primera Victoria}{Que sus datos se vean como lo que valen \\[6pt] \normalsize 15 -- 45 min}
+\sectionframe{Demo 1 · Espejo 1}{Una gráfica que no hay que explicar \\[6pt] \normalsize 32 -- 52 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=6]{Empecemos por Algo que Usan Todas las Semanas}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-   Todos hacen reportes. Y todos han visto la misma escena: un gráfico
-   correcto, con los números bien, que nadie entiende en la reunión --- y hay
-   que explicarlo hablando.
-   \vspace{8pt}
-
-   Un gráfico que hay que explicar es un gráfico que falló.}
-  \vspace{9pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=7pt, bottom=7pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     Una gráfica no es un adorno del análisis: \textbf{es el argumento}.}\\[5pt]
-    {\footnotesize\color{textMuted}
-     Es lo único que la mayoría de la gente va a ver de todo su trabajo. El
-     modelo, los datos y las tres semanas de esfuerzo llegan a la gerencia
-     convertidos en una imagen.}
-  \end{tcolorbox}
-  \vspace{7pt}
-  {\footnotesize\color{textMuted}
-   Y es el mejor lugar para empezar a dirigir un agente: se ve el resultado
-   de inmediato, y si está mal, se nota.}
-\end{frame}
-
-\begin{frame}[shrink=8]{Los Mismos Datos, Dos Veces}
+\begin{frame}[shrink=8]{Demo · Los Mismos Datos, Dos Veces}
   \vspace{-2pt}
   \begin{center}\includegraphics[width=0.97\textwidth, height=0.47\textheight, keepaspectratio]{fig_fea_vs_bonita.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    Mismos datos, mismos números, misma librería. A la izquierda hay que
-   explicar; a la derecha, la respuesta salta sola.}
+   explicar; a la derecha, la respuesta salta sola. \textbf{Un gráfico que
+   hay que explicar hablando es un gráfico que falló.}}
 \end{frame}
 
-\begin{frame}[shrink=6]{Qué Cambió, Exactamente}
+\begin{frame}[shrink=5]{Demo · Las Cinco Decisiones}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   No fue magia ni buen gusto. Fueron \textbf{cinco decisiones}, y todas se le
-   pueden pedir a un agente:}
-  \vspace{7pt}
+   No fue magia. Fueron cinco decisiones, y todas se le pueden \textbf{pedir}
+   a un agente:}
+  \vspace{5pt}
   {\footnotesize\color{textMuted}
   \begin{enumerate}\setlength{\itemsep}{4pt}
-    \item \textbf{Barras en vez de línea.} Una línea sugiere continuidad; las
-          horas son categorías separadas.
-    \item \textbf{Un solo color con sentido.} Gris todo, rojo lo que importa.
-          El color señala, no decora.
-    \item \textbf{Los ejes dicen qué son} --- «hora del día», «viajes» --- en
-          el idioma del que lee.
-    \item \textbf{El hallazgo, escrito sobre la figura.} Si la conclusión es
-          «el pico es a las 18h», eso va en la lámina, no en la boca del
-          presentador.
-    \item \textbf{Se quitó todo lo demás.} Sin marco, sin cuadrícula de más,
-          sin decimales que nadie necesita.
+    \item \textbf{Barras en vez de línea} --- las horas son categorías
+          separadas, no un continuo.
+    \item \textbf{Un solo color con sentido} --- gris todo, rojo lo que
+          importa. El color señala, no decora.
+    \item \textbf{Los ejes dicen qué son}, en el idioma del que lee.
+    \item \textbf{El hallazgo, escrito sobre la figura} --- la conclusión va
+          en la lámina, no en la boca del presentador.
+    \item \textbf{Se quitó todo lo demás} --- sin marco, sin cuadrícula de
+          más, sin decimales que nadie pidió.
   \end{enumerate}}
-  \vspace{7pt}
-  {\footnotesize\color{arcaDark}\bfseries\itshape
-   Ninguna de las cinco es programación. Las cinco son criterio de
-   comunicación --- y por eso las tienen que decidir ustedes, no el agente.}
-\end{frame}
-
-\begin{frame}[shrink=6]{Qué Es Seaborn y Por Qué Existe}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-   \textbf{Matplotlib} es la librería con la que Python dibuja. Puede hacer
-   todo, pero hay que decirle todo: cada color, cada margen, cada etiqueta.
-   Por eso lo que sale «por defecto» se ve así de crudo.
-   \vspace{8pt}
-
-   \textbf{Seaborn} se construyó encima. Trae decisiones de diseño ya tomadas
-   por gente que estudia cómo se leen los gráficos, y entiende de tablas: uno
-   le dice qué columna va en cada eje y él se encarga del resto.}
-  \vspace{9pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=3pt, arc=3pt, left=9pt, right=9pt, top=6pt, bottom=6pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     Y ya viene instalado en Colab. No hay nada que instalar.}
-  \end{tcolorbox}
-  \vspace{7pt}
-  {\scriptsize\color{textMuted}\itshape
-   Además trae datasets de práctica listos, y de ahí salen los datos de hoy:
-   una línea y ya tienen 6.433 viajes de taxi con los que trabajar.}
-\end{frame}
-
-\begin{frame}[fragile, shrink=8]{Las Tres Líneas con las que Arranca Todo}
-  \vspace{2pt}
-  \begin{minted}[fontsize=\small, breaklines]{python}
-import seaborn as sns
-
-taxis = sns.load_dataset("taxis")
-taxis.head()
-  \end{minted}
-  \vspace{6pt}
-  {\footnotesize\color{textMuted}
-   Eso es todo. \texttt{load\_dataset} baja los datos y los deja en una tabla
-   --- lo que en Python se llama un \textbf{DataFrame}: filas y columnas, como
-   una hoja de cálculo, pero manejable con código.}
-  \vspace{7pt}
-
-  {\footnotesize\color{arcaDark}\bfseries
-   Los datos de hoy: 6.433 viajes de taxi de Nueva York, con hora de salida y
-   llegada, distancia, tarifa, propina, forma de pago y zonas.}
   \vspace{5pt}
-
-  {\scriptsize\color{textMuted}\itshape
-   ¿Por qué taxis y no pozos? Porque hoy la habilidad es lo que importa, y
-   quiero que se vea que sirve igual para cualquier problema. En el proyecto
-   final cada uno trae el suyo.}
+  {\footnotesize\color{arcaDark}\bfseries\itshape
+   Ninguna es programación. Las cinco son criterio de comunicación --- por
+   eso las deciden ustedes, no el agente.}
 \end{frame}
 
-\begin{frame}[shrink=10]{La Misma Habilidad, Tres Problemas Distintos}
-  \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.97\textwidth, height=0.46\textheight, keepaspectratio]{fig_tres_dominios.png}\end{center}
+\begin{frame}[shrink=5]{Demo · El Encargo que le Di}
   \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Transporte, gestión presupuestal y planeación de demanda. Tres preguntas
-   que no se parecen en nada --- y la técnica para responderlas es la misma.}
-\end{frame}
-
-\begin{frame}[shrink=6]{Su Primer Encargo al Agente \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}10 min}}
-  \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Abran el cuaderno de la clase y peguen esto en el panel de Gemini. Fíjense
-   en cómo está escrito: no dice «hazme un gráfico bonito».}
-  \vspace{6pt}
-  \begin{prompt}[COPIAR Y PEGAR AL AGENTE]
+  \begin{prompt}[EL PROMPT DE LA DEMO 1 --- así se pidió la gráfica de la derecha]
 Tengo un DataFrame `taxis` de seaborn con viajes de
 taxi de Nueva York. Columnas: pickup y dropoff (fecha
 y hora), distance, fare, tip, total, payment,
@@ -678,7 +666,7 @@ demanda de taxis.
 
 RESTRICCIONES:
 - usa seaborn
-- el gráfico va en un reporte para gerencia: tiene que
+- va en un reporte para gerencia: tiene que
   entenderse sin que yo lo explique
 - ejes con nombre y unidades, en español
 
@@ -687,444 +675,322 @@ CRITERIO DE ACEPTACIÓN:
 - avísame si hay horas sin ningún viaje registrado
   \end{prompt}
   \vspace{4pt}
-  {\scriptsize\color{arcaDark}\itshape
-   Compárenlo con pedir «grafica los viajes». Volvemos sobre por qué en el
-   bloque que sigue.}
-\end{frame}
-
-% ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Cómo se le Pide Bien}{Qué es un agente, y los cuatro fundamentos \\[6pt] \normalsize 45 -- 70 min}
-% ═════════════════════════════════════════════════════════════════════════════
-
-\begin{frame}[shrink=6]{Tres Cosas Distintas que la Gente Llama «la IA»}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-  \begin{enumerate}\setlength{\itemsep}{3pt}
-    \item[{\color{textMuted}\scriptsize\faCircle}]
-      \textbf{Autocompletado.} Sugiere el final de la línea que están
-      escribiendo. Útil, pero no entiende el problema: entiende el patrón.
-    \item[{\color{arcaRed}\scriptsize\faCircle}]
-      \textbf{Asistente.} Uno le pregunta, él contesta con un texto o un
-      bloque de código. Hay que copiarlo, pegarlo, correrlo y ver qué pasó.
-      \emph{Él no ve el resultado.}
-    \item[{\color{codeGreen}\scriptsize\faCircle}]
-      \textbf{Agente.} Escribe el código, \textbf{lo ejecuta}, \textbf{mira lo
-      que salió} --- incluidos los errores --- y \textbf{lo corrige solo}.
-      Repite hasta que funciona.
-  \end{enumerate}}
-  \vspace{3pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=4pt, bottom=4pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     La diferencia no es que el agente adivine mejor. Es que \textbf{itera}.}\\[4pt]
-    {\footnotesize\color{textMuted}
-     Y por eso, cuando se equivoca, se equivoca con mucha más convicción: ya
-     probó, ya corrigió, y les entrega algo que \emph{corre}.}
-  \end{tcolorbox}
-\end{frame}
-
-\begin{frame}[shrink=6]{Los Cuatro Fundamentos}
-  \vspace{-2pt}
   {\scriptsize\color{textMuted}
-   Las cuatro cosas que se le dicen a cualquiera a quien uno le encarga un
-   trabajo:}
-  \vspace{2pt}
-  \begin{columns}[T]
-    \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaDark}\bfseries 1 · OBJETIVO}\\[4pt]
-        {\scriptsize\color{textMuted}
-         Qué pregunta quiero responder. \textbf{No} qué gráfico quiero:
-         qué quiero \emph{saber}.}
-      \end{tcolorbox}
-      \vspace{3pt}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaDark}\bfseries 2 · CONTEXTO}\\[4pt]
-        {\scriptsize\color{textMuted}
-         Qué datos hay, cómo se llaman las columnas, en qué unidades, y
-         para quién es el resultado.}
-      \end{tcolorbox}
-    \end{column}
-    \begin{column}{0.47\textwidth}
-      \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{arcaDark}\bfseries 3 · RESTRICCIONES}\\[4pt]
-        {\scriptsize\color{textMuted}
-         Qué herramientas usar, en qué idioma, qué NO hacer. Sin esto,
-         inventa lo que le parezca.}
-      \end{tcolorbox}
-      \vspace{3pt}
-      \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
-        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-        {\scriptsize\color{codeGreen}\bfseries 4 · CRITERIO DE ACEPTACIÓN}\\[4pt]
-        {\scriptsize\color{textMuted}
-         \textbf{Cómo sabemos que quedó bien.} Es el que casi nadie escribe,
-         y el que más cambia el resultado.}
-      \end{tcolorbox}
-    \end{column}
-  \end{columns}
-  \vspace{2pt}
-  {\scriptsize\color{arcaDark}\bfseries\itshape
-   El cuarto es el que convierte un pedido en un encargo de ingeniería.}
+   Fíjense dónde está cada fundamento. Y fíjense en lo que NO dice: no dice
+   qué tipo de gráfico hacer --- esa decisión se la dejé, y la revisé al
+   recibir.}
 \end{frame}
 
-\begin{frame}[shrink=10]{La Escalera, en Vivo}
-  \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.97\textwidth, height=0.46\textheight, keepaspectratio]{fig_escalera_prompt.png}\end{center}
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 1 · La Flota \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+  \vspace{-5pt}
+  \begin{encargo}[SU ENCARGO --- dataset mpg (398 vehículos, 1970--1982)]
+    {\scriptsize\color{textMuted}
+     La gerencia de flota pregunta: \textbf{¿los vehículos mejoraron su
+     consumo a lo largo de esos años --- y cuánto?}\\[5pt]
+     Columnas que les sirven: \texttt{mpg} (millas por galón: más es
+     mejor), \texttt{model\_year}, \texttt{origin}, \texttt{weight}.\\[5pt]
+     Carguen el dato con
+     \texttt{mpg = sns.load\_dataset("mpg")} y armen \textbf{su propio
+     prompt} con los cuatro fundamentos.}
+  \end{encargo}
   \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   El mismo agente, los mismos datos, tres pedidos distintos. \textbf{La
-   calidad de la salida es la calidad de la especificación.}}
+  {\scriptsize\color{textMuted}
+   \textbf{Cómo saber si van bien} (preguntas, no respuestas):
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Su gráfica se entiende sin que ustedes hablen?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿El hallazgo está \emph{escrito} en la figura, con número?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      Este dataset tiene \textbf{valores faltantes} en una columna. ¿El
+      agente les avisó, o se los tragó sin decir nada?
+  \end{itemize}}
 \end{frame}
 
-\begin{frame}[shrink=6]{La Plantilla que se Llevan}
-  \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Guárdenla. Sirve para pedir una gráfica, un análisis o una aplicación
-   entera:}
-  \vspace{6pt}
-  \begin{prompt}[PLANTILLA GENERAL]
-CONTEXTO: tengo [qué datos], con columnas [cuáles] en
-[qué unidades]. Es para [quién / qué reunión].
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{Demo 2 · Espejo 2}{Una pregunta de operación \\[6pt] \normalsize 52 -- 70 min}
+% ═════════════════════════════════════════════════════════════════════════════
 
-OBJETIVO: quiero responder [qué pregunta].
+\begin{frame}[shrink=5]{Demo · Ahora una Pregunta que Decide Turnos}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   \emph{¿Cuándo conviene tener más gente en la calle?} --- la pregunta de
+   cualquier jefe de operaciones. Así se la encargué:}
+  \vspace{2pt}
+  \begin{prompt}[EL PROMPT DE LA DEMO 2]
+CONTEXTO: el mismo DataFrame `taxis`. Ya tiene las
+columnas hora (0-23) y dia (0=lunes ... 6=domingo).
+
+OBJETIVO: saber en qué combinaciones de día y hora se
+concentra la demanda, para decidir turnos.
 
 RESTRICCIONES:
-- usa [qué librerías]
-- [qué NO hacer]
-- en español, ejes con unidades
-
-CRITERIO DE ACEPTACIÓN:
-- [qué tiene que verse / cumplirse]
-- avísame si [qué problema podría tener el dato]
-  \end{prompt}
-  \vspace{5pt}
-  {\footnotesize\color{arcaDark}\bfseries
-   Ese último renglón --- «avísame si...» --- es el que convierte al agente en
-   un aliado para encontrar problemas, en vez de en alguien que los tapa.}
-\end{frame}
-
-\begin{frame}[shrink=8]{Segundo Encargo: Una Pregunta de Operación \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}10 min}}
-  \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Ahora una pregunta que un jefe de operaciones hace de verdad: \emph{¿cuándo
-   conviene tener más gente en la calle?}}
-  \vspace{6pt}
-  \begin{prompt}[COPIAR Y PEGAR AL AGENTE]
-CONTEXTO: el mismo DataFrame `taxis`. La columna
-pickup tiene fecha y hora de inicio del viaje.
-
-OBJETIVO: saber en qué combinaciones de día de la
-semana y hora se concentra la demanda, para decidir
-turnos.
-
-RESTRICCIONES:
-- un mapa de calor con seaborn (días en filas,
-  horas en columnas)
-- días en español y en orden lunes a domingo
-- no uses colores rojo-verde (hay daltónicos
-  en la sala)
+- un mapa de calor con seaborn: días en filas, horas
+  en columnas
+- días en español, en orden de lunes a domingo
+- nada de escalas rojo-verde (hay daltónicos)
 
 CRITERIO DE ACEPTACIÓN:
 - que se pueda señalar con el dedo el peor momento
-- dime cuál es ese momento y cuántos viajes tiene
+- dime cuál es y cuántos viajes tiene
   \end{prompt}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\itshape
+   La restricción del rojo-verde no es estética: es que el gráfico lo pueda
+   leer toda la sala. Ese tipo de restricción solo la pone quien conoce a su
+   público.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Lo que Debería Salir}
+\begin{frame}[shrink=8]{Demo · Lo que Devolvió}
   \vspace{-2pt}
   \begin{center}\includegraphics[width=0.97\textwidth, height=0.44\textheight, keepaspectratio]{fig_mapa_calor.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   El momento de más demanda es el \textbf{viernes a las 17h}. Con eso ya se
-   puede decidir un turno --- y esa decisión no la tomó el agente: la tomaron
-   ustedes al preguntar bien.}
+   El momento crítico es el \textbf{viernes a las 17h}. Con eso ya se decide
+   un turno --- y la decisión no la tomó el agente: la tomó la
+   \textbf{pregunta}.}
+\end{frame}
+
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 2 · Seguridad Vial \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+  \vspace{-5pt}
+  \begin{encargo}[SU ENCARGO --- dataset car\_crashes (51 estados de EE. UU.)]
+    {\scriptsize\color{textMuted}
+     El área de seguridad pregunta: \textbf{¿los accidentes van de la mano
+     del alcohol? ¿Y en qué estados habría que priorizar una campaña?}\\[5pt]
+     Columnas que les sirven: \texttt{total} (accidentados por cada 100
+     millones de millas), \texttt{alcohol}, \texttt{speeding},
+     \texttt{abbrev} (el estado).\\[5pt]
+     \texttt{crashes = sns.load\_dataset("car\_crashes")} --- y su prompt,
+     con los cuatro fundamentos.}
+  \end{encargo}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   \textbf{Cómo saber si van bien:}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿La relación entre alcohol y accidentes \emph{se ve}, o hay que
+      creerla de palabra?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Pueden señalar con el dedo \textbf{tres estados} para la campaña, y
+      defender por qué esos?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      Pregunta brava: que dos cosas vayan juntas, ¿prueba que una causa la
+      otra? ¿Qué le contestarían al gerente que lo afirme?
+  \end{itemize}}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Dónde Falla}{Y por qué sigue haciendo falta un ingeniero \\[6pt] \normalsize 70 -- 95 min}
+\sectionframe{Demo 3 · Espejo 3}{Donde el agente falla con confianza \\[6pt] \normalsize 70 -- 95 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=6]{Ahora la Parte Incómoda}
+\begin{frame}[shrink=5]{Demo · Ahora la Parte Incómoda}
   \vspace{4pt}
   {\footnotesize\color{textMuted}
-   Hasta acá todo salió bien, y esa es justamente la trampa. Un agente que
-   funciona bien noventa veces genera confianza --- y a la vez noventa y uno
-   hace algo que parece igual de bueno y está mal.
-   \vspace{8pt}
-
-   Vamos a hacer una pregunta perfectamente razonable sobre los mismos datos:}
-  \vspace{7pt}
+   Hasta acá todo salió bien, y esa es justamente la trampa. Vamos a hacer
+   una pregunta perfectamente razonable sobre los mismos taxis:}
+  \vspace{6pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=7pt, bottom=7pt]
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=6pt, bottom=6pt]
     {\footnotesize\color{arcaDark}\bfseries
      «¿Los pasajeros que pagan en efectivo dejan menos propina que los que
-     pagan con tarjeta?»}\\[5pt]
+     pagan con tarjeta?»}\\[4pt]
     {\footnotesize\color{textMuted}
-     Es el tipo de pregunta que se hace para decidir una política de medios de
-     pago. Y tiene consecuencias reales en dinero.}
+     Es el tipo de pregunta con la que se decide una política de medios de
+     pago. Tiene consecuencias en dinero.}
   \end{tcolorbox}
-  \vspace{7pt}
+  \vspace{6pt}
   {\footnotesize\color{textMuted}\itshape
-   El agente la responde en veinte segundos, con un gráfico impecable.}
+   El agente la responde en veinte segundos, con un gráfico impecable. Y
+   antes de mostrarlo, una pregunta para la sala: ¿qué le pedirían ustedes
+   ANTES de creerle?}
 \end{frame}
 
-\begin{frame}[shrink=10]{Un Análisis Impecable}
+\begin{frame}[shrink=8]{Demo · Un Análisis Impecable}
   \vspace{-2pt}
   \begin{center}\includegraphics[width=0.97\textwidth, height=0.46\textheight, keepaspectratio]{fig_trampa.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    El cálculo está bien hecho. El gráfico está bien hecho. La conclusión es
-   \textbf{falsa}.}
+   \textbf{falsa}: la propina en efectivo va al bolsillo del conductor y
+   \textbf{nunca entra al taxímetro}. Un cero que no es un cero: es una
+   \textbf{ausencia}.}
 \end{frame}
 
-\begin{frame}[shrink=6]{Un Cero que No Es un Cero}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-   De los \textbf{1.812} viajes pagados en efectivo, los que tienen propina
-   registrada son \textbf{exactamente cero}. No 3, no 50: cero.
-   \vspace{7pt}
-
-   Ese número perfecto es la pista. En datos reales, nada es exactamente cero
-   por casualidad.}
-  \vspace{8pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=7pt, bottom=7pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     El taxímetro solo registra la propina cuando va en la tarjeta.}\\[5pt]
-    {\footnotesize\color{textMuted}
-     La propina en efectivo va directo al bolsillo del conductor y nunca entra
-     al sistema. La columna no dice «no dejó propina»: dice \textbf{«no
-     tengo ese dato»}.}
-  \end{tcolorbox}
-  \vspace{8pt}
-  {\footnotesize\color{arcaDark}\bfseries
-   Y si alguien decide con eso --- por ejemplo, empujar el pago con tarjeta
-   para «recuperar» propinas --- toma una decisión de negocio sobre una
-   ausencia de datos.}
-\end{frame}
-
-\begin{frame}[shrink=6]{Esto Ya lo Vivieron}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-   Es exactamente el mismo problema que encontramos en el módulo del agua:
-   campos que aparecían con \textbf{cero agua producida} durante veinticinco
-   años.
-   \vspace{7pt}
-
-   No es que no produjeran agua. Es que el regulador \textbf{no la empezó a
-   exigir hasta el año 2000}. Un cero que era una ausencia.}
-  \vspace{9pt}
+\begin{frame}[shrink=5]{Demo · Esto Ya lo Vivieron}
+  \vspace{-5pt}
+  {\scriptsize\color{textMuted}
+   Es el mismo problema del módulo del agua: campos con \textbf{cero agua
+   producida} durante veinticinco años. No es que no produjeran --- es que el
+   regulador no la exigía hasta el año 2000.}
+  \vspace{2pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=7pt, bottom=7pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     Distinto dominio, distinto dato, distinto país --- el mismo error.}\\[5pt]
-    {\footnotesize\color{textMuted}
-     Y en los dos casos, lo que lo detectó no fue una técnica: fue alguien que
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=3pt, bottom=3pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     Distinto dominio, distinto dato, distinto país --- el mismo error.}\\[4pt]
+    {\scriptsize\color{textMuted}
+     Y en los dos casos lo que lo detectó no fue una técnica: fue alguien que
      conocía el negocio y dijo \emph{«esto no puede ser»}.}
   \end{tcolorbox}
-  \vspace{7pt}
-  {\footnotesize\color{arcaDark}\bfseries\itshape
-   El agente no tiene esa alarma. Ustedes sí.}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\bfseries
+   El agente no tiene esa alarma. Ustedes sí. Y se puede convertir en
+   método:}
+  \vspace{2pt}
+  \begin{prompt}[EL PROMPT DE LA DEMO 3 --- la revisión de calidad]
+Antes de concluir nada de `taxis`: revisión de
+calidad. Filas totales y faltantes; mín/máx/ceros
+por columna numérica; y DIME si algún grupo tiene
+SIEMPRE el mismo valor (suele ser artefacto del
+registro). Lista lo raro, aunque no estés seguro.
+  \end{prompt}
+\end{frame}
+
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 3 · Los Diamantes \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+  \vspace{2pt}
+  \begin{encargo}[SU ENCARGO --- dataset diamonds (53.940 piedras)]
+    {\scriptsize\color{textMuted}
+     Van a analizar precios de diamantes... pero todavía no. Primero:
+     \textbf{córranle su revisión de calidad}. Este dataset esconde
+     \textbf{al menos un valor físicamente imposible} --- y más de uno.\\[5pt]
+     Columnas: \texttt{carat} (quilates), \texttt{cut}, \texttt{price}
+     [USD], y \texttt{x}, \texttt{y}, \texttt{z} --- las \textbf{dimensiones
+     físicas en milímetros}.\\[5pt]
+     \texttt{diamonds = sns.load\_dataset("diamonds")}}
+  \end{encargo}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   \textbf{Cómo saber si van bien:}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Qué significa físicamente que una dimensión valga \textbf{cero}?
+      ¿Cuántas filas así hay?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      Miren el \textbf{máximo} de cada dimensión. ¿Un diamante de ese tamaño
+      es creíble, o es un error de captura?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Qué harían con esas filas --- borrarlas, corregirlas, preguntarle al
+      dueño del dato? ¿Y qué le dirían?
+  \end{itemize}}
 \end{frame}
 
 \begin{frame}[shrink=8]{Y Cuidado con la Sensación}
   \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.88\textwidth, height=0.44\textheight, keepaspectratio]{fig_metr.png}\end{center}
+  \begin{center}\includegraphics[width=0.86\textwidth, height=0.44\textheight, keepaspectratio]{fig_metr.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   Un ensayo controlado con desarrolladores experimentados: se sintieron un
+   Ensayo controlado con desarrolladores experimentados: se sintieron un
    \textbf{20\,\% más rápidos} y fueron un \textbf{19\,\% más lentos}. No es
-   un argumento contra la herramienta --- es uno a favor de medir.}
+   un argumento contra la herramienta --- es uno a favor de \textbf{medir}.}
 \end{frame}
 
-\begin{frame}[shrink=6]{La Lista de Verificación}
+\begin{frame}[shrink=5]{El Ciclo Real, y la Lista de Verificación}
   \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Cuatro preguntas para cualquier resultado que devuelva un agente. Toman dos
-   minutos y evitan la mayoría de los desastres:}
-  \vspace{7pt}
-  {\footnotesize\color{textMuted}
-  \begin{enumerate}\setlength{\itemsep}{6pt}
-    \item[{\color{arcaRed}\scriptsize\faSearch}]
-      \textbf{¿Cuántas filas entraron y cuántas salieron?} Si el agente
-      descartó la mitad de los datos sin avisar, todo lo demás sobra.
-    \item[{\color{arcaRed}\scriptsize\faSearch}]
-      \textbf{¿Hay ceros, vacíos o números redondos sospechosos?} Un cero
-      perfecto casi siempre es una ausencia disfrazada.
-    \item[{\color{arcaRed}\scriptsize\faSearch}]
-      \textbf{¿El resultado tiene sentido físico o de negocio?} Si dice que un
-      pozo produce más que el campo entero, no hace falta revisar el código.
-    \item[{\color{arcaRed}\scriptsize\faSearch}]
-      \textbf{¿Qué decisión se tomaría con esto, y qué pasa si está mal?}
-      Si la respuesta es «nada grave», sigan. Si no, verifiquen a mano.
+  \begin{center}
+  \begin{tikzpicture}[
+    caja/.style={draw, rounded corners=2pt, line width=1.1pt, align=center,
+                 minimum height=0.92cm, minimum width=2.55cm,
+                 font=\scriptsize\bfseries},
+    sub/.style={font=\tiny, text=textMuted, align=center},
+    fl/.style={-{Stealth[length=2.2mm]}, line width=1.0pt, color=gray}]
+    \node[caja, color=arcaDark] (e) at (0,0)    {ESPECIFICAR};
+    \node[caja, color=blue!60!black] (g) at (3.4,0)  {GENERAR};
+    \node[caja, color=arcaRed] (v) at (6.8,0)   {VERIFICAR};
+    \node[caja, color=codeGreen] (d) at (10.2,0){DECIDIR};
+    \node[sub] at (0,-0.82)    {los 4 fundamentos};
+    \node[sub] at (3.4,-0.82)  {eso lo hace el agente};
+    \node[sub] at (6.8,-0.82)  {las 4 preguntas};
+    \node[sub] at (10.2,-0.82) {sirve, o se re-especifica};
+    \draw[fl] (e) -- (g);
+    \draw[fl] (g) -- (v);
+    \draw[fl] (v) -- (d);
+    \draw[fl, dashed] (d.south) .. controls (8,-1.7) and (2,-1.7) .. (e.south);
+    \node[sub] at (5.1,-1.75) {y si no sirve, se vuelve a especificar --- eso es el trabajo};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Las \textbf{cuatro preguntas} de VERIFICAR, para todo lo que devuelva un
+   agente:
+  \begin{enumerate}\setlength{\itemsep}{2pt}
+    \item ¿Cuántas filas entraron y cuántas salieron?
+    \item ¿Hay ceros, vacíos o números redondos sospechosos?
+    \item ¿El resultado tiene sentido físico o de negocio?
+    \item ¿Qué decisión se toma con esto, y qué pasa si está mal?
   \end{enumerate}}
-  \vspace{7pt}
-  {\footnotesize\color{arcaDark}\bfseries\itshape
-   Ninguna de las cuatro exige saber programar. Las cuatro exigen saber del
-   negocio.}
-\end{frame}
-
-\begin{frame}[shrink=8]{El Ciclo Real de Trabajo}
-  \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.97\textwidth, height=0.44\textheight, keepaspectratio]{fig_ciclo.png}\end{center}
   \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   El agente hace la caja del medio. Las dos de los extremos --- especificar y
-   decidir --- son de ustedes, y no se delegan.}
-\end{frame}
-
-\begin{frame}[shrink=6]{Tercer Encargo: Pónganle Trampas \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}8 min}}
-  \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Ahora usen al agente para lo contrario: para \textbf{buscar} problemas en
-   vez de taparlos.}
-  \vspace{6pt}
-  \begin{prompt}[COPIAR Y PEGAR AL AGENTE]
-CONTEXTO: DataFrame `taxis` de seaborn.
-
-OBJETIVO: quiero saber si estos datos tienen algún
-problema ANTES de sacar conclusiones.
-
-Hazme una revisión de calidad que incluya:
-- filas totales y filas con datos faltantes
-- para cada columna numérica: mínimo, máximo, y
-  cuántos valores son exactamente cero
-- si alguna combinación de categorías tiene SIEMPRE
-  el mismo valor (eso suele ser un artefacto del
-  sistema que registra, no un hecho real)
-
-CRITERIO DE ACEPTACIÓN:
-- una tabla que yo pueda leer en 30 segundos
-- y una lista de las cosas que te parecen raras,
-  aunque no estés seguro
-  \end{prompt}
-  \vspace{3pt}
-  {\scriptsize\color{arcaDark}\itshape
-   Este prompt vale por toda la clase: guárdenlo y córranlo con cada dataset
-   nuevo, antes de cualquier análisis.}
+  {\scriptsize\color{arcaDark}\bfseries\itshape
+   Ninguna exige saber programar. Las cuatro exigen saber del negocio.}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{De la Gráfica a la App}{Que otro lo pueda usar sin llamarlos \\[6pt] \normalsize 95 -- 120 min}
+\sectionframe{De la Gráfica a la App}{Que otro lo pueda usar sin llamarlos \\[6pt] \normalsize 95 -- 118 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{El Salto que Falta}
   \vspace{-2pt}
-  \begin{center}\includegraphics[width=0.95\textwidth, height=0.44\textheight, keepaspectratio]{fig_de_grafica_a_app.png}\end{center}
+  \begin{center}\includegraphics[width=0.93\textwidth, height=0.42\textheight, keepaspectratio]{fig_de_grafica_a_app.png}\end{center}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    Mientras el análisis viva en una celda, cada vez que alguien quiera ver
    otra cosa tiene que llamarlos. Una app se la mandan y se acabó.}
 \end{frame}
 
-\begin{frame}[shrink=6]{Qué Es Gradio}
-  \vspace{4pt}
-  {\footnotesize\color{textMuted}
-   Una librería que convierte una función de Python en una página web con
-   controles. Uno le dice: \emph{«esta función recibe una hora y devuelve un
-   gráfico»}, y Gradio arma la interfaz sola.
-   \vspace{8pt}
-
-   No hay que saber nada de páginas web. Y en Colab hace algo muy útil: genera
-   un \textbf{link público} que se le puede mandar a cualquiera.}
-  \vspace{8pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=3pt, arc=3pt, left=9pt, right=9pt, top=6pt, bottom=6pt]
-    {\scriptsize\color{arcaDark}\bfseries LO QUE HAY QUE SABER DEL LINK}\\[4pt]
-    {\footnotesize\color{textMuted}
-     Funciona \textbf{mientras el cuaderno esté corriendo}. Si cierran Colab o
-     se desconecta, el link deja de responder. Sirve perfecto para mostrar
-     algo en una reunión; no sirve como sistema permanente.}
-  \end{tcolorbox}
-  \vspace{6pt}
-  {\scriptsize\color{textMuted}\itshape
-   Cómo se hace permanente lo vemos en la Clase 3. Hoy nos alcanza y sobra.}
-\end{frame}
-
-\begin{frame}[fragile, shrink=10]{La App Más Chica que Sirve}
+\begin{frame}[fragile, shrink=8]{Demo · La App Más Chica que Sirve}
   \vspace{2pt}
   \begin{minted}[fontsize=\scriptsize, breaklines]{python}
 import gradio as gr
 
 def ver_demanda(dia):
-    d = taxis[taxis.dia_nombre == dia]
-    return grafico_de_horas(d)
+    datos = taxis[taxis.dia_nombre == dia]
+    return grafico_demanda(datos)
 
 demo = gr.Interface(
     fn=ver_demanda,
     inputs=gr.Dropdown(DIAS, label="Día"),
     outputs=gr.Plot(label="Demanda por hora"),
-    title="Demanda de taxis por día y hora")
+    title="Demanda de taxis por día")
 
 demo.launch(share=True)
   \end{minted}
   \vspace{4pt}
   {\footnotesize\color{textMuted}
-   Tres piezas: la \textbf{función} que hace el trabajo, los
-   \textbf{controles} de entrada y salida, y \texttt{launch(share=True)} que
-   publica el link.}
+   Tres piezas: la \textbf{función}, los \textbf{controles}, y
+   \texttt{launch(share=True)}, que genera el \textbf{link público}.}
+  \vspace{4pt}
+
+  {\scriptsize\color{arcaDark}\bfseries
+   Lo que hay que saber del link: vive mientras el cuaderno esté corriendo.
+   Perfecto para una reunión; no es un sistema permanente.}
 \end{frame}
 
-\begin{frame}[shrink=8]{Su Turno: Construyan la Herramienta \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}20 min}}
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Su Turno · La App de SU Dato \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}18 min}}
   \vspace{2pt}
-  \begin{prompt}[COPIAR Y PEGAR AL AGENTE]
-CONTEXTO: en este cuaderno ya tengo el DataFrame
-`taxis` cargado y una función que grafica la demanda
-por hora.
-
-OBJETIVO: convertirlo en una app de Gradio que pueda
-mandarle por link al jefe de operaciones.
-
-La app tiene que dejarle elegir:
-- el día de la semana
-- el barrio de origen (pickup_borough)
-
-y mostrarle el gráfico de demanda por hora para esa
-combinación, más una línea de texto que diga cuál es
-la hora pico y cuántos viajes tiene.
-
-RESTRICCIONES:
-- usa gradio, con launch(share=True)
-- todo en español
-- si la combinación elegida no tiene datos, que lo
-  diga con un mensaje claro en vez de fallar
-
-CRITERIO DE ACEPTACIÓN:
-- me tiene que dar un link que yo pueda abrir
-- y no se puede caer si elijo un barrio sin viajes
-  \end{prompt}
-\end{frame}
-
-\begin{frame}[shrink=6]{El Entregable del Módulo}
+  \begin{encargo}[SU ENCARGO FINAL --- con el dataset espejo que prefieran]
+    {\scriptsize\color{textMuted}
+     Elijan \textbf{uno} de sus tres datasets (\texttt{mpg},
+     \texttt{car\_crashes} o \texttt{diamonds}) y conviertan su análisis en
+     una \textbf{app de Gradio con link}, para alguien que decide:\\[5pt]
+     La app debe tener \textbf{al menos dos controles} (qué filtrar o
+     comparar, lo deciden ustedes), mostrar \textbf{una gráfica que se
+     entienda sola}, y \textbf{no caerse} si la combinación elegida no tiene
+     datos.}
+  \end{encargo}
   \vspace{2pt}
-  {\footnotesize\color{textMuted}
-   Empiecen a pensarlo desde hoy. En la última clase cada uno presenta:}
-  \vspace{3pt}
-  \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=4pt, bottom=4pt]
-    {\footnotesize\color{arcaDark}\bfseries
-     Una aplicación que resuelva un problema real de su trabajo, construida
-     dirigiendo a un agente, con su link funcionando.}
-  \end{tcolorbox}
-  \vspace{3pt}
-  {\footnotesize\color{textMuted}
-   Y con tres cosas más, que valen tanto como la app:
-  \begin{itemize}\setlength{\itemsep}{3pt}
-    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-      \textbf{Los prompts que usaron.} Queremos ver cómo dirigieron, no solo
-      qué salió.
-    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-      \textbf{Un error que el agente cometió}, y cómo lo detectaron.
-    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-      \textbf{Qué decisión se toma} con la herramienta, y quién la toma.
+  {\scriptsize\color{textMuted}
+   \textbf{Cómo saber si van bien:}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Le escribieron al agente el criterio de aceptación --- incluido el
+      caso sin datos?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      Abran su propio link y traten de romperlo. ¿Sobrevive?
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      ¿Se lo mandarían a su jefe tal como está? Si dudan, ¿qué le falta?
   \end{itemize}}
-  \vspace{3pt}
-  {\footnotesize\color{arcaDark}\bfseries\itshape
-   Traigan su propio dato. Si no pueden por confidencialidad, lo hablamos ---
-   hay maneras, y son parte de la Clase 3.}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\itshape
+   Al final, tres voluntarios abren su link en el proyector. Ese es el cierre
+   de la clase.}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
@@ -1144,12 +1010,11 @@ CRITERIO DE ACEPTACIÓN:
         \item[{\color{codeGreen}\scriptsize\faCheck}]
           Una gráfica es un \textbf{argumento}, no un adorno
         \item[{\color{codeGreen}\scriptsize\faCheck}]
-          Los \textbf{cuatro fundamentos}: objetivo, contexto,
-          restricciones, criterio de aceptación
+          Los \textbf{cuatro fundamentos} de un encargo
         \item[{\color{codeGreen}\scriptsize\faCheck}]
           Un \textbf{cero perfecto} casi siempre es una ausencia
         \item[{\color{codeGreen}\scriptsize\faCheck}]
-          La \textbf{lista de verificación} de cuatro preguntas
+          Las \textbf{cuatro preguntas} de verificación
       \end{itemize}}
     \end{column}
     \begin{column}{0.48\textwidth}
@@ -1158,98 +1023,98 @@ CRITERIO DE ACEPTACIÓN:
       {\footnotesize\color{textMuted}
       \begin{itemize}\setlength{\itemsep}{3pt}
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-          \texttt{seaborn} y \texttt{load\_dataset}
+          \texttt{seaborn} y sus datasets de práctica
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-          El panel de Gemini de Colab
+          El agente Gemini del panel de Colab
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
           \texttt{gradio} y \texttt{launch(share=True)}
         \item[{\color{arcaRed}\scriptsize\faArrowRight}]
-          La \textbf{plantilla de prompt} --- la que más van a usar
+          La \textbf{plantilla de encargo} --- la que más van a usar
       \end{itemize}}
-      \vspace{6pt}
+      \vspace{5pt}
       \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=3pt,
         arc=3pt, left=6pt, right=6pt, top=4pt, bottom=4pt]
         {\scriptsize\color{arcaRed}\bfseries EL NÚMERO DEL DÍA}\\[3pt]
         {\scriptsize\color{textMuted}
-         \textbf{1.812 y 0.} Los viajes en efectivo, y los que tenían propina
-         registrada. El agente no vio nada raro.}
+         \textbf{1.812 y 0.} Los viajes en efectivo, y los que tenían
+         propina registrada. El agente no vio nada raro.}
       \end{tcolorbox}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}[shrink=6]{El Resultado Negativo de Hoy}
+\begin{frame}[shrink=5]{Los Resultados Negativos de Hoy}
   \vspace{4pt}
   {\footnotesize\color{textMuted}
-   La regla de este curso es que al menos un resultado negativo se dice en voz
-   alta. Hoy hubo dos, y los dos están medidos:}
-  \vspace{7pt}
+   La regla del curso: al menos un resultado negativo se dice en voz alta.
+   Hoy hubo dos, medidos:}
+  \vspace{6pt}
   {\footnotesize\color{textMuted}
-  \begin{enumerate}\setlength{\itemsep}{7pt}
+  \begin{enumerate}\setlength{\itemsep}{6pt}
     \item[{\color{arcaRed}\scriptsize\faTimes}]
       \textbf{El agente entregó un análisis correcto con una conclusión
-      falsa}, y no dio ninguna señal de alarma. El código estaba bien; el dato
+      falsa}, sin ninguna señal de alarma. El código estaba bien; el dato
       mentía.
     \item[{\color{arcaRed}\scriptsize\faTimes}]
-      \textbf{En un ensayo controlado, desarrolladores experimentados fueron
-      19\,\% más lentos} usando estas herramientas, mientras se sentían 20\,\%
-      más rápidos.
+      \textbf{Desarrolladores experimentados fueron 19\,\% más lentos} con
+      estas herramientas en un ensayo controlado, sintiéndose 20\,\% más
+      rápidos.
   \end{enumerate}}
-  \vspace{8pt}
+  \vspace{7pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=7pt, bottom=7pt]
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=6pt, bottom=6pt]
     {\footnotesize\color{arcaDark}\bfseries
-     Ninguno de los dos es razón para no usarlas. Los dos son razón para
-     \textbf{medir en vez de confiar en la sensación} --- que es exactamente
-     lo que venimos haciendo todo el diplomado.}
+     Ninguno es razón para no usarlas. Los dos son razón para \textbf{medir
+     en vez de confiar en la sensación} --- lo mismo que venimos haciendo
+     todo el diplomado.}
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=6]{Si Se Llevan Una Sola Cosa}
+\begin{frame}[shrink=5]{Si Se Llevan Una Sola Cosa}
   \vspace{6pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt, leftrule=4pt,
     arc=3pt, left=10pt, right=10pt, top=9pt, bottom=9pt]
     {\large\color{arcaDark}\bfseries
-     El agente escribe el código. Ustedes responden por el resultado.}\\[7pt]
+     El agente escribe el código. Ustedes responden por el resultado.}\\[6pt]
     {\footnotesize\color{textMuted}
-     Y eso no es una carga: es la razón por la que su criterio vale más ahora
-     que hace tres años. Escribir se volvió barato; saber si el resultado
-     tiene sentido, no.\\[6pt]
-     La habilidad que se llevan hoy no es «usar Gemini». Es
-     \textbf{especificar bien y verificar siempre} --- y eso sirve con
-     cualquier herramienta que salga el año que viene.}
+     Y eso no es una carga: es la razón por la que su criterio vale más
+     ahora que hace tres años. Escribir se volvió barato; saber si el
+     resultado tiene sentido, no.\\[5pt]
+     La habilidad de hoy no es «usar Gemini». Es \textbf{especificar bien y
+     verificar siempre} --- y sirve con cualquier herramienta que salga el
+     año que viene.}
   \end{tcolorbox}
-  \vspace{8pt}
+  \vspace{7pt}
   {\footnotesize\color{arcaDark}\itshape
-   Nadie en esta sala escribió una línea de código hoy. Y todos se van con una
-   aplicación funcionando.}
+   Nadie escribió una línea de código hoy. Y todos se van con una aplicación
+   funcionando y tres ejercicios resueltos por ustedes mismos.}
 \end{frame}
 
-\begin{frame}[shrink=6]{Lo Que Sigue}
-  \vspace{4pt}
+\begin{frame}[shrink=5]{Lo Que Sigue, y Su Proyecto}
+  \vspace{2pt}
   {\footnotesize\color{textMuted}
-  \begin{itemize}\setlength{\itemsep}{7pt}
+  \begin{itemize}\setlength{\itemsep}{5pt}
     \item[{\color{arcaRed}\faArrowCircleRight}]
-      \textbf{Clase 2 --- Que responda, y que no mienta.} Cómo se sirve un
-      modelo de verdad: qué entra, qué sale, qué pasa cuando le mandan un dato
-      raro. Y el error más caro de todos: el que funciona en el cuaderno y
-      falla en producción.
+      \textbf{Clase 2 --- Que responda, y que no mienta.} Servir un modelo
+      de verdad: qué entra, qué sale, y el error que funciona en el cuaderno
+      y falla en producción.
     \item[{\color{arcaRed}\faArrowCircleRight}]
-      \textbf{Clase 3 --- Los peligros, con nombre y apellido.}
-      Confidencialidad --- qué se puede pegar en un chat de IA y qué no ---,
-      librerías que el agente inventa, y código que corre y está mal.
+      \textbf{Clase 3 --- Los peligros, con nombre.} Qué se puede pegar en
+      un chat de IA y qué no, librerías inventadas, y código que corre y
+      está mal.
     \item[{\color{arcaRed}\faArrowCircleRight}]
-      \textbf{Clase 4 --- Su proyecto.} Cada uno con su problema y su
-      herramienta, presentada al grupo.
+      \textbf{Clase 4 --- Su proyecto,} presentado al grupo: su problema, su
+      app, sus prompts, y un error del agente que ustedes cazaron.
   \end{itemize}}
-  \vspace{8pt}
+  \vspace{6pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt, leftrule=3pt,
     arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
-    {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{4pt}TAREA PARA LA PRÓXIMA}\\[4pt]
+    {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{4pt}TAREA PARA LA PRÓXIMA}\\[3pt]
     {\scriptsize\color{textMuted}
-     Piensen en \textbf{un} problema de su trabajo donde hoy alguien pierde
-     tiempo con una hoja de cálculo. Ese es su proyecto. Tráiganlo escrito en
-     dos frases.}
+     Piensen en \textbf{un} problema de su trabajo donde alguien pierde
+     tiempo con una hoja de cálculo. Ese es su proyecto. Tráiganlo escrito
+     en dos frases: qué duele, y quién decidiría distinto con una
+     herramienta.}
   \end{tcolorbox}
 \end{frame}
 
@@ -1259,23 +1124,23 @@ CRITERIO DE ACEPTACIÓN:
   \begin{itemize}\setlength{\itemsep}{5pt}
     \item[{\color{arcaRed}\scriptsize\faChartBar}]
       \textbf{Adopción y confianza:} Stack Overflow Developer Survey y su
-      análisis de la brecha de confianza (2026); \emph{State of Code}, Sonar
-      (enero de 2026).
+      análisis de la brecha de confianza (2026); \emph{State of Code},
+      Sonar (enero de 2026).
     \item[{\color{arcaRed}\scriptsize\faChartBar}]
-      \textbf{Productividad medida:} ensayo controlado de \textbf{METR} con
-      desarrolladores experimentados; informes de adopción de agentes 2026.
+      \textbf{Productividad medida:} ensayo controlado de \textbf{METR};
+      informes de adopción de agentes 2026.
     \item[{\color{arcaRed}\scriptsize\faDatabase}]
-      \textbf{Datos:} \texttt{taxis}, \texttt{healthexp} y \texttt{flights},
-      de los conjuntos de práctica que trae \textbf{seaborn}. Se cargan con
-      una línea y no hay que bajar nada.
+      \textbf{Datos:} \texttt{taxis}, \texttt{mpg}, \texttt{car\_crashes} y
+      \texttt{diamonds}, de los conjuntos de práctica de \textbf{seaborn}.
+      Una línea y están cargados.
     \item[{\color{arcaRed}\scriptsize\faFileCode}]
-      Las figuras y \textbf{todas} las cifras de estas láminas salen de
-      \texttt{figuras.py}. Nada está escrito a mano.
+      Las figuras y las cifras de estas láminas salen de
+      \texttt{figuras.py}. Las soluciones de los ejercicios espejo
+      \textbf{no existen en ningún archivo}: se construyen en clase.
   \end{itemize}}
-  \vspace{7pt}
+  \vspace{6pt}
   {\scriptsize\color{arcaDark}\itshape
-   Como siempre: corren el script y tiene que dar exactamente lo mismo. Si no
-   da, es un error nuestro y queremos saberlo.}
+   Los logos pertenecen a sus marcas y se usan con fines educativos.}
 \end{frame}
 
 % ── GRACIAS ──────────────────────────────────────────────────────────────────

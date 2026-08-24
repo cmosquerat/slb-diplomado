@@ -2,12 +2,13 @@
 Machine Learning for Petroleum Engineers Using Python
 Modulo 7 - Clase 1: genera el cuaderno de la clase.
 
-Este script ESCRIBE el .ipynb. Se versiona en el repo a proposito: asi el
-cuaderno se puede editar aca y regenerar, en vez de tocar el JSON a mano.
+Este script ESCRIBE el .ipynb y queda versionado para poder regenerarlo.
 
-El cuaderno es GUIADO: cada ejercicio trae el prompt literal que el alumno
-copia y pega en el panel de Gemini de Colab, y una celda de referencia con
-el resultado esperado.
+El cuaderno tiene TRES DEMOS resueltas (con el prompt que se uso y el codigo
+que salio) y TRES EJERCICIOS ESPEJO en los que el alumno arma su propio
+prompt y dirige al agente. REGLA DE LA CLASE: las soluciones de los espejos
+NO existen en ningun archivo -- se construyen en vivo. Este generador la
+respeta: no hay ninguna respuesta de los espejos aca adentro.
 
 Uso:  python3 mknb.py
 """
@@ -20,8 +21,7 @@ celdas = []
 
 
 def _lineas(texto):
-    """En el .ipynb cada linea del source lleva su salto al final, menos la
-    ultima. Si se omite, todo el codigo queda pegado en un renglon."""
+    """Cada linea del source lleva su salto al final, menos la ultima."""
     ls = texto.strip("\n").split("\n")
     return [l + "\n" for l in ls[:-1]] + ls[-1:]
 
@@ -47,24 +47,19 @@ md(r"""
 
 ### Cómo se usa este cuaderno
 
-Este cuaderno es **guiado**. Cada ejercicio tiene tres partes:
+La clase alterna dos tipos de sección:
 
-1. 🤖 **Un prompt para copiar y pegar** en el panel de Gemini de Colab
-   (el ícono ✨ abajo a la derecha, o el botón *Gemini* arriba).
-2. ✍️ **Una celda vacía** donde pegan lo que el agente les devuelva.
-3. ✅ **Una celda de referencia** con una solución posible, para comparar.
+- 🎬 **DEMO** — un mini-proyecto resuelto, con el **prompt exacto** que se le
+  dio al agente y lo que salió. Ustedes lo corren y lo discutimos.
+- 🛠️ **ESPEJO** — el mismo tipo de problema, en **otro dataset**, y lo
+  resuelven **ustedes** dirigiendo al agente. Solo hay pistas y preguntas.
 
-> **No copien la referencia sin intentarlo antes.** La habilidad que se
-> llevan de esta clase no es tener el código: es saber pedirlo y saber
-> revisarlo.
+> ⚠️ **Los espejos no tienen solución escrita en ninguna parte** — ni en este
+> cuaderno, ni en el repositorio. Se construyen en clase, en vivo. Así que si
+> se atascan, la jugada correcta es preguntar, no buscar.
 
-### Lo que van a lograr hoy
-
-- Que sus gráficas se entiendan sin que ustedes las expliquen.
-- Dirigir a un agente con la precisión con la que le encargan un trabajo a
-  un contratista.
-- Detectar un error que el agente **no** va a detectar.
-- Y terminar con una aplicación funcionando, con su link.
+**El agente:** el panel de **Gemini** de Colab (el ícono ✨). A él le van a
+copiar los prompts.
 
 **No hace falta haber programado nunca.**
 """)
@@ -72,8 +67,7 @@ Este cuaderno es **guiado**. Cada ejercicio tiene tres partes:
 md(r"""
 ## 0 · Preparación
 
-Una sola celda. Todo esto ya viene instalado en Colab; solo lo estamos
-trayendo al cuaderno.
+Una sola celda. Todo viene instalado en Colab.
 """)
 
 code(r"""
@@ -82,7 +76,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ¿estamos en Colab? algunas celdas del final lo necesitan
+# ¿estamos en Colab? la parte de la app lo usa al final
 try:
     import google.colab          # noqa: F401
     EN_COLAB = True
@@ -92,63 +86,55 @@ except ImportError:
 print("listo. ¿en Colab?", EN_COLAB)
 """)
 
-# ================================================== PARTE 1 · GRAFICAS ======
 md(r"""
----
+## 0.1 · Las herramientas de hoy, en una frase cada una
 
-# Parte 1 · Que sus datos se vean como lo que valen
+| herramienta | qué es |
+|---|---|
+| **Colab** | el taller: un cuaderno de Python en el navegador, gratis |
+| **Gemini** | el contratista: el agente que vive dentro de Colab |
+| **pandas** | la mesa de trabajo: deja los datos en *tablas* manejables con código |
+| **seaborn** | el dibujante: gráficas con las decisiones de diseño ya tomadas — y trae los datos de práctica de hoy |
+| **Gradio** | la vitrina: convierte una función en una página web con un link |
 
-## 1.1 · Los datos de hoy
+## 0.2 · Los cuatro datos de hoy
 
-Vamos a trabajar con **viajes de taxi de Nueva York**. No son datos de
-petróleo a propósito: quiero que se vea que la habilidad no depende del tema.
-En el proyecto final cada uno trae los suyos.
+Todos vienen **dentro de seaborn**: una línea y están cargados.
 
-Seaborn trae varios conjuntos de práctica listos. Se cargan con una línea y
-no hay que descargar nada.
+| dataset | qué es | quién lo trabaja |
+|---|---|---|
+| `taxis` | 6.433 viajes de taxi de Nueva York | 🎬 las demos |
+| `mpg` | 398 vehículos, 1970–1982 | 🛠️ ustedes (espejo 1) |
+| `car_crashes` | accidentes viales en 51 estados | 🛠️ ustedes (espejo 2) |
+| `diamonds` | 53.940 diamantes con precio y medidas | 🛠️ ustedes (espejo 3) |
+
+A propósito ninguno es de petróleo: la habilidad es la misma en cualquier
+dominio, y el proyecto del módulo es con **su** dato.
 """)
 
 code(r"""
 taxis = sns.load_dataset("taxis")
 
-print(f"{len(taxis)} viajes")
-print(f"columnas: {list(taxis.columns)}")
-taxis.head()
-""")
-
-md(r"""
-Cada fila es un viaje. Las columnas que nos importan hoy:
-
-| columna | qué es |
-|---|---|
-| `pickup` / `dropoff` | fecha y hora de inicio y fin |
-| `distance` | distancia en millas |
-| `fare` / `tip` / `total` | tarifa, propina y total en dólares |
-| `payment` | `cash` (efectivo) o `credit card` (tarjeta) |
-| `pickup_borough` | barrio donde subió el pasajero |
-
-Lo primero, siempre: preparar las columnas de fecha para poder usarlas.
-""")
-
-code(r"""
-# pandas las lee como texto; hay que decirle que son fechas
+# preparamos las columnas de tiempo que van a usar las demos
 taxis["pickup"] = pd.to_datetime(taxis.pickup)
 taxis["dropoff"] = pd.to_datetime(taxis.dropoff)
+taxis["hora"] = taxis.pickup.dt.hour          # 0 a 23
+taxis["dia"] = taxis.pickup.dt.dayofweek      # 0 = lunes
 
-# y de ahí sacamos las piezas que vamos a usar
-taxis["hora"] = taxis.pickup.dt.hour           # 0 a 23
-taxis["dia"] = taxis.pickup.dt.dayofweek       # 0 = lunes
-taxis["minutos"] = (taxis.dropoff - taxis.pickup).dt.total_seconds() / 60
-
-print(f"desde {taxis.pickup.min()} hasta {taxis.pickup.max()}")
-print(f"duración mediana de un viaje: {taxis.minutos.median():.0f} minutos")
-print(f"tarifa mediana: USD {taxis.total.median():.2f}")
+print(f"{len(taxis)} viajes, de {taxis.pickup.min().date()} "
+      f"a {taxis.pickup.max().date()}")
+taxis.head(3)
 """)
 
+# ================================================== DEMO 1 ==================
 md(r"""
-## 1.2 · La gráfica que sale por defecto
+---
 
-Preguntemos algo simple: **¿a qué hora hay más demanda de taxis?**
+# 🎬 Demo 1 · Una gráfica que no hay que explicar
+
+**La pregunta:** ¿a qué hora del día hay más demanda de taxis?
+
+Primero, lo que sale sin pensar:
 """)
 
 code(r"""
@@ -159,194 +145,95 @@ plt.show()
 """)
 
 md(r"""
-Funciona. Los números están bien. Y sin embargo, si esto aparece en una
-reunión, alguien va a preguntar «¿qué estoy viendo?».
+Correcta y muda: no dice qué son los ejes, usa una línea para categorías, y
+**no dice cuál es la respuesta**.
 
-**Miren todo lo que le falta:**
-
-- No dice qué son los ejes ni en qué unidades.
-- No tiene título.
-- Usa una línea, que sugiere continuidad — pero las horas del día son
-  categorías separadas, no una serie continua.
-- Y sobre todo: **no dice cuál es la respuesta**. Hay que buscarla con el ojo.
-
-> Un gráfico que hay que explicar hablando es un gráfico que falló. Es lo
-> único que la mayoría de la gente va a ver de todo su trabajo.
-
-## 1.3 · 🤖 Su primer encargo al agente
-
-Abran el panel de Gemini y peguen esto **tal cual**. Fíjense en que no dice
-«hazme un gráfico bonito»: dice qué quiero saber, con qué datos, con qué
-restricciones y cómo sabremos que quedó bien.
+### El encargo que le di al agente
 
 ```
 Tengo un DataFrame `taxis` de seaborn con viajes de taxi de Nueva York.
 Columnas: pickup y dropoff (fecha y hora, ya convertidas), distance, fare,
-tip, total, payment, pickup_zone, pickup_borough. Ya calculé las columnas
-hora (0-23) y dia (0=lunes).
+tip, total, payment, pickup_zone, pickup_borough. Ya calculé hora (0-23)
+y dia (0=lunes).
 
 OBJETIVO: quiero saber a qué hora del día hay más demanda de taxis.
 
 RESTRICCIONES:
 - usa seaborn
-- el gráfico va en un reporte para gerencia: tiene que entenderse sin que
-  yo lo explique
+- va en un reporte para gerencia: tiene que entenderse sin que yo lo explique
 - ejes con nombre y unidades, en español
 
 CRITERIO DE ACEPTACIÓN:
-- la hora pico tiene que estar marcada y ser legible de un vistazo
+- la hora pico marcada y legible de un vistazo
 - avísame si hay horas sin ningún viaje registrado
 ```
-""")
 
-md(r"""
-### ✍️ Peguen aquí lo que les devolvió el agente
-""")
-
-code(r"""
-# pega aquí el código del agente y ejecútalo
-""")
-
-md(r"""
-### ✅ Una solución posible
-
-No es *la* respuesta correcta — es una de muchas. Compárenla con la suya y
-fíjense en las **cinco decisiones** que la separan de la primera gráfica.
+Fíjense dónde está cada uno de los **cuatro fundamentos**: objetivo,
+contexto, restricciones, criterio de aceptación. Y lo que salió:
 """)
 
 code(r"""
 def grafico_demanda(datos, titulo="Demanda de taxis por hora del día"):
-    '''Grafica cuantos viajes empiezan en cada hora del dia.
-
-    Devuelve la figura, para poder reutilizarla despues en la app.
-    '''
-    por_hora = datos.groupby("hora").size()
-    # 1. las horas sin viajes existen aunque no aparezcan en el groupby
-    por_hora = por_hora.reindex(range(24), fill_value=0)
+    '''Lo que devolvio el agente para la demo 1 (ligeramente ordenado).'''
+    por_hora = datos.groupby("hora").size().reindex(range(24), fill_value=0)
 
     fig, ax = plt.subplots(figsize=(9, 4))
     pico = int(por_hora.idxmax())
 
-    # 2. barras, no linea: las horas son categorias
-    # 3. un solo color con sentido: gris todo, rojo lo que importa
     colores = ["#C82B40" if h == pico else "#D8DAE0" for h in por_hora.index]
     ax.bar(por_hora.index, por_hora.values, color=colores)
-
-    # 4. los ejes dicen que son, en el idioma del que lee
     ax.set_xlabel("hora del día")
     ax.set_ylabel("cantidad de viajes")
     ax.set_xticks(range(0, 24, 2))
     ax.set_title(titulo, loc="left", fontweight="bold")
-
-    # 5. el hallazgo, escrito sobre la figura
     ax.annotate(f"hora pico: {pico}h  ({por_hora.max()} viajes)",
                 xy=(pico, por_hora.max()),
                 xytext=(pico - 9, por_hora.max() * 0.92),
                 color="#C82B40", fontweight="bold",
                 arrowprops=dict(arrowstyle="->", color="#C82B40"))
-
     sns.despine(ax=ax)
-    return fig, pico, int(por_hora.max()), int((por_hora == 0).sum())
+
+    sin_viajes = int((por_hora == 0).sum())
+    if sin_viajes:
+        print(f"aviso: {sin_viajes} horas sin ningún viaje registrado")
+    return fig
 
 
-fig, pico, n_pico, horas_vacias = grafico_demanda(taxis)
+fig = grafico_demanda(taxis)
 plt.show()
-
-print(f"hora pico: {pico}h con {n_pico} viajes")
-print(f"horas sin ningún viaje: {horas_vacias}")
 """)
 
 md(r"""
-### Las cinco decisiones
-
-Ninguna es programación. Las cinco son **criterio de comunicación**, y por
-eso las tienen que decidir ustedes:
+### Las cinco decisiones que separan las dos gráficas
 
 1. **Barras en vez de línea** — las horas son categorías, no un continuo.
-2. **Un solo color con sentido** — gris todo, rojo lo que importa. El color
-   señala, no decora.
-3. **Ejes con nombre** en el idioma del que lee.
-4. **El hallazgo escrito sobre la figura** — si la conclusión es «el pico es
-   a las 18h», eso va en la imagen, no en la boca del que presenta.
-5. **Se quitó lo que sobra** — sin marco, sin cuadrícula de más.
+2. **Un solo color con sentido** — gris todo, rojo lo que importa.
+3. **Ejes con nombre**, en el idioma del que lee.
+4. **El hallazgo escrito sobre la figura** — no en la boca del presentador.
+5. **Se quitó lo que sobra.**
 
-## 1.4 · La misma habilidad, otro problema
-
-Para que quede claro que esto no es «un truco para datos de taxis», la misma
-receta sobre otro dominio completamente distinto: **gasto en salud contra
-expectativa de vida**, por país.
+Ninguna es programación. Las cinco son **criterio de comunicación** — por eso
+las deciden ustedes, no el agente.
 """)
 
-code(r"""
-salud = sns.load_dataset("healthexp")
-print(f"{len(salud)} filas | {salud.Country.nunique()} países | "
-      f"{salud.Year.min()}-{salud.Year.max()}")
-
-ultimo = salud[salud.Year == salud.Year.max()]
-
-fig, ax = plt.subplots(figsize=(8, 4.2))
-ax.scatter(ultimo.Spending_USD / 1000, ultimo.Life_Expectancy,
-           s=90, color="#16A34A", alpha=.85)
-for _, r in ultimo.iterrows():
-    ax.annotate(r.Country, (r.Spending_USD / 1000, r.Life_Expectancy),
-                xytext=(5, 4), textcoords="offset points", fontsize=9)
-ax.set_xlabel("gasto en salud por persona [miles de USD al año]")
-ax.set_ylabel("expectativa de vida [años]")
-ax.set_title(f"¿El gasto se traduce en resultado?  ({salud.Year.max()})",
-             loc="left", fontweight="bold")
-sns.despine(ax=ax)
-plt.show()
-""")
-
-md(r"""
-Misma técnica, pregunta de gestión presupuestal. Un país gasta bastante más
-que los demás y no vive más — y esa conclusión salta sola de la figura.
-
-**Ese es el punto de todo el módulo:** la habilidad de construir herramientas
-sobre datos es la misma, sea producción de un campo, viajes de un taxi, o
-presupuesto de un área.
-""")
-
-# ============================================ PARTE 2 · LOS FUNDAMENTOS =====
+# ================================================== ESPEJO 1 ================
 md(r"""
 ---
 
-# Parte 2 · Cómo se le pide bien a un agente
+# 🛠️ Espejo 1 · La flota  *(12 min)*
 
-## 2.1 · Tres cosas distintas que la gente llama «la IA»
+> **SU ENCARGO:** la gerencia de flota pregunta — **¿los vehículos mejoraron
+> su consumo entre 1970 y 1982, y cuánto?**
 
-| | qué hace | quién ve el resultado |
-|---|---|---|
-| **Autocompletado** | sugiere el final de la línea que escribes | tú |
-| **Asistente** | le preguntas, te contesta con código para copiar | tú lo corres |
-| **Agente** | escribe, **ejecuta**, **mira el error** y **corrige solo** | él mismo, y repite |
+Columnas que les sirven: `mpg` (millas por galón — **más es mejor**),
+`model_year`, `origin`, `weight`.
 
-> La diferencia no es que el agente adivine mejor: es que **itera**. Y por
-> eso, cuando se equivoca, se equivoca con más convicción — ya probó, ya
-> corrigió, y te entrega algo que *corre*.
-
-## 2.2 · Los cuatro fundamentos
-
-No son trucos de *prompt*. Son las cuatro cosas que uno le dice a cualquiera
-a quien le encarga un trabajo:
-
-| | qué es | ejemplo malo | ejemplo bueno |
-|---|---|---|---|
-| **Objetivo** | qué quiero *saber* (no qué gráfico quiero) | «hazme un gráfico» | «quiero saber a qué hora hay más demanda» |
-| **Contexto** | qué datos hay, cómo se llaman, en qué unidades, para quién es | — | «DataFrame `taxis`, columna `hora` de 0 a 23, es para gerencia» |
-| **Restricciones** | qué usar, qué no hacer, en qué idioma | — | «usa seaborn, en español, sin colores rojo-verde» |
-| **Criterio de aceptación** | **cómo sabemos que quedó bien** | — | «la hora pico marcada, y avísame si faltan datos» |
-
-El cuarto es el que casi nadie escribe y el que más cambia el resultado. Es
-el que convierte un pedido en un **encargo de ingeniería**.
-
-## 2.3 · La plantilla que se llevan
-
-Guárdenla. Sirve para pedir una gráfica, un análisis o una aplicación entera:
+**Armen su propio prompt** con los cuatro fundamentos y páselo al panel de
+Gemini. Esta plantilla es la que se llevan del curso:
 
 ```
 CONTEXTO: tengo [qué datos], con columnas [cuáles] en [qué unidades].
-Es para [quién / qué reunión].
+Es para [quién].
 
 OBJETIVO: quiero responder [qué pregunta].
 
@@ -359,49 +246,68 @@ CRITERIO DE ACEPTACIÓN:
 - [qué tiene que verse o cumplirse]
 - avísame si [qué problema podría tener el dato]
 ```
-
-Ese último renglón —«avísame si...»— es el que convierte al agente en un
-aliado para **encontrar** problemas, en vez de en alguien que los tapa.
-
-## 2.4 · 🤖 Segundo encargo: una pregunta de operación
-
-Ahora una pregunta que un jefe de operaciones hace de verdad:
-**¿cuándo conviene tener más gente en la calle?**
-
-```
-CONTEXTO: el mismo DataFrame `taxis`. Ya tiene las columnas hora (0-23) y
-dia (0=lunes ... 6=domingo).
-
-OBJETIVO: saber en qué combinaciones de día de la semana y hora se concentra
-la demanda, para decidir turnos de conductores.
-
-RESTRICCIONES:
-- un mapa de calor con seaborn: días en las filas, horas en las columnas
-- los días en español y en orden de lunes a domingo
-- no uses una escala de color rojo-verde (hay daltónicos en la sala)
-
-CRITERIO DE ACEPTACIÓN:
-- que yo pueda señalar con el dedo el momento de más demanda
-- dime cuál es ese momento y cuántos viajes tiene
-```
-""")
-
-md(r"""
-### ✍️ Peguen aquí lo que les devolvió el agente
 """)
 
 code(r"""
-# pega aquí el código del agente y ejecútalo
+# los datos de SU ejercicio
+mpg = sns.load_dataset("mpg")
+print(f"{len(mpg)} vehículos")
+mpg.head(3)
+""")
+
+code(r"""
+# ✍️ peguen aquí lo que les devuelva el agente, y córranlo
 """)
 
 md(r"""
-### ✅ Una solución posible
+**Cómo saber si van bien** (preguntas, no respuestas):
+
+- ¿Su gráfica se entiende sin que ustedes hablen?
+- ¿El hallazgo está *escrito* en la figura, con número?
+- Este dataset tiene **valores faltantes** en una columna. ¿El agente les
+  avisó, o se los tragó sin decir nada? *(si no avisó: ¿qué le faltó a su
+  criterio de aceptación?)*
+
+⏸️ **Aquí paramos y lo armamos juntos antes de seguir.**
+""")
+
+# ================================================== DEMO 2 ==================
+md(r"""
+---
+
+# 🎬 Demo 2 · Una pregunta de operación
+
+**La pregunta:** ¿cuándo conviene tener más gente en la calle? — la pregunta
+de cualquier jefe de operaciones, y no se responde con una gráfica de una
+sola variable.
+
+### El encargo que le di
+
+```
+CONTEXTO: el mismo DataFrame `taxis`. Ya tiene hora (0-23) y
+dia (0=lunes ... 6=domingo).
+
+OBJETIVO: saber en qué combinaciones de día y hora se concentra la
+demanda, para decidir turnos.
+
+RESTRICCIONES:
+- un mapa de calor con seaborn: días en filas, horas en columnas
+- días en español, en orden de lunes a domingo
+- nada de escalas rojo-verde (hay daltónicos en la sala)
+
+CRITERIO DE ACEPTACIÓN:
+- que se pueda señalar con el dedo el peor momento
+- dime cuál es y cuántos viajes tiene
+```
+
+La restricción del rojo-verde no es estética: es que el gráfico lo pueda leer
+**toda** la sala. Ese tipo de restricción solo la pone quien conoce a su
+público. Lo que salió:
 """)
 
 code(r"""
 DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 
-# una fila por dia, una columna por hora, el valor es cuantos viajes hubo
 tabla = (taxis.groupby(["dia", "hora"]).size()
          .unstack(fill_value=0)
          .reindex(index=range(7), columns=range(24), fill_value=0))
@@ -416,41 +322,70 @@ ax.set_title("¿Cuándo conviene tener más gente en la calle?",
              loc="left", fontweight="bold")
 plt.show()
 
-# el momento de mas demanda
 d, h = np.unravel_index(np.argmax(tabla.values), tabla.shape)
 print(f"momento de más demanda: {DIAS[d]} a las {tabla.columns[h]}h "
-      f"con {tabla.values.max()} viajes")
+      f"({tabla.values.max()} viajes)")
 """)
 
-md(r"""
-Con eso ya se puede decidir un turno. Y noten quién tomó la decisión: **el
-agente hizo el gráfico, pero la pregunta la hicieron ustedes** — y la pregunta
-es la que vale.
-""")
-
-# ============================================== PARTE 3 · VERIFICAR =========
+# ================================================== ESPEJO 2 ================
 md(r"""
 ---
 
-# Parte 3 · La parte incómoda: dónde falla
+# 🛠️ Espejo 2 · Seguridad vial  *(12 min)*
 
-Hasta acá todo salió bien, y esa es justamente la trampa. Un agente que
-acierta noventa veces genera confianza — y a la noventa y una hace algo que
-*parece* igual de bueno y está mal.
+> **SU ENCARGO:** el área de seguridad pregunta — **¿los accidentes van de la
+> mano del alcohol? ¿Y en qué estados habría que priorizar una campaña?**
 
-## 3.1 · Una pregunta perfectamente razonable
+Columnas que les sirven: `total` (accidentados por cada 100 millones de
+millas conducidas), `alcohol`, `speeding`, `abbrev` (el estado).
+
+Su prompt, con los cuatro fundamentos. Pista de diseño: comparar dos
+variables pide un tipo de gráfico; señalar estados prioritarios pide otra
+cosa encima — y ambas se le pueden pedir al agente en el mismo encargo.
+""")
+
+code(r"""
+# los datos de SU ejercicio
+crashes = sns.load_dataset("car_crashes")
+print(f"{len(crashes)} estados")
+crashes.head(3)
+""")
+
+code(r"""
+# ✍️ peguen aquí lo que les devuelva el agente, y córranlo
+""")
+
+md(r"""
+**Cómo saber si van bien:**
+
+- ¿La relación entre alcohol y accidentes *se ve*, o hay que creerla de
+  palabra?
+- ¿Pueden señalar con el dedo **tres estados** para la campaña, y defender
+  por qué esos?
+- Pregunta brava: que dos cosas vayan juntas, ¿prueba que una **causa** la
+  otra? ¿Qué le contestarían al gerente que lo afirme?
+
+⏸️ **Paramos y lo discutimos.**
+""")
+
+# ================================================== DEMO 3 ==================
+md(r"""
+---
+
+# 🎬 Demo 3 · Donde el agente falla con confianza
+
+Hasta acá todo salió bien — y esa es justamente la trampa. Una pregunta
+perfectamente razonable sobre los mismos taxis:
 
 > **¿Los pasajeros que pagan en efectivo dejan menos propina que los que
 > pagan con tarjeta?**
 
-Es el tipo de pregunta que se hace para decidir una política de medios de
-pago, y tiene consecuencias en dinero. El agente la responde en veinte
-segundos, con un gráfico impecable. Hagámoslo nosotros:
+Es el tipo de pregunta con la que se decide una política de medios de pago.
+El agente la responde en veinte segundos, con un gráfico impecable:
 """)
 
 code(r"""
 propinas = taxis.groupby("payment").tip.mean()
-print(propinas.round(2).to_string())
 
 fig, ax = plt.subplots(figsize=(6, 3.6))
 ax.bar(["Efectivo", "Tarjeta"],
@@ -466,204 +401,126 @@ plt.show()
 """)
 
 md(r"""
-El cálculo está bien. El gráfico está bien. Y la conclusión obvia —**«quien
-paga en efectivo nunca deja propina»**— es **falsa**.
-
-## 3.2 · Miren el número exacto
-
-Antes de seguir, cuenten. En datos reales, nada es exactamente cero por
-casualidad.
+La conclusión obvia — *«quien paga en efectivo nunca deja propina»* — es
+**falsa**. Cuenten antes de creer:
 """)
 
 code(r"""
 efectivo = taxis[taxis.payment == "cash"]
-tarjeta = taxis[taxis.payment == "credit card"]
 
-print(f"viajes en efectivo:                    {len(efectivo)}")
-print(f"de esos, con propina mayor que cero:   {(efectivo.tip > 0).sum()}")
-print()
-print(f"viajes con tarjeta:                    {len(tarjeta)}")
-print(f"de esos, con propina mayor que cero:   {(tarjeta.tip > 0).sum()}")
+print(f"viajes en efectivo:                  {len(efectivo)}")
+print(f"de esos, con propina mayor que cero: {(efectivo.tip > 0).sum()}")
 """)
 
 md(r"""
-## 3.3 · Un cero que no es un cero
+**Exactamente cero.** Ese número perfecto es la pista: en datos reales, nada
+es exactamente cero por casualidad.
 
-De **1.812** viajes en efectivo, los que tienen propina son **exactamente
-cero**. No tres, no cincuenta: cero. Ese número perfecto es la pista.
+> El taxímetro **solo registra la propina cuando va en la tarjeta**. La de
+> efectivo va al bolsillo del conductor y nunca entra al sistema. La columna
+> no dice «no dejó propina»: dice **«no tengo ese dato»**.
 
-> **El taxímetro solo registra la propina cuando va en la tarjeta.** La
-> propina en efectivo va directo al bolsillo del conductor y nunca entra al
-> sistema.
-
-La columna no dice «no dejó propina». Dice **«no tengo ese dato»**. Y si
-alguien decide con eso —por ejemplo, empujar el pago con tarjeta para
-«recuperar» propinas— está tomando una decisión de negocio sobre una
-**ausencia de datos**.
-
-### Esto ya lo vivieron
-
-Es el mismo problema del módulo del agua: campos que aparecían con **cero
-agua producida** durante veinticinco años. No es que no produjeran agua — es
-que el regulador no la empezó a exigir hasta el año 2000.
-
-Distinto dominio, distinto dato, distinto país, **el mismo error**. Y en los
-dos casos lo que lo detectó no fue una técnica: fue alguien que conocía el
+**Esto ya lo vivieron:** es el mismo error del módulo del agua — campos con
+cero agua producida durante veinticinco años, porque el regulador no la
+exigía hasta el año 2000. Distinto dominio, distinto país, **el mismo
+error**. Y lo que lo detectó no fue una técnica: fue alguien que conocía el
 negocio y dijo *«esto no puede ser»*.
 
-**El agente no tiene esa alarma. Ustedes sí.**
-
-## 3.4 · 🤖 Tercer encargo: pónganle trampas al dato
-
-Ahora usen al agente para lo contrario: para **buscar** problemas en vez de
-taparlos. Este prompt vale por toda la clase — guárdenlo y córranlo con cada
-dataset nuevo, **antes** de cualquier análisis.
+### El encargo que convierte esa alarma en método
 
 ```
-CONTEXTO: DataFrame `taxis` de seaborn, con viajes de taxi.
-
-OBJETIVO: quiero saber si estos datos tienen algún problema ANTES de sacar
-conclusiones.
-
-Hazme una revisión de calidad que incluya:
-- filas totales, y cuántas tienen algún dato faltante
-- para cada columna numérica: mínimo, máximo, y cuántos valores son
-  exactamente cero
-- si alguna combinación de categorías tiene SIEMPRE el mismo valor (eso
-  suele ser un artefacto del sistema que registra, no un hecho real)
-
-CRITERIO DE ACEPTACIÓN:
-- una tabla que yo pueda leer en 30 segundos
-- y una lista de las cosas que te parecen raras, aunque no estés seguro
+Antes de concluir nada de `taxis`: revisión de calidad. Filas totales y
+faltantes; mínimo/máximo/ceros por columna numérica; y DIME si algún grupo
+tiene SIEMPRE el mismo valor (suele ser artefacto del registro). Lista lo
+que te parezca raro, aunque no estés seguro.
 ```
+
+Guárdenlo: se corre con **cada dataset nuevo, antes de cualquier análisis**.
+
+### La lista de verificación (para todo lo que devuelva un agente)
+
+1. ¿Cuántas filas entraron y cuántas salieron?
+2. ¿Hay ceros, vacíos o números redondos sospechosos?
+3. ¿El resultado tiene sentido físico o de negocio?
+4. ¿Qué decisión se toma con esto, y qué pasa si está mal?
+
+Ninguna exige saber programar. Las cuatro exigen saber del negocio.
 """)
 
-md(r"""
-### ✍️ Peguen aquí lo que les devolvió el agente
-""")
-
-code(r"""
-# pega aquí el código del agente y ejecútalo
-""")
-
-md(r"""
-### ✅ Una revisión de calidad mínima
-""")
-
-code(r"""
-def revisar(df):
-    '''Revision de calidad rapida: lo minimo antes de analizar nada.'''
-    print(f"filas: {len(df)}   columnas: {df.shape[1]}")
-
-    faltantes = df.isna().sum()
-    faltantes = faltantes[faltantes > 0]
-    if len(faltantes):
-        print(f"\ncolumnas con datos faltantes:\n{faltantes.to_string()}")
-    else:
-        print("\nsin datos faltantes")
-
-    print("\nnuméricas — mínimo, máximo y cuántos ceros exactos:")
-    num = df.select_dtypes("number")
-    resumen = pd.DataFrame({
-        "min": num.min(), "max": num.max(),
-        "ceros": (num == 0).sum(),
-        "% ceros": (100 * (num == 0).mean()).round(1)})
-    print(resumen.to_string())
-
-    # la prueba que encuentra el artefacto: ¿algun grupo es SIEMPRE cero?
-    print("\nsospechas:")
-    hubo = False
-    for cat in df.select_dtypes(["object", "category"]).columns:
-        if df[cat].nunique() > 12:
-            continue
-        for n in num.columns:
-            g = df.groupby(cat, observed=True)[n].apply(lambda s: (s == 0).mean())
-            for valor, frac in g.items():
-                if frac == 1.0:
-                    print(f"  · TODOS los '{valor}' tienen {n} = 0 "
-                          f"({(df[cat] == valor).sum()} filas). "
-                          f"¿de verdad es cero, o no se registra?")
-                    hubo = True
-    if not hubo:
-        print("  ninguna")
-
-
-revisar(taxis)
-""")
-
-md(r"""
-Eso es lo que el agente debería haber hecho **antes** de responder sobre las
-propinas. Fíjense en la última sección: la prueba de «¿algún grupo es siempre
-cero?» es la que destapa el artefacto sin que uno sepa de antemano qué buscar.
-
-## 3.5 · La lista de verificación
-
-Cuatro preguntas para cualquier resultado que devuelva un agente. Toman dos
-minutos y evitan la mayoría de los desastres:
-
-1. **¿Cuántas filas entraron y cuántas salieron?** Si descartó la mitad de
-   los datos sin avisar, todo lo demás sobra.
-2. **¿Hay ceros, vacíos o números redondos sospechosos?** Un cero perfecto
-   casi siempre es una ausencia disfrazada.
-3. **¿El resultado tiene sentido físico o de negocio?** Si dice que un pozo
-   produce más que el campo entero, no hace falta revisar el código.
-4. **¿Qué decisión se tomaría con esto, y qué pasa si está mal?** Si la
-   respuesta es «nada grave», sigan. Si no, verifiquen a mano.
-
-> Ninguna de las cuatro exige saber programar. Las cuatro exigen saber del
-> negocio — que es exactamente lo que ustedes traen.
-""")
-
-# ================================================ PARTE 4 · LA APP ==========
+# ================================================== ESPEJO 3 ================
 md(r"""
 ---
 
-# Parte 4 · De la gráfica a una herramienta
+# 🛠️ Espejo 3 · Los diamantes  *(12 min)*
+
+> **SU ENCARGO:** van a analizar precios de diamantes... pero todavía no.
+> Primero **córranle su revisión de calidad**. Este dataset esconde **al
+> menos un valor físicamente imposible** — y más de uno.
+
+Columnas: `carat` (quilates), `cut` (calidad del corte), `price` [USD], y
+`x`, `y`, `z` — las **dimensiones físicas de la piedra, en milímetros**.
+""")
+
+code(r"""
+# los datos de SU ejercicio
+diamonds = sns.load_dataset("diamonds")
+print(f"{len(diamonds)} diamantes")
+diamonds.head(3)
+""")
+
+code(r"""
+# ✍️ peguen aquí la revisión de calidad que les devuelva el agente
+""")
+
+md(r"""
+**Cómo saber si van bien:**
+
+- ¿Qué significa físicamente que una dimensión valga **cero**? ¿Cuántas
+  filas así encontraron?
+- Miren el **máximo** de cada dimensión. ¿Un diamante de ese tamaño es
+  creíble, o es un error de captura? *(pista: un quilate típico mide unos
+  6 mm de diámetro)*
+- ¿Qué harían con esas filas — borrarlas, corregirlas, preguntar? ¿Y qué le
+  dirían al dueño del dato?
+
+⏸️ **Paramos: cada grupo dice qué encontró y qué haría.**
+""")
+
+# ================================================== PARTE 4 · LA APP ========
+md(r"""
+---
+
+# 🎬 Demo 4 · De la gráfica a una herramienta
 
 Mientras el análisis viva en una celda, cada vez que alguien quiera ver otra
 cosa **tiene que llamarlos**. Una app se la mandan y se acabó.
 
-## 4.1 · Qué es Gradio
+**Gradio** convierte una función de Python en una página web con controles, y
+en Colab genera un **link público** para compartir.
 
-Una librería que convierte una función de Python en una página web con
-controles. Uno le dice *«esta función recibe un día y devuelve un gráfico»* y
-Gradio arma la interfaz sola. No hay que saber nada de páginas web.
+> ⚠️ El link vive **mientras el cuaderno esté corriendo**. Perfecto para una
+> reunión; no es un sistema permanente.
 
-En Colab hace además algo muy útil: genera un **link público** que se le
-puede mandar a cualquiera.
-
-> ⚠️ **Lo que hay que saber del link:** funciona **mientras el cuaderno esté
-> corriendo**. Si cierran Colab o se desconecta la sesión, el link deja de
-> responder. Sirve perfecto para mostrar algo en una reunión; no sirve como
-> sistema permanente. Cómo se hace permanente lo vemos más adelante.
-
-## 4.2 · La app más chica que sirve
-
-Tres piezas: la **función** que hace el trabajo, los **controles** de entrada
-y salida, y `launch(share=True)` que publica el link.
+La app más chica que sirve — la función de la Demo 1, con un control:
 """)
 
 code(r"""
-# preparamos una columna con el nombre del día, para el control
 taxis["dia_nombre"] = taxis.dia.map(dict(enumerate(DIAS)))
 
 
 def ver_demanda(dia_elegido):
-    '''Recibe el nombre de un dia y devuelve el grafico de ese dia.'''
     datos = taxis[taxis.dia_nombre == dia_elegido]
-    fig, pico, n, _ = grafico_demanda(
-        datos, titulo=f"Demanda de taxis · {dia_elegido}")
-    return fig
+    return grafico_demanda(datos, titulo=f"Demanda de taxis · {dia_elegido}")
 
 
-# probamos la función sola, antes de montar la app
+# probamos la funcion sola, antes de montar nada
 _ = ver_demanda("viernes")
 plt.show()
 """)
 
 code(r"""
-# En Colab esta celda abre el link publico. Fuera de Colab solo construye
-# la interfaz, para poder verificar que el cuaderno corre entero.
+# En Colab esta celda publica el link. Fuera de Colab solo construye la
+# interfaz (para poder verificar que el cuaderno corre entero).
 try:
     import gradio as gr
 
@@ -675,72 +532,48 @@ try:
         description="Elija un día para ver en qué horas se concentran los viajes.")
 
     if EN_COLAB:
-        demo.launch(share=True)      # <- acá aparece el link público
+        demo.launch(share=True)      # <- aquí aparece el link público
     else:
-        print("interfaz construida. En Colab, esta celda abre el link.")
+        print("interfaz construida; en Colab esta celda abre el link")
 except ImportError:
-    print("gradio no está instalado en este entorno.")
-    print("En Colab ya viene listo; si hiciera falta: !pip install gradio")
+    print("gradio no está en este entorno. En Colab ya viene listo;")
+    print("si hiciera falta:  !pip install gradio")
 """)
 
+# ================================================== SU TURNO FINAL ==========
 md(r"""
-## 4.3 · 🤖 Su turno: construyan la herramienta
+---
 
-Ahora ustedes. La app de arriba solo deja elegir el día; falta que sirva de
-verdad.
+# 🛠️ Su turno final · La app de SU dato  *(18 min)*
 
-```
-CONTEXTO: en este cuaderno ya tengo el DataFrame `taxis` cargado, la función
-grafico_demanda(datos, titulo) que devuelve la figura, y una app de Gradio
-mínima que solo deja elegir el día.
+> **SU ENCARGO:** elijan **uno** de sus tres datasets (`mpg`, `crashes` o
+> `diamonds`) y conviertan su análisis en una **app de Gradio con link**,
+> para alguien que decide.
+>
+> La app debe tener **al menos dos controles** (qué filtrar o comparar — lo
+> deciden ustedes), mostrar **una gráfica que se entienda sola**, y **no
+> caerse** si la combinación elegida no tiene datos.
 
-OBJETIVO: convertirla en una app que pueda mandarle por link al jefe de
-operaciones.
-
-La app tiene que dejarle elegir:
-- el día de la semana
-- el barrio de origen (columna pickup_borough)
-
-y mostrarle el gráfico de demanda por hora para esa combinación, más una
-línea de texto que diga cuál es la hora pico y cuántos viajes tiene.
-
-RESTRICCIONES:
-- usa gradio, con launch(share=True)
-- todo en español
-- si la combinación elegida no tiene datos, que lo diga con un mensaje
-  claro en vez de fallar
-
-CRITERIO DE ACEPTACIÓN:
-- me tiene que dar un link que yo pueda abrir
-- y no se puede caer si elijo un barrio sin viajes
-```
-
-**Antes de pegarlo:** fíjense en el último renglón del criterio de
-aceptación. Ese es el que evita la llamada del jefe diciendo «se me rompió».
-""")
-
-md(r"""
-### ✍️ Peguen aquí su app
+Armen el prompt con los cuatro fundamentos. El caso «sin datos» va en el
+**criterio de aceptación** — ese renglón es el que evita la llamada del jefe
+diciendo «se me rompió».
 """)
 
 code(r"""
-# pega aquí el código del agente y ejecútalo
+# ✍️ peguen aquí su app, y córranla
 """)
 
 md(r"""
-### Cómo revisarla antes de mandar el link
+**Antes de mandar el link, rómpanlo ustedes primero:**
 
-Prueben ustedes mismos lo que va a hacer el que la reciba:
+- Elijan la combinación más rara que permitan sus controles. ¿Sobrevive?
+- ¿El texto que muestra coincide con lo que muestra la gráfica?
+- ¿Se lo mandarían a su jefe tal como está? Si dudan — ¿qué le falta?
 
-- Elijan un barrio con pocos viajes. ¿Se cae o avisa?
-- ¿El texto de la hora pico coincide con lo que muestra el gráfico?
-- ¿Se entiende sin que ustedes estén al lado explicando?
-
-> Es la misma revisión que le harían a un contratista antes de firmarle el
-> acta. Si sale mal, la firma es de ustedes — el agente no va a la reunión.
+⏸️ **Cierre: tres voluntarios abren su link en el proyector.**
 """)
 
-# ================================================ CIERRE Y PROYECTO =========
+# ================================================== CIERRE ==================
 md(r"""
 ---
 
@@ -751,69 +584,46 @@ md(r"""
 | Lo que vimos | Lo que decidimos |
 |---|---|
 | La gráfica por defecto no comunica | Cinco decisiones de diseño, siempre las mismas |
-| El agente responde según cómo se le pida | Usar los **cuatro fundamentos** en cada encargo |
+| El agente responde según cómo se le pida | Los **cuatro fundamentos** en cada encargo |
 | El criterio de aceptación casi nunca se escribe | Escribirlo siempre — es lo que más cambia el resultado |
-| 1.812 viajes en efectivo y **cero** propinas | Desconfiar de todo cero perfecto: revisar antes de concluir |
-| El agente no dio ninguna señal de alarma | **Verificar siempre**, con la lista de cuatro preguntas |
-| Un análisis en una celda no lo puede usar nadie más | Convertirlo en app con link |
+| 1.812 viajes en efectivo y **cero** propinas | Desconfiar de todo cero perfecto |
+| El agente no dio ninguna señal de alarma | **Verificar siempre**: las cuatro preguntas |
+| Un análisis en una celda no lo usa nadie más | Convertirlo en app con link |
 
 ## Los dos resultados negativos de hoy
 
-1. **El agente entregó un análisis correcto con una conclusión falsa**, y no
-   dio ninguna señal de alarma. El código estaba bien; el dato mentía.
+1. **El agente entregó un análisis correcto con una conclusión falsa**, sin
+   ninguna señal de alarma. El código estaba bien; el dato mentía.
 2. En un ensayo controlado, desarrolladores experimentados fueron **19% más
-   lentos** con estas herramientas, mientras se sentían **20% más rápidos**.
+   lentos** con estas herramientas — sintiéndose 20% más rápidos.
 
-Ninguno de los dos es razón para no usarlas. Los dos son razón para **medir
-en vez de confiar en la sensación**.
+Ninguno es razón para no usarlas. Los dos son razón para **medir en vez de
+confiar en la sensación**.
 
 ## Si se llevan una sola cosa
 
 > **El agente escribe el código. Ustedes responden por el resultado.**
 
-Y eso no es una carga: es la razón por la que su criterio vale más ahora que
-hace tres años. Escribir se volvió barato; saber si el resultado tiene
-sentido, no.
-
-Nadie escribió una línea de código hoy. Y todos se van con una aplicación
-funcionando.
+Escribir se volvió barato; saber si el resultado tiene sentido, no. La
+habilidad de hoy no es «usar Gemini»: es **especificar bien y verificar
+siempre** — y sirve con cualquier herramienta que salga el año que viene.
 
 ---
 
-## Su proyecto del módulo
+## Tarea para la próxima clase
 
-Empiecen a pensarlo desde hoy. En la última clase cada uno presenta:
+Piensen en **un** problema de su trabajo donde alguien pierde tiempo con una
+hoja de cálculo. Ese es su proyecto del módulo. Tráiganlo escrito en dos
+frases: **qué duele**, y **quién decidiría distinto** con una herramienta.
 
-**Una aplicación que resuelva un problema real de su trabajo**, construida
-dirigiendo a un agente, con su link funcionando.
-
-Y tres cosas más, que valen tanto como la app:
-
-- **Los prompts que usaron** — queremos ver cómo dirigieron, no solo qué
-  salió.
-- **Un error que el agente cometió**, y cómo lo detectaron.
-- **Qué decisión se toma** con la herramienta, y quién la toma.
-
-### Tarea para la próxima clase
-
-Piensen en **un** problema de su trabajo donde hoy alguien pierde tiempo con
-una hoja de cálculo. Ese es su proyecto. Tráiganlo escrito en dos frases.
-
-### Ideas, por si ayuda
-
-| Idea | Datos que necesita |
-|---|---|
-| Conversor de unidades de campo | ninguno |
-| Priorizador de órdenes de trabajo | lista de pendientes con fecha y criticidad |
-| Mapa de demanda por turno | registros con fecha y hora |
-| Seguimiento de gasto contra presupuesto | ejecución mensual |
-| Calculadora de corte de agua y WOR | producción por pozo |
-| Detector de lecturas raras de un sensor | serie de tiempo del instrumento |
+En la última clase presentan: su app con link funcionando, los prompts que
+usaron, **un error del agente que ustedes cazaron**, y qué decisión se toma
+con la herramienta.
 
 ---
 
-*Machine Learning for Petroleum Engineers Using Python* · SLB Ecuador / UDLA ·
-2026
+*Machine Learning for Petroleum Engineers Using Python* · SLB Ecuador / UDLA
+· 2026
 """)
 
 # ================================================================ ESCRIBIR ==
@@ -834,7 +644,13 @@ with open(NOMBRE, "w", encoding="utf-8") as f:
 
 n_md = sum(1 for c in celdas if c["cell_type"] == "markdown")
 n_code = sum(1 for c in celdas if c["cell_type"] == "code")
-n_prompts = sum(1 for c in celdas
-                if c["cell_type"] == "markdown" and "🤖" in "".join(c["source"]))
-print(f"escrito {NOMBRE}: {len(celdas)} celdas "
-      f"({n_md} markdown, {n_code} codigo, {n_prompts} prompts guiados)")
+texto = " ".join("".join(c["source"]) for c in celdas)
+demos = texto.count("🎬")
+espejos = texto.count("🛠️")
+print(f"escrito {NOMBRE}: {len(celdas)} celdas ({n_md} md, {n_code} codigo)")
+print(f"  demos: {demos} menciones | espejos: {espejos} menciones")
+print("  verificacion anti-spoiler: no debe haber respuestas de espejos")
+for palabra in ["31.7", "31,7", "0.85", "0,85", "20 filas", "58.9", "58,9"]:
+    if palabra in texto:
+        raise SystemExit(f"  SPOILER DETECTADO: '{palabra}' — revisar")
+print("  sin spoilers: OK")

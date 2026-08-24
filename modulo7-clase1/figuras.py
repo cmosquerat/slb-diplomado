@@ -85,52 +85,44 @@ APPS_ANTES = 5         # % el anio anterior
 
 
 def cargar():
-    """Los tres datasets de la clase. seaborn los baja y los cachea."""
+    """Los cuatro datasets de la clase. seaborn los baja y los cachea.
+
+    taxis es el de las DEMOS. Los otros tres son los de los ejercicios
+    espejo: esta figura solo los PRESENTA -- las respuestas de los
+    ejercicios no aparecen en ninguna figura ni en ninguna cifra impresa.
+    """
     taxis = sns.load_dataset("taxis")
     taxis["pickup"] = pd.to_datetime(taxis.pickup)
     taxis["dropoff"] = pd.to_datetime(taxis.dropoff)
     taxis["hora"] = taxis.pickup.dt.hour
     taxis["dia"] = taxis.pickup.dt.dayofweek
     taxis["minutos"] = (taxis.dropoff - taxis.pickup).dt.total_seconds() / 60
-    return taxis, sns.load_dataset("healthexp"), sns.load_dataset("flights")
+    return (taxis, sns.load_dataset("mpg"), sns.load_dataset("car_crashes"),
+            sns.load_dataset("diamonds"))
 
 
 # =========================================================== FIGURAS ========
 def fig_adopcion():
     """Esto ya paso: la adopcion en 2026, y quien la lidera."""
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.0),
-                             gridspec_kw=dict(width_ratios=[1.15, 1]))
-    ax = axes[0]
-    ax.grid(axis="y")
-    etiquetas = ["Usa alguna\nherramienta de IA", "Usa AGENTES\ncon regularidad",
-                 "Agentes entre los\ningenieros senior"]
-    vals = [ADOPCION, AGENTES, AGENTES_SENIOR]
-    cols = [BLUE, GREEN, DARK]
-    ax.bar(range(3), vals, 0.55, color=cols, alpha=.9)
+    fig, ax = plt.subplots(figsize=(9.6, 4.0))
+    ax.grid(axis="x")
+    etiquetas = ["Usa alguna\nherramienta de IA",
+                 "Usa AGENTES\ncon regularidad",
+                 "Agentes entre los\ningenieros MÁS senior",
+                 "Confía plenamente\nen lo que producen"]
+    vals = [ADOPCION, AGENTES, AGENTES_SENIOR, CONFIA_PLENO]
+    cols = [BLUE, GREEN, GREEN, RED]
+    y = np.arange(len(vals))[::-1]
+    ax.barh(y, vals, 0.6, color=cols, alpha=.9)
     for i, v in enumerate(vals):
-        ax.text(i, v + 2, f"{v:.0f} %", ha="center", fontsize=15,
-                fontweight="bold", color=cols[i])
-    ax.set_xticks(range(3))
-    ax.set_xticklabels(etiquetas, fontsize=9.5)
-    ax.set_ylim(0, 108)
-    ax.set_ylabel("% de desarrolladores", fontsize=9.5)
-    ax.set_title("Dónde estamos en 2026", fontsize=12, fontweight="bold",
-                 loc="left")
-
-    ax = axes[1]
-    ax.set_axis_off(); ax.grid(False)
-    ax.text(0.5, 0.93, "Y el dato que sorprende", ha="center", fontsize=12,
-            fontweight="bold", color=DARK)
-    ax.text(0.5, 0.60,
-            "Los ingenieros\nMÁS SENIOR\nson los que más\nusan agentes",
-            ha="center", va="center", fontsize=15, fontweight="bold",
-            color=GREEN, linespacing=1.35)
-    ax.text(0.5, 0.16,
-            "No es una herramienta para principiantes.\n"
-            "Es una herramienta que rinde más\ncuanto más criterio tiene quien la usa.",
-            ha="center", va="center", fontsize=10, color=MUTED, linespacing=1.4,
-            style="italic")
-    fig.tight_layout(w_pad=2.0)
+        ax.text(v + 1.5, y[i], f"{v:.0f} %".replace(".0", ""), va="center",
+                fontsize=14, fontweight="bold", color=cols[i])
+    ax.set_yticks(y)
+    ax.set_yticklabels(etiquetas, fontsize=10.5)
+    ax.set_xlim(0, 108)
+    ax.set_xlabel("% de desarrolladores encuestados", fontsize=9.5)
+    ax.set_title("Cómo se trabaja en 2026 — y la brecha que nadie cierra",
+                 fontsize=12.5, fontweight="bold", loc="left", pad=8)
     guardar(fig, "fig_adopcion.png")
 
 
@@ -207,47 +199,53 @@ def fig_fea_vs_bonita(taxis):
     return pico, int(d.max())
 
 
-def fig_tres_dominios(taxis, health, flights):
-    """La misma tecnica sirve en cualquier dominio."""
-    fig, axes = plt.subplots(1, 3, figsize=(12.0, 3.7))
+def fig_cuatro_datasets(taxis, mpg, crashes, diamonds):
+    """Presenta los cuatro datasets de la clase, cada uno con una vista de
+    ENTRADA. Ninguna de estas vistas resuelve los ejercicios espejo: son la
+    foto del dato, no la respuesta."""
+    fig, axes = plt.subplots(1, 4, figsize=(12.6, 3.3))
 
-    # transporte
+    # taxis (las demos)
     ax = axes[0]
     ax.grid(axis="y")
     d = taxis.groupby("hora").size()
     ax.fill_between(d.index, d.values, color=BLUE, alpha=.75)
-    ax.set_xlabel("hora del día", fontsize=9)
-    ax.set_ylabel("viajes", fontsize=9)
-    ax.set_title("TRANSPORTE\n¿a qué hora hay demanda?", fontsize=10.5,
+    ax.set_xlabel("hora del día", fontsize=8.5)
+    ax.set_ylabel("viajes", fontsize=8.5)
+    ax.set_title("taxis · DEMO\n6.433 viajes de NY", fontsize=10,
                  fontweight="bold", loc="left", color=BLUE)
 
-    # presupuesto / gestion
+    # mpg (espejo 1) -- peso vs potencia: NO es la respuesta del ejercicio
     ax = axes[1]
-    ult = health[health.Year == health.Year.max()]
-    ax.scatter(ult.Spending_USD / 1000, ult.Life_Expectancy, s=60,
-               color=GREEN, alpha=.85)
-    for _, r in ult.iterrows():
-        ax.annotate(r.Country[:3].upper(), (r.Spending_USD / 1000,
-                    r.Life_Expectancy), fontsize=7, color=MUTED,
-                    xytext=(3, 3), textcoords="offset points")
-    ax.set_xlabel("gasto por persona [miles USD]", fontsize=9)
-    ax.set_ylabel("expectativa de vida [años]", fontsize=9)
-    ax.set_title("GESTIÓN\n¿el gasto se traduce en resultado?", fontsize=10.5,
+    m = mpg.dropna(subset=["horsepower"])
+    ax.scatter(m.weight, m.horsepower, s=14, color=GREEN, alpha=.5)
+    ax.set_xlabel("peso [lb]", fontsize=8.5)
+    ax.set_ylabel("potencia [hp]", fontsize=8.5)
+    ax.set_title("mpg · FLOTA\n398 vehículos, 1970-82", fontsize=10,
                  fontweight="bold", loc="left", color=GREEN)
 
-    # planeacion de demanda
+    # car_crashes (espejo 2) -- primas de seguro: NO es la respuesta
     ax = axes[2]
-    piv = flights.pivot(index="month", columns="year", values="passengers")
-    ax.plot(piv.columns, piv.sum(), color=ORANGE, lw=2.4)
-    ax.set_xlabel("año", fontsize=9)
-    ax.set_ylabel("pasajeros al año", fontsize=9)
-    ax.set_title("PLANEACIÓN\n¿cuánto vamos a necesitar?", fontsize=10.5,
+    ax.grid(axis="x")
+    top = crashes.nlargest(7, "ins_premium").iloc[::-1]
+    ax.barh(top.abbrev, top.ins_premium, color=ORANGE, alpha=.85)
+    ax.set_xlabel("prima de seguro [USD]", fontsize=8.5)
+    ax.set_title("car_crashes · SEGURIDAD\n51 estados de EE. UU.", fontsize=10,
                  fontweight="bold", loc="left", color=ORANGE)
 
-    fig.suptitle("La misma habilidad, tres problemas que no se parecen en nada",
+    # diamonds (espejo 3) -- precio vs quilates: NO es la respuesta
+    ax = axes[3]
+    muestra = diamonds.sample(3000, random_state=0)
+    ax.scatter(muestra.carat, muestra.price, s=5, color=DARK, alpha=.25)
+    ax.set_xlabel("quilates", fontsize=8.5)
+    ax.set_ylabel("precio [USD]", fontsize=8.5)
+    ax.set_title("diamonds · PRECIOS\n53.940 piedras", fontsize=10,
+                 fontweight="bold", loc="left", color=DARK)
+
+    fig.suptitle("Los cuatro datos de hoy: uno para las demos, tres para ustedes",
                  fontsize=12.5, fontweight="bold", color=DARK, x=0.005, ha="left")
-    fig.tight_layout(w_pad=2.0)
-    guardar(fig, "fig_tres_dominios.png")
+    fig.tight_layout(w_pad=1.8)
+    guardar(fig, "fig_cuatro_datasets.png")
 
 
 def fig_escalera_prompt(taxis):
@@ -387,39 +385,6 @@ def fig_metr():
     guardar(fig, "fig_metr.png")
 
 
-def fig_ciclo():
-    """El ciclo de trabajo real con un agente."""
-    pasos = [("ESPECIFICAR", "qué quiero, con qué\ndatos y qué restricciones", DARK),
-             ("GENERAR", "el agente escribe\ny ejecuta", BLUE),
-             ("VERIFICAR", "¿los números tienen\nsentido? ¿el dato miente?", RED),
-             ("DECIDIR", "sirve, o vuelvo\na especificar", GREEN)]
-    fig, ax = plt.subplots(figsize=(11.2, 3.4))
-    ax.set_axis_off(); ax.grid(False)
-    ax.set_xlim(0, 10); ax.set_ylim(0, 3)
-    for i, (tit, sub, col) in enumerate(pasos):
-        x = 0.35 + i * 2.45
-        ax.add_patch(FancyBboxPatch((x, 1.0), 1.95, 1.25,
-                                    boxstyle="round,pad=0.05",
-                                    fc="white", ec=col, lw=2.2))
-        ax.text(x + 0.97, 1.88, tit, ha="center", fontsize=11.5,
-                fontweight="bold", color=col)
-        ax.text(x + 0.97, 1.38, sub, ha="center", fontsize=8.5,
-                color=MUTED, linespacing=1.3)
-        if i < 3:
-            ax.add_patch(FancyArrowPatch((x + 2.02, 1.62), (x + 2.38, 1.62),
-                                         arrowstyle="-|>", mutation_scale=16,
-                                         color=GRAY, lw=1.8))
-    ax.add_patch(FancyArrowPatch((9.1, 0.98), (1.3, 0.98),
-                                 connectionstyle="arc3,rad=0.18",
-                                 arrowstyle="-|>", mutation_scale=16,
-                                 color=GRAY, lw=1.6, ls="--"))
-    ax.text(5.2, 0.28, "y si no sirve, se vuelve a especificar — eso es el trabajo",
-            ha="center", fontsize=9.5, color=MUTED, style="italic")
-    ax.text(0.35, 2.55, "El trabajo de ustedes está en las cajas de los extremos",
-            fontsize=12, fontweight="bold", color=DARK)
-    guardar(fig, "fig_ciclo.png")
-
-
 def fig_de_grafica_a_app():
     """El salto de la clase: de una celda a una herramienta que otro usa."""
     fig, ax = plt.subplots(figsize=(11.0, 3.5))
@@ -452,20 +417,19 @@ def fig_de_grafica_a_app():
 # =============================================================== MAIN =======
 def main():
     print("cargando datasets de seaborn ...")
-    taxis, health, flights = cargar()
-    print(f"  taxis {len(taxis)} filas | healthexp {len(health)} | "
-          f"flights {len(flights)}")
+    taxis, mpg, crashes, diamonds = cargar()
+    print(f"  taxis {len(taxis)} | mpg {len(mpg)} | car_crashes {len(crashes)} "
+          f"| diamonds {len(diamonds)}")
 
     print("\ngenerando figuras ...")
     fig_adopcion()
     fig_cuello_botella()
     pico, viajes_pico = fig_fea_vs_bonita(taxis)
-    fig_tres_dominios(taxis, health, flights)
+    fig_cuatro_datasets(taxis, mpg, crashes, diamonds)
     fig_escalera_prompt(taxis)
     dia_top, hora_top, n_top = fig_mapa_calor(taxis)
     n_efec, n_prop_efec, prop_tarjeta = fig_trampa(taxis)
     fig_metr()
-    fig_ciclo()
     fig_de_grafica_a_app()
 
     print("\n" + "=" * 74)
@@ -486,12 +450,14 @@ def main():
     print(f"  ensayo METR: percibida {METR_PERCIBIDA:+d} % | real {METR_REAL:+d} %")
 
     print("\nDATASETS DE LA CLASE:")
-    print(f"  taxis:     {len(taxis)} viajes, {taxis.pickup.min().date()} a "
-          f"{taxis.pickup.max().date()}")
-    print(f"  healthexp: {len(health)} filas, {health.Country.nunique()} paises, "
-          f"{health.Year.min()}-{health.Year.max()}")
-    print(f"  flights:   {len(flights)} meses, {flights.year.min()}-"
-          f"{flights.year.max()}")
+    print(f"  taxis (demos):        {len(taxis)} viajes, "
+          f"{taxis.pickup.min().date()} a {taxis.pickup.max().date()}")
+    print(f"  mpg (espejo 1):       {len(mpg)} vehiculos, "
+          f"{mpg.model_year.min()+1900}-{mpg.model_year.max()+1900}")
+    print(f"  car_crashes (esp. 2): {len(crashes)} estados de EE. UU.")
+    print(f"  diamonds (espejo 3):  {len(diamonds)} piedras")
+    print("  (las respuestas de los espejos NO se imprimen: la regla de esta")
+    print("   clase es que no hay soluciones escritas en ningun archivo)")
 
     print("\nHALLAZGOS EN LOS DATOS (los que salen en las laminas):")
     print(f"  hora pico de taxis:            {pico}h con {viajes_pico} viajes")

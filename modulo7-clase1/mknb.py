@@ -63,6 +63,18 @@ copiar los prompts.
 
 **No hace falta haber programado nunca.**
 
+### Hoy, ustedes son la consultora
+
+Así llega el trabajo de verdad: **nadie llega con un dataset**. Llegan con un
+problema, una decisión que no pueden aplazar, y un costo si se equivocan.
+Hoy pasan **cuatro clientes** por su mesa — una empresa de movilidad (mis
+demos), un gerente de flota, un área HSE y un comprador de diamantes (sus
+retos).
+
+> **Regla de la consultora:** no se abre ningún dato sin poder decir antes el
+> **problema**, la **decisión** y el **costo del error**. Con un agente, esa
+> regla vale doble.
+
 ---
 
 ### El proyecto del módulo — desde ya
@@ -119,12 +131,12 @@ md(r"""
 
 Todos vienen **dentro de seaborn**: una línea y están cargados.
 
-| dataset | qué es | quién lo trabaja |
+| dataset | el cliente | quién lo trabaja |
 |---|---|---|
-| `taxis` | 6.433 viajes de taxi de Nueva York | 🎬 las demos |
-| `mpg` | 398 vehículos, 1970–1982 | 🛠️ ustedes (reto 1) |
-| `car_crashes` | accidentes viales en 51 estados | 🛠️ ustedes (reto 2) |
-| `diamonds` | 53.940 diamantes con precio y medidas | 🛠️ ustedes (reto 3) |
+| `taxis` | la empresa de movilidad que reparte mal su flota | 🎬 las demos |
+| `mpg` | el gerente de flota que defiende la renovación ante finanzas | 🛠️ reto 1 |
+| `car_crashes` | el área HSE con presupuesto para UNA campaña | 🛠️ reto 2 |
+| `diamonds` | el comprador al que le exigen el modelo de precios *ya* | 🛠️ reto 3 |
 
 A propósito ninguno es de petróleo: la habilidad es la misma en cualquier
 dominio, y el proyecto del módulo es con **su** dato.
@@ -150,8 +162,17 @@ md(r"""
 
 # 🎬 Demo 1 · Una gráfica que no hay que explicar
 
-**La pregunta:** ¿a qué hora del día hay más demanda de taxis?
+**El caso.** Nuestro primer cliente: una empresa de movilidad con cientos de
+carros. En las horas muertas los carros están **parados quemando costo
+fijo**; en las pico **no alcanzan** y los viajes se los lleva la
+competencia. El gerente de operaciones arma los **turnos del mes** la
+próxima semana, y el error duele en las dos direcciones: turno de más es
+nómina parada, turno de menos es ingreso regalado.
 
+**Lo que nos pidió:** *«díganme cuándo hay demanda, en algo que yo pueda
+mostrar en el comité sin que ustedes estén al lado explicando».*
+
+Recién ahora — con problema, decisión y costo claros — abrimos el dato.
 Primero, lo que sale sin pensar:
 """)
 
@@ -240,8 +261,13 @@ md(r"""
 
 # 🛠️ Reto 1 · La flota  *(12 min)*
 
-> **SU ENCARGO:** la gerencia de flota pregunta — **¿los vehículos mejoraron
-> su consumo entre 1970 y 1982, y cuánto?**
+**EL CASO.** Su cliente administra una **flota de vehículos** y la próxima
+semana defiende ante finanzas el plan de **renovación**. La duda que lo
+frena: *¿los modelos más nuevos de verdad consumen menos, o es un mito
+caro?* De la respuesta depende **aprobar o aplazar** una compra grande.
+
+> **SU ENCARGO:** respondan con el dato — **¿el consumo mejoró con los años,
+> y cuánto?**
 
 Columnas que les sirven: `mpg` (millas por galón — **más es mejor**),
 `model_year`, `origin`, `weight`.
@@ -278,12 +304,13 @@ code(r"""
 """)
 
 md(r"""
-**Cómo saber si van bien** (preguntas, no respuestas):
+**Criterio de aceptación, en el idioma del cliente:**
 
-- ¿Su gráfica se entiende sin que ustedes hablen?
-- ¿El hallazgo está *escrito* en la figura, con número?
-- Este dataset tiene **valores faltantes** en una columna. ¿El agente les
-  avisó, o se los tragó sin decir nada? *(si no avisó: ¿qué le faltó a su
+- Finanzas mira la lámina **30 segundos**. ¿Se defiende sola, con el número
+  de mejora escrito encima?
+- Este dataset tiene **valores faltantes** en una columna. Si finanzas
+  pregunta *«¿con cuántos vehículos calculó esto?»*, ¿tienen la respuesta —
+  o el agente se los tragó sin avisar? *(si no avisó: ¿qué le faltó a su
   criterio de aceptación?)*
 
 ⏸️ **Aquí paramos y lo armamos juntos antes de seguir.**
@@ -295,9 +322,10 @@ md(r"""
 
 # 🎬 Demo 2 · Una pregunta de operación
 
-**La pregunta:** ¿cuándo conviene tener más gente en la calle? — la pregunta
-de cualquier jefe de operaciones, y no se responde con una gráfica de una
-sola variable.
+**El mismo cliente, una semana después.** Ya sabe a qué hora hay demanda.
+Pero los turnos no se arman por hora suelta: se arman **por día y hora** —
+el viernes a las 17h no es el martes a las 17h. Su decisión necesita el
+cruce de las dos cosas.
 
 ### El encargo que le di
 
@@ -351,15 +379,21 @@ md(r"""
 
 # 🛠️ Reto 2 · Seguridad vial  *(12 min)*
 
-> **SU ENCARGO:** el área de seguridad pregunta — **¿los accidentes van de la
-> mano del alcohol? ¿Y en qué estados habría que priorizar una campaña?**
+**EL CASO.** Su cliente mueve carga por carretera en todo EE. UU. El área
+**HSE** tiene presupuesto para **una sola campaña** de seguridad vial este
+año, y el comité discute dos cosas: *¿el alcohol es de verdad el factor que
+acompaña los accidentes?* y *¿en qué estados invertir?* Una campaña en el
+lugar equivocado es plata quemada — y un año perdido.
+
+> **SU ENCARGO:** muestren la **relación alcohol–accidentes** y propongan
+> **tres estados** para la campaña.
 
 Columnas que les sirven: `total` (accidentados por cada 100 millones de
 millas conducidas), `alcohol`, `speeding`, `abbrev` (el estado).
 
-Su prompt, con los cuatro fundamentos. Pista de diseño: comparar dos
-variables pide un tipo de gráfico; señalar estados prioritarios pide otra
-cosa encima — y ambas se le pueden pedir al agente en el mismo encargo.
+Pista de diseño: comparar dos variables pide un tipo de gráfico; señalar
+estados prioritarios pide otra cosa encima — y ambas se le pueden pedir al
+agente en el mismo encargo.
 """)
 
 code(r"""
@@ -374,14 +408,12 @@ code(r"""
 """)
 
 md(r"""
-**Cómo saber si van bien:**
+**Criterio de aceptación, en el idioma del cliente:**
 
-- ¿La relación entre alcohol y accidentes *se ve*, o hay que creerla de
-  palabra?
-- ¿Pueden señalar con el dedo **tres estados** para la campaña, y defender
-  por qué esos?
-- Pregunta brava: que dos cosas vayan juntas, ¿prueba que una **causa** la
-  otra? ¿Qué le contestarían al gerente que lo afirme?
+- ¿El comité *ve* la relación en la figura, o tiene que creerles de palabra?
+- Sus tres estados: ¿pueden defender **por qué esos y no otros**?
+- Si el gerente concluye *«el alcohol causa los accidentes, listo»* — ¿se lo
+  dejan pasar? ¿Qué le contestan?
 
 ⏸️ **Paramos y lo discutimos.**
 """)
@@ -392,14 +424,17 @@ md(r"""
 
 # 🎬 Demo 3 · Donde el agente falla con confianza
 
-Hasta acá todo salió bien — y esa es justamente la trampa. Una pregunta
-perfectamente razonable sobre los mismos taxis:
+**El mismo cliente, tercera visita — ahora con plata en juego.** La gerencia
+comercial quiere **empujar el pago con tarjeta**, convencida de que así «se
+recuperan» propinas que hoy se pierden. Nos piden el dato que respalde la
+política:
 
 > **¿Los pasajeros que pagan en efectivo dejan menos propina que los que
 > pagan con tarjeta?**
 
-Es el tipo de pregunta con la que se decide una política de medios de pago.
-El agente la responde en veinte segundos, con un gráfico impecable:
+De la respuesta depende una decisión con dinero: comisiones de tarjeta,
+incentivos, terminales nuevas. El agente responde en veinte segundos, con un
+gráfico impecable:
 """)
 
 code(r"""
@@ -471,9 +506,15 @@ md(r"""
 
 # 🛠️ Reto 3 · Los diamantes  *(12 min)*
 
-> **SU ENCARGO:** van a analizar precios de diamantes... pero todavía no.
-> Primero **córranle su revisión de calidad**. Este dataset esconde **al
-> menos un valor físicamente imposible** — y más de uno.
+**EL CASO.** Su cliente va a comprar un **lote grande de piedras** y el área
+comercial exige el modelo de precios *para ayer*. Pero si el modelo se
+entrena con datos sucios, **tasa mal** — y comprar caro no se nota hasta que
+toca vender. Ustedes son el último filtro: deciden si este dato se
+**certifica** o se **devuelve**.
+
+> **SU ENCARGO:** antes de que nadie entrene nada, **revisión de calidad**.
+> Este dataset esconde **al menos un valor físicamente imposible** — y más
+> de uno.
 
 Columnas: `carat` (quilates), `cut` (calidad del corte), `price` [USD], y
 `x`, `y`, `z` — las **dimensiones físicas de la piedra, en milímetros**.
@@ -491,15 +532,13 @@ code(r"""
 """)
 
 md(r"""
-**Cómo saber si van bien:**
+**Criterio de aceptación, en el idioma del cliente:**
 
-- ¿Qué significa físicamente que una dimensión valga **cero**? ¿Cuántas
-  filas así encontraron?
-- Miren el **máximo** de cada dimensión. ¿Un diamante de ese tamaño es
-  creíble, o es un error de captura? *(pista: un quilate típico mide unos
-  6 mm de diámetro)*
-- ¿Qué harían con esas filas — borrarlas, corregirlas, preguntar? ¿Y qué le
-  dirían al dueño del dato?
+- ¿Cuántas filas **rechazan**, y con qué argumento físico? *(¿qué significa
+  que una dimensión valga cero? ¿y el máximo de cada una es creíble? — un
+  quilate típico mide unos 6 mm)*
+- El correo al proveedor del dato, en **dos frases**: ¿qué dice?
+- La firma: ¿dejarían entrenar el modelo **hoy** — sí o no?
 
 ⏸️ **Paramos: cada grupo dice qué encontró y qué haría.**
 """)
@@ -564,9 +603,12 @@ md(r"""
 
 # 🛠️ Su turno final · La app de SU dato  *(18 min)*
 
-> **SU ENCARGO:** elijan **uno** de sus tres datasets (`mpg`, `crashes` o
-> `diamonds`) y conviertan su análisis en una **app de Gradio con link**,
-> para alguien que decide.
+**EL CASO.** Su cliente — el de la flota, el de HSE o el de los diamantes,
+**elijan uno** — quedó contento con el análisis. Y pidió lo que piden todos
+los clientes contentos: *«déjenme la herramienta a mí, que no quiero
+llamarlos cada vez»*.
+
+> **SU ENCARGO:** conviertan su análisis en una **app de Gradio con link**.
 >
 > La app debe tener **al menos dos controles** (qué filtrar o comparar — lo
 > deciden ustedes), mostrar **una gráfica que se entienda sola**, y **no

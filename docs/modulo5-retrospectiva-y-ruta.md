@@ -124,8 +124,8 @@ Resultado: **5 de los 9 temas** y **las 3 prácticas comprometidas**.
 
 ### Lo que se difiere, explícitamente
 
-Estos cuatro temas **no entran en 10 horas** y se declaran diferidos al **Módulo 7
-(proyecto integrador)**, donde el alumno los aplica sobre su propio dataset:
+Estos cuatro temas **no entran en 10 horas** y quedan fuera del alcance del
+Módulo 5. No se trasladan a ningún otro módulo:
 
 - Tema 4 · Feature selection para análisis de **EOR**
 - Tema 5 · Predicción de **presión promedio de yacimiento** con ML

@@ -124,12 +124,14 @@ md(r"""
 | **Colab** | el taller: un cuaderno de Python en el navegador, gratis |
 | **Gemini** | el contratista: el agente que vive dentro de Colab |
 | **pandas** | la mesa de trabajo: deja los datos en *tablas* manejables con código |
-| **seaborn** | el dibujante: gráficas con las decisiones de diseño ya tomadas — y trae los datos de práctica de hoy |
+| **seaborn** | el dibujante: gráficas con las decisiones de diseño ya tomadas |
 | **Gradio** | la vitrina: convierte una función en una página web con un link |
 
 ## 0.2 · Los cuatro datos de hoy
 
-Todos vienen **dentro de seaborn**: una línea y están cargados.
+Todos están **publicados en el repositorio del curso** (son copias exactas
+de los conjuntos de práctica de seaborn): una línea y cargan, en Colab o en
+cualquier computador con internet.
 
 | dataset | el cliente | quién lo trabaja |
 |---|---|---|
@@ -143,7 +145,10 @@ dominio, y el proyecto del módulo es con **su** dato.
 """)
 
 code(r"""
-taxis = sns.load_dataset("taxis")
+# los datos de la clase viven en el repositorio del curso
+DATOS = "https://raw.githubusercontent.com/cmosquerat/slb-diplomado/main/datos/"
+
+taxis = pd.read_csv(DATOS + "taxis_nyc.csv")
 
 # preparamos las columnas de tiempo que van a usar las demos
 taxis["pickup"] = pd.to_datetime(taxis.pickup)
@@ -190,7 +195,7 @@ Correcta y muda: no dice qué son los ejes, usa una línea para categorías, y
 ### El encargo que le di al agente
 
 ```
-Tengo un DataFrame `taxis` de seaborn con viajes de taxi de Nueva York.
+Tengo un DataFrame `taxis` con viajes de taxi de Nueva York.
 Columnas: pickup y dropoff (fecha y hora, ya convertidas), distance, fare,
 tip, total, payment, pickup_zone, pickup_borough. Ya calculé hora (0-23)
 y dia (0=lunes).
@@ -293,8 +298,8 @@ CRITERIO DE ACEPTACIÓN:
 """)
 
 code(r"""
-# los datos de SU ejercicio
-mpg = sns.load_dataset("mpg")
+# los datos de SU reto, desde el repositorio del curso
+mpg = pd.read_csv(DATOS + "vehiculos_mpg.csv")
 print(f"{len(mpg)} vehículos")
 mpg.head(3)
 """)
@@ -397,8 +402,8 @@ agente en el mismo encargo.
 """)
 
 code(r"""
-# los datos de SU ejercicio
-crashes = sns.load_dataset("car_crashes")
+# los datos de SU reto, desde el repositorio del curso
+crashes = pd.read_csv(DATOS + "accidentes_viales_eeuu.csv")
 print(f"{len(crashes)} estados")
 crashes.head(3)
 """)
@@ -521,8 +526,8 @@ Columnas: `carat` (quilates), `cut` (calidad del corte), `price` [USD], y
 """)
 
 code(r"""
-# los datos de SU ejercicio
-diamonds = sns.load_dataset("diamonds")
+# los datos de SU reto, desde el repositorio del curso
+diamonds = pd.read_csv(DATOS + "diamantes.csv")
 print(f"{len(diamonds)} diamantes")
 diamonds.head(3)
 """)

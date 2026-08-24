@@ -88,7 +88,7 @@ def cargar():
     """Los cuatro datasets de la clase. seaborn los baja y los cachea.
 
     taxis es el de las DEMOS. Los otros tres son los de los ejercicios
-    espejo: esta figura solo los PRESENTA -- las respuestas de los
+    reto: esta figura solo los PRESENTA -- las respuestas de los
     ejercicios no aparecen en ninguna figura ni en ninguna cifra impresa.
     """
     taxis = sns.load_dataset("taxis")
@@ -201,7 +201,7 @@ def fig_fea_vs_bonita(taxis):
 
 def fig_cuatro_datasets(taxis, mpg, crashes, diamonds):
     """Presenta los cuatro datasets de la clase, cada uno con una vista de
-    ENTRADA. Ninguna de estas vistas resuelve los ejercicios espejo: son la
+    ENTRADA. Ninguna de estas vistas resuelve los ejercicios reto: son la
     foto del dato, no la respuesta."""
     fig, axes = plt.subplots(1, 4, figsize=(12.6, 3.3))
 
@@ -215,7 +215,7 @@ def fig_cuatro_datasets(taxis, mpg, crashes, diamonds):
     ax.set_title("taxis · DEMO\n6.433 viajes de NY", fontsize=10,
                  fontweight="bold", loc="left", color=BLUE)
 
-    # mpg (espejo 1) -- peso vs potencia: NO es la respuesta del ejercicio
+    # mpg (reto 1) -- peso vs potencia: NO es la respuesta del ejercicio
     ax = axes[1]
     m = mpg.dropna(subset=["horsepower"])
     ax.scatter(m.weight, m.horsepower, s=14, color=GREEN, alpha=.5)
@@ -224,7 +224,7 @@ def fig_cuatro_datasets(taxis, mpg, crashes, diamonds):
     ax.set_title("mpg · FLOTA\n398 vehículos, 1970-82", fontsize=10,
                  fontweight="bold", loc="left", color=GREEN)
 
-    # car_crashes (espejo 2) -- primas de seguro: NO es la respuesta
+    # car_crashes (reto 2) -- primas de seguro: NO es la respuesta
     ax = axes[2]
     ax.grid(axis="x")
     top = crashes.nlargest(7, "ins_premium").iloc[::-1]
@@ -233,7 +233,7 @@ def fig_cuatro_datasets(taxis, mpg, crashes, diamonds):
     ax.set_title("car_crashes · SEGURIDAD\n51 estados de EE. UU.", fontsize=10,
                  fontweight="bold", loc="left", color=ORANGE)
 
-    # diamonds (espejo 3) -- precio vs quilates: NO es la respuesta
+    # diamonds (reto 3) -- precio vs quilates: NO es la respuesta
     ax = axes[3]
     muestra = diamonds.sample(3000, random_state=0)
     ax.scatter(muestra.carat, muestra.price, s=5, color=DARK, alpha=.25)
@@ -452,11 +452,11 @@ def main():
     print("\nDATASETS DE LA CLASE:")
     print(f"  taxis (demos):        {len(taxis)} viajes, "
           f"{taxis.pickup.min().date()} a {taxis.pickup.max().date()}")
-    print(f"  mpg (espejo 1):       {len(mpg)} vehiculos, "
+    print(f"  mpg (reto 1):       {len(mpg)} vehiculos, "
           f"{mpg.model_year.min()+1900}-{mpg.model_year.max()+1900}")
     print(f"  car_crashes (esp. 2): {len(crashes)} estados de EE. UU.")
-    print(f"  diamonds (espejo 3):  {len(diamonds)} piedras")
-    print("  (las respuestas de los espejos NO se imprimen: la regla de esta")
+    print(f"  diamonds (reto 3):  {len(diamonds)} piedras")
+    print("  (las respuestas de los retos NO se imprimen: la regla de esta")
     print("   clase es que no hay soluciones escritas en ningun archivo)")
 
     print("\nHALLAZGOS EN LOS DATOS (los que salen en las laminas):")

@@ -5,10 +5,10 @@ Modulo 7 - Clase 1: genera el cuaderno de la clase.
 Este script ESCRIBE el .ipynb y queda versionado para poder regenerarlo.
 
 El cuaderno tiene TRES DEMOS resueltas (con el prompt que se uso y el codigo
-que salio) y TRES EJERCICIOS ESPEJO en los que el alumno arma su propio
-prompt y dirige al agente. REGLA DE LA CLASE: las soluciones de los espejos
+que salio) y TRES EJERCICIOS RETO en los que el alumno arma su propio
+prompt y dirige al agente. REGLA DE LA CLASE: las soluciones de los retos
 NO existen en ningun archivo -- se construyen en vivo. Este generador la
-respeta: no hay ninguna respuesta de los espejos aca adentro.
+respeta: no hay ninguna respuesta de los retos aca adentro.
 
 Uso:  python3 mknb.py
 """
@@ -51,10 +51,10 @@ La clase alterna dos tipos de sección:
 
 - 🎬 **DEMO** — un mini-proyecto resuelto, con el **prompt exacto** que se le
   dio al agente y lo que salió. Ustedes lo corren y lo discutimos.
-- 🛠️ **ESPEJO** — el mismo tipo de problema, en **otro dataset**, y lo
+- 🛠️ **RETO** — el mismo tipo de problema, en **otro dataset**, y lo
   resuelven **ustedes** dirigiendo al agente. Solo hay pistas y preguntas.
 
-> ⚠️ **Los espejos no tienen solución escrita en ninguna parte** — ni en este
+> ⚠️ **Los retos no tienen solución escrita en ninguna parte** — ni en este
 > cuaderno, ni en el repositorio. Se construyen en clase, en vivo. Así que si
 > se atascan, la jugada correcta es preguntar, no buscar.
 
@@ -62,6 +62,24 @@ La clase alterna dos tipos de sección:
 copiar los prompts.
 
 **No hace falta haber programado nunca.**
+
+---
+
+### El proyecto del módulo — desde ya
+
+Este módulo se aprueba con **una aplicación que resuelva un problema real de
+su trabajo**, construida dirigiendo a un agente, con su link funcionando.
+
+- **Equipos de hasta 3 personas** (solo también vale).
+- **Entrega: hasta el jueves de la próxima semana.**
+- **Esta semana** se introducen las herramientas **reales** con las que se
+  produce ML en la industria hoy: agentes de código, servir un modelo, apps
+  que otros usan. Cada clase le suma una pieza a su proyecto.
+- Se entrega con los **prompts** que usaron, **un error del agente que
+  ustedes cazaron**, y qué **decisión** habilita la herramienta.
+
+**Tarea de hoy mismo:** elijan equipo y problema. El problema correcto es
+uno donde alguien pierde tiempo con una hoja de cálculo.
 """)
 
 md(r"""
@@ -104,9 +122,9 @@ Todos vienen **dentro de seaborn**: una línea y están cargados.
 | dataset | qué es | quién lo trabaja |
 |---|---|---|
 | `taxis` | 6.433 viajes de taxi de Nueva York | 🎬 las demos |
-| `mpg` | 398 vehículos, 1970–1982 | 🛠️ ustedes (espejo 1) |
-| `car_crashes` | accidentes viales en 51 estados | 🛠️ ustedes (espejo 2) |
-| `diamonds` | 53.940 diamantes con precio y medidas | 🛠️ ustedes (espejo 3) |
+| `mpg` | 398 vehículos, 1970–1982 | 🛠️ ustedes (reto 1) |
+| `car_crashes` | accidentes viales en 51 estados | 🛠️ ustedes (reto 2) |
+| `diamonds` | 53.940 diamantes con precio y medidas | 🛠️ ustedes (reto 3) |
 
 A propósito ninguno es de petróleo: la habilidad es la misma en cualquier
 dominio, y el proyecto del módulo es con **su** dato.
@@ -216,11 +234,11 @@ Ninguna es programación. Las cinco son **criterio de comunicación** — por es
 las deciden ustedes, no el agente.
 """)
 
-# ================================================== ESPEJO 1 ================
+# ================================================== RETO 1 ================
 md(r"""
 ---
 
-# 🛠️ Espejo 1 · La flota  *(12 min)*
+# 🛠️ Reto 1 · La flota  *(12 min)*
 
 > **SU ENCARGO:** la gerencia de flota pregunta — **¿los vehículos mejoraron
 > su consumo entre 1970 y 1982, y cuánto?**
@@ -327,11 +345,11 @@ print(f"momento de más demanda: {DIAS[d]} a las {tabla.columns[h]}h "
       f"({tabla.values.max()} viajes)")
 """)
 
-# ================================================== ESPEJO 2 ================
+# ================================================== RETO 2 ================
 md(r"""
 ---
 
-# 🛠️ Espejo 2 · Seguridad vial  *(12 min)*
+# 🛠️ Reto 2 · Seguridad vial  *(12 min)*
 
 > **SU ENCARGO:** el área de seguridad pregunta — **¿los accidentes van de la
 > mano del alcohol? ¿Y en qué estados habría que priorizar una campaña?**
@@ -447,11 +465,11 @@ Guárdenlo: se corre con **cada dataset nuevo, antes de cualquier análisis**.
 Ninguna exige saber programar. Las cuatro exigen saber del negocio.
 """)
 
-# ================================================== ESPEJO 3 ================
+# ================================================== RETO 3 ================
 md(r"""
 ---
 
-# 🛠️ Espejo 3 · Los diamantes  *(12 min)*
+# 🛠️ Reto 3 · Los diamantes  *(12 min)*
 
 > **SU ENCARGO:** van a analizar precios de diamantes... pero todavía no.
 > Primero **córranle su revisión de calidad**. Este dataset esconde **al
@@ -612,13 +630,13 @@ siempre** — y sirve con cualquier herramienta que salga el año que viene.
 
 ## Tarea para la próxima clase
 
-Piensen en **un** problema de su trabajo donde alguien pierde tiempo con una
-hoja de cálculo. Ese es su proyecto del módulo. Tráiganlo escrito en dos
-frases: **qué duele**, y **quién decidiría distinto** con una herramienta.
+Equipo (**máximo 3**) y problema elegidos, escritos en dos frases: **qué
+duele**, y **quién decidiría distinto** con una herramienta.
 
-En la última clase presentan: su app con link funcionando, los prompts que
-usaron, **un error del agente que ustedes cazaron**, y qué decisión se toma
-con la herramienta.
+Recuerden el plazo: la entrega del proyecto es **hasta el jueves de la
+próxima semana** — su app con link funcionando, los prompts que usaron,
+**un error del agente que ustedes cazaron**, y qué decisión se toma con la
+herramienta.
 
 ---
 
@@ -646,10 +664,10 @@ n_md = sum(1 for c in celdas if c["cell_type"] == "markdown")
 n_code = sum(1 for c in celdas if c["cell_type"] == "code")
 texto = " ".join("".join(c["source"]) for c in celdas)
 demos = texto.count("🎬")
-espejos = texto.count("🛠️")
+retos = texto.count("🛠️")
 print(f"escrito {NOMBRE}: {len(celdas)} celdas ({n_md} md, {n_code} codigo)")
-print(f"  demos: {demos} menciones | espejos: {espejos} menciones")
-print("  verificacion anti-spoiler: no debe haber respuestas de espejos")
+print(f"  demos: {demos} menciones | retos: {retos} menciones")
+print("  verificacion anti-spoiler: no debe haber respuestas de retos")
 for palabra in ["31.7", "31,7", "0.85", "0,85", "20 filas", "58.9", "58,9"]:
     if palabra in texto:
         raise SystemExit(f"  SPOILER DETECTADO: '{palabra}' — revisar")

@@ -245,7 +245,7 @@
 % =============================================================================
 % =============================================================================
 %  Bloques de PROMPT (lo que el alumno copia al agente) y de ENCARGO (los
-%  ejercicios espejo: sin solucion en ninguna parte del material).
+%  ejercicios reto: sin solucion en ninguna parte del material).
 % =============================================================================
 \newtcolorbox{prompt}[1][]{%
   colback=arcaGray, colframe=arcaDark, boxrule=0pt, leftrule=3.5pt,
@@ -362,6 +362,35 @@
    Los ejercicios no tienen solución escrita en ninguna parte. Se resuelven
    acá, en vivo --- así que pregunten sin pena.}
 \end{frame}
+\begin{frame}[shrink=5]{El Proyecto del Módulo, Desde Ya}
+  space{1pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=9pt, right=9pt, top=3pt, bottom=3pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     Una aplicación que resuelva un problema real de su trabajo, construida
+     dirigiendo a un agente, con su link funcionando.}\\[4pt]
+    {\scriptsize\color{textMuted}
+     Se entrega con los \textbf{prompts} que usaron, \textbf{un error del
+     agente que ustedes cazaron}, y qué \textbf{decisión} habilita la
+     herramienta.}
+  \end{tcolorbox}
+  space{1pt}
+  {\scriptsize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{arcaRed}\scriptsize\faUsers}]
+      \textbf{Equipos de hasta 3 personas}, máximo. Solo también vale.
+    \item[{\color{arcaRed}\scriptsize\faCalendarCheck}]
+      \textbf{Entrega: hasta el jueves de la próxima semana.} No se corre.
+    \item[{\color{arcaRed}\scriptsize\faRoad}]
+      \textbf{Esta semana} se introducen las herramientas \textbf{reales} de
+      producción de ML en la industria: agentes, servir un modelo, apps.
+      Cada clase le suma una pieza a su proyecto.
+  \end{itemize}}
+  space{1pt}
+  {\scriptsize\color{arcaDark}\bfseries\itshape
+   Tarea de hoy mismo: elijan equipo y problema.}
+\end{frame}
+
 
 \begin{frame}[shrink=5]{Ustedes Ya Dirigen Trabajo Técnico}
   \vspace{-2pt}
@@ -832,7 +861,7 @@ CRITERIO DE ACEPTACIÓN:
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 1 · Espejo 1}{Una gráfica que no hay que explicar \\[6pt] \normalsize 40 -- 60 min}
+\sectionframe{Demo 1 · Reto 1}{Una gráfica que no hay que explicar \\[6pt] \normalsize 40 -- 60 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{Demo · Los Mismos Datos, Dos Veces}
@@ -897,7 +926,7 @@ CRITERIO DE ACEPTACIÓN:
    recibir.}
 \end{frame}
 
-\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 1 · La Flota \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Reto 1 · La Flota \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
   \vspace{-5pt}
   \begin{encargo}[SU ENCARGO --- dataset mpg (398 vehículos, 1970--1982)]
     {\scriptsize\color{textMuted}
@@ -922,7 +951,7 @@ CRITERIO DE ACEPTACIÓN:
       agente les avisó, o se los tragó sin decir nada?
   \end{itemize}}
 \end{frame}
-\begin{frame}[shrink=5]{Espejo 1 · Puesta en Común}
+\begin{frame}[shrink=5]{Reto 1 · Puesta en Común}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    Antes de ver ninguna «respuesta»: comparen entre mesas.}
@@ -950,7 +979,7 @@ CRITERIO DE ACEPTACIÓN:
 
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 2 · Espejo 2}{Una pregunta de operación \\[6pt] \normalsize 60 -- 76 min}
+\sectionframe{Demo 2 · Reto 2}{Una pregunta de operación \\[6pt] \normalsize 60 -- 76 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{Demo · Ahora una Pregunta que Decide Turnos}
@@ -993,7 +1022,7 @@ CRITERIO DE ACEPTACIÓN:
    \textbf{pregunta}.}
 \end{frame}
 
-\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 2 · Seguridad Vial \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Reto 2 · Seguridad Vial \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
   \vspace{-5pt}
   \begin{encargo}[SU ENCARGO --- dataset car\_crashes (51 estados de EE. UU.)]
     {\scriptsize\color{textMuted}
@@ -1020,7 +1049,7 @@ CRITERIO DE ACEPTACIÓN:
       otra? ¿Qué le contestarían al gerente que lo afirme?
   \end{itemize}}
 \end{frame}
-\begin{frame}[shrink=5]{Espejo 2 · Puesta en Común}
+\begin{frame}[shrink=5]{Reto 2 · Puesta en Común}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    Otra vez entre mesas, tres preguntas:}
@@ -1050,7 +1079,7 @@ CRITERIO DE ACEPTACIÓN:
 
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 3 · Espejo 3}{Donde el agente falla con confianza \\[6pt] \normalsize 76 -- 98 min}
+\sectionframe{Demo 3 · Reto 3}{Donde el agente falla con confianza \\[6pt] \normalsize 76 -- 98 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{Demo · Ahora la Parte Incómoda}
@@ -1115,7 +1144,7 @@ registro). Lista lo raro, aunque no estés seguro.
   \end{prompt}
 \end{frame}
 
-\begin{frame}[shrink=5]{\faTools\hspace{4pt}Espejo 3 · Los Diamantes \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
+\begin{frame}[shrink=5]{\faTools\hspace{4pt}Reto 3 · Los Diamantes \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}12 min}}
   \vspace{2pt}
   \begin{encargo}[SU ENCARGO --- dataset diamonds (53.940 piedras)]
     {\scriptsize\color{textMuted}
@@ -1142,7 +1171,7 @@ registro). Lista lo raro, aunque no estés seguro.
       dueño del dato? ¿Y qué le dirían?
   \end{itemize}}
 \end{frame}
-\begin{frame}[shrink=5]{Espejo 3 · Puesta en Común}
+\begin{frame}[shrink=5]{Reto 3 · Puesta en Común}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    La más importante de las tres:}
@@ -1291,7 +1320,7 @@ demo.launch(share=True)
 
 \begin{frame}[shrink=5]{\faTools\hspace{4pt}Su Turno · La App de SU Dato \hfill {\normalsize\color{arcaRed}\faClock\hspace{4pt}18 min}}
   \vspace{2pt}
-  \begin{encargo}[SU ENCARGO FINAL --- con el dataset espejo que prefieran]
+  \begin{encargo}[SU ENCARGO FINAL --- con el dataset reto que prefieran]
     {\scriptsize\color{textMuted}
      Elijan \textbf{uno} de sus tres datasets (\texttt{mpg},
      \texttt{car\_crashes} o \texttt{diamonds}) y conviertan su análisis en
@@ -1467,10 +1496,9 @@ demo.launch(share=True)
     arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
     {\scriptsize\color{codeGreen}\bfseries\faCheck\hspace{4pt}TAREA PARA LA PRÓXIMA}\\[3pt]
     {\scriptsize\color{textMuted}
-     Piensen en \textbf{un} problema de su trabajo donde alguien pierde
-     tiempo con una hoja de cálculo. Ese es su proyecto. Tráiganlo escrito
-     en dos frases: qué duele, y quién decidiría distinto con una
-     herramienta.}
+     Equipo (máx. 3) y problema elegidos, escritos en dos frases: qué
+     duele, y quién decidiría distinto con una herramienta. La entrega del
+     proyecto es \textbf{hasta el jueves de la próxima semana}.}
   \end{tcolorbox}
 \end{frame}
 
@@ -1491,7 +1519,7 @@ demo.launch(share=True)
       Una línea y están cargados.
     \item[{\color{arcaRed}\scriptsize\faFileCode}]
       Las figuras y las cifras de estas láminas salen de
-      \texttt{figuras.py}. Las soluciones de los ejercicios espejo
+      \texttt{figuras.py}. Las soluciones de los ejercicios reto
       \textbf{no existen en ningún archivo}: se construyen en clase.
   \end{itemize}}
   \vspace{6pt}

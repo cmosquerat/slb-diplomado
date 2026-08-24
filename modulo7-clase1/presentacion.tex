@@ -406,7 +406,7 @@
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Esto Ya Pasó}{Cómo se escribe código en 2026, con números \\[6pt] \normalsize 0 -- 15 min}
+\sectionframe{Esto Ya Pasó}{Cómo se escribe código en 2026, con números \\[6pt] \normalsize 0 -- 18 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{La Foto de 2026}
@@ -418,6 +418,41 @@
    dos cosas son ciertas a la vez --- y esa brecha es exactamente la
    habilidad que se paga: usarlo \textbf{sin} creerle a ciegas.}
 \end{frame}
+\begin{frame}[shrink=5]{Lo que No Dicen los Titulares}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Todo el mundo lo usa. Casi nadie le cree del todo. Las dos cosas están
+   medidas:}
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+        {\scriptsize\color{arcaRed}\bfseries LA CONFIANZA}\\[4pt]
+        {\footnotesize\color{textMuted}
+         Solo el \textbf{3\,\%} confía plenamente en lo que produce.\\[4pt]
+         El \textbf{46\,\%} desconfía de su precisión, contra un 33\,\% que
+         confía.}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+        {\scriptsize\color{arcaRed}\bfseries LA LETRA CHICA}\\[4pt]
+        {\footnotesize\color{textMuted}
+         Frustración \#1, con el \textbf{66\,\%}: soluciones \emph{«casi
+         correctas, pero no del todo»}.\\[4pt]
+         Y el \textbf{45\,\%} dice que depurarlas tarda \textbf{más} que
+         escribir a mano.}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{7pt}
+  {\footnotesize\color{arcaDark}\bfseries
+   «Casi correcto, pero no» es el problema central de esta clase --- y es
+   justo donde hace falta alguien que sepa del tema.}
+\end{frame}
+
 
 \begin{frame}[shrink=5]{El Dato que le Conviene a Esta Sala}
   \vspace{4pt}
@@ -450,10 +485,136 @@
    Escribir código dejó de ser lo caro. Lo caro ahora es \textbf{verificar}.
    Y verificar exige saber del negocio --- que es lo que ustedes traen.}
 \end{frame}
+\begin{frame}[shrink=5]{Y Por Eso Ustedes Valen Más, No Menos}
+  \vspace{4pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=8pt, bottom=8pt]
+    {\large\color{arcaDark}\bfseries
+     Lo que se volvió barato es \emph{escribir}. Lo que sigue siendo escaso
+     es \textbf{saber si el resultado tiene sentido}.}
+  \end{tcolorbox}
+  \vspace{8pt}
+  {\footnotesize\color{textMuted}
+   Un agente escribe en treinta segundos el código que ajusta una curva de
+   declinación. Lo que no puede saber es que ese campo tuvo un
+   \emph{workover} en 2018, que el medidor estuvo descalibrado seis meses, o
+   que ese pozo no debería estar en la muestra.
+   \vspace{6pt}
+
+   \textbf{Eso lo saben ustedes.} Y hasta hoy, convertir ese conocimiento en
+   una herramienta significaba esperar a que alguien de sistemas tuviera
+   tiempo.}
+  \vspace{7pt}
+  {\footnotesize\color{arcaDark}\bfseries\itshape
+   Eso es lo que se acabó. De eso se trata este módulo.}
+\end{frame}
+
+
+\begin{frame}[shrink=5]{Acotar el Problema}
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+        {\scriptsize\color{codeGreen}\bfseries LO QUE SÍ VAMOS A HACER HOY}\\[4pt]
+        {\footnotesize\color{textMuted}
+        \begin{itemize}\setlength{\itemsep}{3pt}
+          \item[{\color{codeGreen}\scriptsize\faCheck}]
+            Gráficas que se entienden solas
+          \item[{\color{codeGreen}\scriptsize\faCheck}]
+            Dirigir un agente con encargos bien escritos
+          \item[{\color{codeGreen}\scriptsize\faCheck}]
+            \textbf{Verificar} lo que devuelve
+          \item[{\color{codeGreen}\scriptsize\faCheck}]
+            Una app con link, hecha por ustedes
+        \end{itemize}}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+        leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+        {\scriptsize\color{arcaRed}\bfseries LO QUE NO}\\[4pt]
+        {\footnotesize\color{textMuted}
+        \begin{itemize}\setlength{\itemsep}{3pt}
+          \item[{\color{arcaRed}\scriptsize\faTimes}]
+            Convertirlos en programadores
+          \item[{\color{arcaRed}\scriptsize\faTimes}]
+            Memorizar sintaxis de Python
+          \item[{\color{arcaRed}\scriptsize\faTimes}]
+            Instalar nada: todo corre en Colab
+          \item[{\color{arcaRed}\scriptsize\faTimes}]
+            Modelos nuevos --- hoy se \textbf{construye}, no se predice
+        \end{itemize}}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  \vspace{7pt}
+  {\footnotesize\color{arcaDark}\itshape
+   Regla de la casa: si algo no se entiende, es culpa del material, no de
+   ustedes. Pregunten en el momento.}
+\end{frame}
+
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Las Herramientas}{El panorama de 2026, y las cinco que usamos hoy \\[6pt] \normalsize 15 -- 32 min}
+\sectionframe{Las Herramientas}{El panorama de 2026, y las cinco que usamos hoy \\[6pt] \normalsize 18 -- 40 min}
 % ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[shrink=5]{Colab, Desde Cero}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Para quien nunca lo ha abierto --- y de recorderis para el resto:}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{5pt}
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      Un \textbf{cuaderno} es una página hecha de \textbf{celdas}: unas
+      tienen texto, otras tienen código.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      Una celda de código se ejecuta con \textbf{Shift + Enter} (o el botón
+      \faPlay). El resultado aparece justo debajo.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      Todo corre en un computador de Google, no en el suyo. Por eso
+      \textbf{no hay que instalar nada}.
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      El cuaderno se guarda solo en su \textbf{Drive}. Si la sesión se
+      desconecta, el texto queda --- solo hay que volver a correr las celdas.
+  \end{itemize}}
+  \vspace{6pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     Regla práctica de hoy: las celdas se corren \textbf{en orden}, de
+     arriba hacia abajo. Si algo falla, casi siempre es una celda de más
+     arriba que no se corrió.}
+  \end{tcolorbox}
+\end{frame}
+
+
+\begin{frame}[shrink=5]{Dónde Vive el Agente}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   El agente de hoy es el \textbf{Gemini de Colab}. Así se le habla:}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+  \begin{enumerate}\setlength{\itemsep}{3pt}
+    \item Abran el cuaderno de la clase en \texttt{colab.research.google.com}.
+    \item Arriba a la derecha está el botón \textbf{Gemini} (el ícono
+          \faIcon{magic}). Se abre un panel de chat al costado.
+    \item Ahí se \textbf{pega el encargo}. El agente propone código; se
+          revisa y con \textbf{«insertar»} pasa al cuaderno como celda nueva.
+    \item Si una celda falla, aparece el botón \textbf{«explicar error»}:
+          úsenlo --- es la manera más rápida de aprender qué pasó.
+  \end{enumerate}}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaRed}\bfseries SI EL PANEL NO LES APARECE}\\[3pt]
+    {\scriptsize\color{textMuted}
+     Requiere cuenta de 18+ y varía por región. No es problema: armen el
+     encargo igual, y lo corremos en el proyector --- el aprendizaje de hoy
+     está en \textbf{escribir el encargo}, no en apretar el botón.}
+  \end{tcolorbox}
+\end{frame}
 
 \begin{frame}[shrink=5]{El Panorama a 2026}
   \vspace{2pt}
@@ -517,6 +678,33 @@
   {\scriptsize\color{arcaDark}\itshape
    Las cinco ya están en Colab. Hoy no se instala absolutamente nada.}
 \end{frame}
+\begin{frame}[shrink=5]{pandas, la Mesa de Trabajo}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Casi todo lo de hoy pasa por un \textbf{DataFrame}. Es solo esto:}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=9pt, right=9pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     Una tabla con filas y columnas --- como una hoja de cálculo --- pero que
+     se maneja con código en vez de con el mouse.}\\[4pt]
+    {\scriptsize\color{textMuted}
+     Cada fila es un caso (un viaje, un vehículo, un diamante). Cada columna
+     es un dato de ese caso, con su tipo: número, texto o fecha.}
+  \end{tcolorbox}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Las tres operaciones que van a ver todo el día:
+  \begin{itemize}\setlength{\itemsep}{3pt}
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \texttt{taxis.head()} --- muestra las primeras filas, para mirar qué hay
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \texttt{taxis["hora"]} --- una columna, por su nombre
+    \item[{\color{arcaRed}\scriptsize\faArrowRight}]
+      \texttt{taxis.groupby("hora").size()} --- cuenta casos por grupo
+  \end{itemize}}
+\end{frame}
+
 
 \begin{frame}[shrink=5]{Qué Es un Agente (y Qué No)}
   \vspace{2pt}
@@ -593,6 +781,34 @@
    El cuarto convierte un pedido en un encargo de ingeniería. En los
    ejercicios de hoy, ustedes lo escriben.}
 \end{frame}
+\begin{frame}[shrink=5]{La Plantilla que se Llevan}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Los cuatro fundamentos, listos para llenar. Sirve para una gráfica, un
+   análisis o una app entera --- y es la que van a usar en los tres
+   ejercicios de hoy:}
+  \vspace{2pt}
+  \begin{prompt}[LA PLANTILLA --- guárdenla]
+CONTEXTO: tengo [qué datos], con columnas [cuáles] en
+[qué unidades]. Es para [quién / qué reunión].
+
+OBJETIVO: quiero responder [qué pregunta].
+
+RESTRICCIONES:
+- usa [qué librerías]
+- [qué NO hacer]
+- en español, ejes con unidades
+
+CRITERIO DE ACEPTACIÓN:
+- [qué tiene que verse / cumplirse]
+- avísame si [qué problema podría tener el dato]
+  \end{prompt}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\bfseries
+   El último renglón --- «avísame si...» --- convierte al agente en un aliado
+   para \textbf{encontrar} problemas, en vez de alguien que los tapa.}
+\end{frame}
+
 
 \begin{frame}[shrink=8]{La Escalera: el Mismo Agente, Tres Pedidos}
   \vspace{-2pt}
@@ -616,7 +832,7 @@
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 1 · Espejo 1}{Una gráfica que no hay que explicar \\[6pt] \normalsize 32 -- 52 min}
+\sectionframe{Demo 1 · Espejo 1}{Una gráfica que no hay que explicar \\[6pt] \normalsize 40 -- 60 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{Demo · Los Mismos Datos, Dos Veces}
@@ -706,9 +922,35 @@ CRITERIO DE ACEPTACIÓN:
       agente les avisó, o se los tragó sin decir nada?
   \end{itemize}}
 \end{frame}
+\begin{frame}[shrink=5]{Espejo 1 · Puesta en Común}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Antes de ver ninguna «respuesta»: comparen entre mesas.}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{6pt}
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      ¿Qué tipo de gráfico eligió el agente de cada grupo --- línea, barras,
+      cajas? ¿Quién tomó esa decisión: ustedes en el prompt, o él por
+      defecto?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      ¿A alguien le \textbf{avisó} de los valores faltantes sin que se lo
+      pidiera? Lean ese prompt en voz alta: ¿qué tenía distinto?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      El número final --- ¿cuánto mejoró el consumo? ¿Todas las mesas
+      sacaron \textbf{el mismo} número? Si no: ¿por qué no?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      Miren el prompt del compañero de al lado: ¿qué le copiarían?
+  \end{itemize}}
+  \vspace{6pt}
+  {\footnotesize\color{arcaDark}\bfseries\itshape
+   Dos prompts distintos dan dos resultados distintos sobre el mismo dato.
+   Esa es la lección --- y por eso el prompt se escribe con cuidado.}
+\end{frame}
+
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 2 · Espejo 2}{Una pregunta de operación \\[6pt] \normalsize 52 -- 70 min}
+\sectionframe{Demo 2 · Espejo 2}{Una pregunta de operación \\[6pt] \normalsize 60 -- 76 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{Demo · Ahora una Pregunta que Decide Turnos}
@@ -778,9 +1020,37 @@ CRITERIO DE ACEPTACIÓN:
       otra? ¿Qué le contestarían al gerente que lo afirme?
   \end{itemize}}
 \end{frame}
+\begin{frame}[shrink=5]{Espejo 2 · Puesta en Común}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Otra vez entre mesas, tres preguntas:}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{6pt}
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      ¿Cómo mostraron la \textbf{relación}: puntos, ranking, mapa de calor?
+      ¿Se ve, o hay que creerla de palabra?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      Los \textbf{tres estados} para la campaña: ¿coinciden entre mesas?
+      Si dos mesas eligieron distinto con el mismo dato, ¿qué criterio usó
+      cada una?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      La brava: alcohol y accidentes van juntos. ¿Eso \textbf{prueba} que
+      uno causa el otro? ¿Qué más podría explicar la relación?
+  \end{itemize}}
+  \vspace{7pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     Correlación no es causa --- y un agente les va a entregar la
+     correlación con total confianza. La pregunta de causa la hace el
+     ingeniero, no la herramienta.}
+  \end{tcolorbox}
+\end{frame}
+
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{Demo 3 · Espejo 3}{Donde el agente falla con confianza \\[6pt] \normalsize 70 -- 95 min}
+\sectionframe{Demo 3 · Espejo 3}{Donde el agente falla con confianza \\[6pt] \normalsize 76 -- 98 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{Demo · Ahora la Parte Incómoda}
@@ -872,6 +1142,33 @@ registro). Lista lo raro, aunque no estés seguro.
       dueño del dato? ¿Y qué le dirían?
   \end{itemize}}
 \end{frame}
+\begin{frame}[shrink=5]{Espejo 3 · Puesta en Común}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   La más importante de las tres:}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{6pt}
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      ¿Cuántas filas \textbf{físicamente imposibles} encontró cada mesa?
+      ¿Todas encontraron las mismas?
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      ¿Qué decidieron hacer con ellas: borrar, corregir, preguntar? No hay
+      una sola respuesta correcta --- pero sí hay que poder \textbf{defender}
+      la que eligieron.
+    \item[{\color{arcaRed}\scriptsize\faComments}]
+      La de fondo: si nadie hubiera revisado y se entrena un modelo de
+      precios con esos datos, ¿qué pasa? ¿Quién se da cuenta, y cuándo?
+  \end{itemize}}
+  \vspace{7pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=5pt, bottom=5pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     Hoy encontraron ustedes la trampa que en la Demo 3 encontré yo. Esa es
+     exactamente la habilidad que este módulo quiere dejarles.}
+  \end{tcolorbox}
+\end{frame}
+
 
 \begin{frame}[shrink=8]{Y Cuidado con la Sensación}
   \vspace{-2pt}
@@ -923,7 +1220,7 @@ registro). Lista lo raro, aunque no estés seguro.
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{De la Gráfica a la App}{Que otro lo pueda usar sin llamarlos \\[6pt] \normalsize 95 -- 118 min}
+\sectionframe{De la Gráfica a la App}{Que otro lo pueda usar sin llamarlos \\[6pt] \normalsize 98 -- 118 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{El Salto que Falta}
@@ -933,6 +1230,35 @@ registro). Lista lo raro, aunque no estés seguro.
   {\footnotesize\color{textMuted}
    Mientras el análisis viva en una celda, cada vez que alguien quiera ver
    otra cosa tiene que llamarlos. Una app se la mandan y se acabó.}
+\end{frame}
+
+\begin{frame}[shrink=5]{Qué Es Gradio, y Qué Es el Link}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   \textbf{Gradio} convierte una función de Python en una página web con
+   controles. Uno le dice \emph{«esta función recibe un día y devuelve un
+   gráfico»}, y él arma la interfaz solo: el menú, el botón, el espacio del
+   resultado.
+   \vspace{2pt}
+
+   No hay que saber nada de páginas web. Y en Colab hace algo más: con
+   \texttt{share=True} genera un \textbf{link público} --- una dirección que
+   cualquiera puede abrir desde su celular, mientras el cuaderno de ustedes
+   hace el trabajo por detrás.}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=9pt, right=9pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaRed}\bfseries LO QUE HAY QUE SABER DEL LINK}\\[3pt]
+    {\scriptsize\color{textMuted}
+     Vive \textbf{mientras el cuaderno esté corriendo}. Si cierran Colab o
+     la sesión se desconecta, deja de responder. Perfecto para una reunión o
+     una demostración; \textbf{no} es un sistema permanente --- eso se ve más
+     adelante en el módulo.}
+  \end{tcolorbox}
+  \vspace{2pt}
+  {\scriptsize\color{arcaDark}\itshape
+   La analogía honesta: es una extensión telefónica hacia su cuaderno, no
+   una oficina nueva.}
 \end{frame}
 
 \begin{frame}[fragile, shrink=8]{Demo · La App Más Chica que Sirve}
@@ -1088,6 +1414,36 @@ demo.launch(share=True)
   {\footnotesize\color{arcaDark}\itshape
    Nadie escribió una línea de código hoy. Y todos se van con una aplicación
    funcionando y tres ejercicios resueltos por ustedes mismos.}
+\end{frame}
+
+\begin{frame}[shrink=5]{Adelanto · Qué No Se Pega en un Chat de IA}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   Hoy trabajamos con datos públicos de práctica. Su proyecto será con datos
+   \textbf{de su empresa} --- y ahí aplican tres reglas, desde ya:}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+  \begin{enumerate}\setlength{\itemsep}{3pt}
+    \item[{\color{arcaRed}\scriptsize\faLock}]
+      \textbf{El dato confidencial no se pega.} Producción real, presiones,
+      coordenadas, nombres de pozos o de clientes: nada de eso entra a un
+      chat de IA sin autorización.
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{El esquema sí.} Los \emph{nombres de las columnas} y los tipos
+      --- sin los valores --- suelen bastar para que el agente escriba el
+      código. Se corre localmente sobre el dato real.
+    \item[{\color{arcaRed}\scriptsize\faQuestion}]
+      \textbf{En la duda, pregunten} a su área de seguridad de la
+      información antes, no después.
+  \end{enumerate}}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     Los proveedores de estos servicios pueden retener lo que se les pega
+     --- prompts y datos --- por meses, y personas pueden revisarlo. En la
+     Clase 3 esto se ve completo, con la letra chica en pantalla.}
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}[shrink=5]{Lo Que Sigue, y Su Proyecto}

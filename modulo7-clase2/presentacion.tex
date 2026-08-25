@@ -719,28 +719,64 @@ tasador = joblib.load("tasador_v1.joblib")  # cargar
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=5]{Qué Es Gradio (lo Pendiente de la Clase 1)}
-  \vspace{4pt}
+\begin{frame}[shrink=8]{Gradio: Qué Es, y Por Qué Existe}
+  \vspace{-6pt}
+  \begin{columns}[T]
+    \begin{column}{0.30\textwidth}
+      \begin{center}
+        \includegraphics[width=0.52\linewidth]{_logos/gradio.png}\\[5pt]
+        {\scriptsize\color{textMuted} desde 2021, parte de}\\[2pt]
+        \includegraphics[width=0.32\linewidth]{_logos/huggingface.png}\\[1pt]
+        {\scriptsize\color{textMuted} Hugging Face}
+      \end{center}
+    \end{column}
+    \begin{column}{0.66\textwidth}
+      {\scriptsize\color{textMuted}
+       Nació en \textbf{Stanford, en 2019}, por una frustración que les va a
+       sonar: los investigadores tenían modelos médicos funcionando... y los
+       \textbf{médicos} --- los que sabían si el modelo servía --- no podían
+       probarlos sin pedirle una interfaz a un programador.
+       \vspace{5pt}
+
+       La solución fue radical: que \textbf{una función de Python se vuelva
+       una página web} con controles, en una línea. Sin saber nada de
+       páginas web.
+       \vspace{5pt}
+
+       Hoy es el \textbf{estándar de la industria} para poner un modelo en
+       manos de alguien: las demos de IA más famosas de los últimos años
+       corren sobre Gradio, y ya viene instalado en Colab.
+       \vspace{5pt}
+
+       \textbf{\color{arcaDark}Fíjense para quién se inventó: para que el
+       experto de dominio tocara el modelo sin programar la interfaz. O sea:
+       para ustedes.}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[shrink=5]{Y Qué Es el Link}
+  \vspace{2pt}
   {\footnotesize\color{textMuted}
-   \textbf{Gradio} convierte una función de Python en una página web con
-   controles. Uno le dice \emph{«esta función recibe las medidas y devuelve
-   el precio»}, y él arma solo la interfaz: las casillas, el botón, el
-   espacio de la respuesta.
+   Uno le dice \emph{«esta función recibe las medidas y devuelve el precio»},
+   y Gradio arma solo la interfaz: las casillas, el botón, el espacio de la
+   respuesta.
    \vspace{6pt}
 
-   No hay que saber nada de páginas web. Y en Colab, con
-   \texttt{share=True}, genera un \textbf{link público}: una dirección que el
-   comprador abre desde su celular en la mesa de compra, mientras el cuaderno
-   de ustedes hace el trabajo por detrás.}
+   Y en Colab hace algo más: con \texttt{share=True} genera un \textbf{link
+   público} --- una dirección que el comprador abre desde su celular en la
+   mesa de compra, mientras el cuaderno de ustedes hace el trabajo por
+   detrás. Es una extensión telefónica hacia su cuaderno, no una oficina
+   nueva.}
   \vspace{7pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
     leftrule=3pt, arc=3pt, left=9pt, right=9pt, top=5pt, bottom=5pt]
     {\scriptsize\color{arcaRed}\bfseries LO QUE HAY QUE SABER DEL LINK}\\[3pt]
     {\footnotesize\color{textMuted}
      Vive \textbf{mientras el cuaderno esté corriendo}. Si Colab se cierra o
-     se desconecta, el link deja de responder. Perfecto para una demo o una
-     jornada de trabajo; no es un sistema permanente --- eso se conversa en
-     la Clase 3.}
+     se desconecta, deja de responder. Perfecto para una demo o una jornada
+     de trabajo; no es un sistema permanente --- eso se conversa en la
+     Clase 3.}
   \end{tcolorbox}
 \end{frame}
 

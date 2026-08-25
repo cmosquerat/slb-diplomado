@@ -274,9 +274,28 @@ md(r"""
 
 # 🎬 Paso 5 · Servir — la app
 
-Gradio convierte una función en una página con controles, y `share=True` da
-el **link público**. Antes del tasador, la anatomía en chiquito — tres
-escalones, de un minuto cada uno.
+### Gradio: qué es, y por qué existe
+
+Nació en **Stanford, en 2019**, por una frustración que les va a sonar: los
+investigadores tenían modelos médicos funcionando... y los **médicos** — los
+que sabían si el modelo servía — no podían probarlos sin pedirle una
+interfaz a un programador.
+
+La solución fue radical: que **una función de Python se vuelva una página
+web con controles**, en una línea, sin saber nada de páginas web. Hoy Gradio
+es parte de **Hugging Face**, es el estándar de la industria para poner un
+modelo en manos de alguien, y ya viene instalado en Colab.
+
+**Fíjense para quién se inventó:** para que el *experto de dominio* tocara
+el modelo sin programar la interfaz. O sea: para ustedes.
+
+Con `share=True` genera además el **link público** — una dirección que el
+comprador abre desde su celular mientras el cuaderno hace el trabajo por
+detrás. El link vive mientras el cuaderno corra: perfecto para una demo, no
+un sistema permanente.
+
+Antes del tasador, la anatomía en chiquito — tres escalones, de un minuto
+cada uno.
 
 ### Escalón 1 · Toda app son tres piezas
 

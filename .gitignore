@@ -32,3 +32,6 @@ _crudo_sodir.csv
 
 # fuentes de figuras (se bajan con las instrucciones del handoff)
 _fuentes/
+
+# modelos entrenados (los generan los cuadernos): se regeneran, no se versionan
+*.joblib

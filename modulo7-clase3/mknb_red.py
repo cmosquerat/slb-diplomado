@@ -379,7 +379,7 @@ Colab) y pídanle al agente que la pase por el mismo detector.
 
 > ⚠️ **Regla de oro antes de subir:** nada de instalaciones de la empresa,
 > documentos, ni personas que no hayan dado permiso. Una foto de la calle,
-> su escritorio, el parqueadero. En la Clase 3 vemos el porqué completo.
+> su escritorio, el parqueadero. En la Clase 4 vemos el porqué completo.
 
 **Tarea:** ¿qué detectó bien? ¿qué se le escapó o inventó? Anoten un
 acierto y un fallo — el detector más famoso del mundo también se equivoca,

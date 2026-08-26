@@ -12,7 +12,7 @@ Esta clase no publica datos nuevos. Usa:
     make_moons        -- lo genera scikit-learn en el momento (semilla 0)
     MNIST             -- lo descarga keras.datasets.mnist en Colab
                          (mismo .npz de storage.googleapis.com/tensorflow)
-    imagen de prueba  -- https://ultralytics.com/images/bus.jpg
+    imagen de prueba  -- https://raw.githubusercontent.com/ultralytics/ultralytics/main/ultralytics/assets/bus.jpg
     las fotos propias -- cada estudiante sube la suya (sin instalaciones
                          de la empresa, documentos ni personas sin permiso)
 
@@ -29,7 +29,7 @@ URLS = {
                           "slb-diplomado/main/datos/pasajeros_titanic.csv"),
     "mnist (fuente keras)": ("https://storage.googleapis.com/tensorflow/"
                              "tf-keras-datasets/mnist.npz"),
-    "imagen de prueba yolo": "https://ultralytics.com/images/bus.jpg",
+    "imagen de prueba yolo": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/ultralytics/assets/bus.jpg",
 }
 
 

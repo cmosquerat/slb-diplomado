@@ -361,7 +361,7 @@ md(r"""
 OBJETIVO: probar un modelo YOLO preentrenado.
 - carga el modelo "yolo11n.pt" con ultralytics
 - detecta objetos en esta imagen de prueba:
-  https://ultralytics.com/images/bus.jpg
+  https://raw.githubusercontent.com/ultralytics/ultralytics/main/ultralytics/assets/bus.jpg
 - muestra la imagen con las cajas dibujadas, y debajo un conteo por
   tipo de objeto, en español
 ```

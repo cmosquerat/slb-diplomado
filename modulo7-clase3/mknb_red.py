@@ -329,6 +329,77 @@ code(r"""
 # ✍️ aqui va lo que devuelva el agente
 """)
 
+# ====================================================== RETO FASHION =======
+md(r"""
+---
+
+# 🛠️ Su reto · La misma red, otra ropa
+
+**Fashion-MNIST**: 70.000 prendas de ropa en imágenes de 28×28 — el
+reemplazo moderno de los dígitos, con exactamente las mismas formas. La
+carga viene dada; **todo lo demás es de ustedes**.
+
+Y hay un cambio de nivel: en MNIST los prompts se los di yo. Esta vez
+**los escriben ustedes**, con la plantilla de la Clase 1 (contexto,
+objetivo, restricciones, criterio de aceptación).
+
+> En clase si alcanza el tiempo; si no, para la casa — es el mejor
+> calentamiento posible para la entrega del jueves.
+""")
+
+code(r"""
+# --- DADA: cargar Fashion-MNIST y mirar el dato (la regla de oro)
+PRENDAS = ["camiseta/top", "pantalón", "suéter", "vestido", "abrigo",
+           "sandalia", "camisa", "zapatilla", "bolso", "botín"]
+
+try:
+    from tensorflow import keras
+    (xf_ent, yf_ent), (xf_exa, yf_exa) = \
+        keras.datasets.fashion_mnist.load_data()
+    print(f"entrenamiento: {xf_ent.shape} | examen: {xf_exa.shape}")
+
+    fig, axes = plt.subplots(2, 6, figsize=(9, 3.4))
+    for ax, i in zip(axes.ravel(), range(12)):
+        ax.imshow(xf_ent[i], cmap="gray_r")
+        ax.set_title(PRENDAS[yf_ent[i]], fontsize=8)
+        ax.axis("off")
+    plt.suptitle("Doce prendas del dato, con su etiqueta", fontweight="bold")
+    plt.tight_layout(); plt.show()
+except ImportError:
+    print("TensorFlow no está en este entorno; en Colab ya viene instalado.")
+""")
+
+md(r"""
+**El encargo, completo:** repitan el flujo de la Parte 3 sobre este dato —
+armar y entrenar la red, las curvas de entrenamiento contra validación, y
+los errores mirados a la cara. Con sus propios prompts.
+
+**Cómo saber si van bien** (preguntas, no respuestas):
+
+- La **misma arquitectura** que leyó dígitos: ¿rinde igual acá? ¿Cuánto da,
+  y qué les dice la diferencia sobre *dónde vive la dificultad*?
+- ¿En qué época empieza **ahora** el overfitting? ¿Antes o después que con
+  los dígitos?
+- ¿Qué **prendas se confunden** entre sí? Miren esas imágenes: ¿los
+  confundirían también a ustedes? ¿Qué implicaría eso si esta red etiquetara
+  inventario?
+
+*(Sin solución escrita, como siempre: se discute en la puesta en común — o
+en la Clase 4 si queda de tarea.)*
+""")
+
+code(r"""
+# ✍️ su prompt y el codigo del agente: armar y entrenar
+""")
+
+code(r"""
+# ✍️ su prompt y el codigo del agente: las curvas
+""")
+
+code(r"""
+# ✍️ su prompt y el codigo del agente: los errores
+""")
+
 # ============================================================ PARTE 4 =======
 md(r"""
 ---

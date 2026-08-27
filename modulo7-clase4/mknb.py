@@ -4,9 +4,12 @@ Modulo 7 - Clase 4 (la ultima): genera el cuaderno de la clase.
 
 Contenido: la SOLUCION del reto de Fashion-MNIST (el reto vencio: aca va
 resuelta, como el examen corregido), el mapa de las tareas de vision por
-computadora con codigo real para cada una (Ultralytics), el ojo por codigo
-(la llave de la clase + Secrets + Gemini multimodal desde la celda), los
-peligros con nombre, y el cierre del proyecto.
+computadora con codigo real para cada una (Ultralytics, incluida la perilla
+del umbral de confianza y el catalogo COCO), el ojo por codigo (la llave de
+la clase + Secrets + Gemini multimodal desde la celda), el oido por codigo
+(Whisper local: grabar con el microfono del navegador, transcribir, y
+estructurar el acta con Gemini), los peligros con nombre, y el cierre del
+proyecto con puesta en comun.
 
 La llave de la clase se comparte por el chat del curso, se guarda en los
 Secrets de Colab, y SE REVOCA EN VIVO al final -- esa revocacion es parte
@@ -47,16 +50,20 @@ md(r"""
 
 ---
 
-### La última clase, en cinco partes
+### La última clase, en siete partes
 
 1. **La solución del reto** — Fashion-MNIST, resuelto como se corrige un
    examen.
-2. **El mapa de la visión por computadora** — las tareas, y en qué se
+2. **La GPU** — por qué existe, la historia de NVIDIA, y el botón de Colab.
+3. **El mapa de la visión por computadora** — las tareas, y en qué se
    diferencian.
-3. **Cada tarea, con código** — cuatro modelos, la misma línea.
-4. **El ojo por código** — Gemini multimodal llamado desde una celda, con la
+4. **Cada tarea, con código** — cuatro modelos, la misma línea, y la perilla
+   del umbral.
+5. **El ojo por código** — Gemini multimodal llamado desde una celda, con la
    llave de la clase.
-5. **Los peligros, con nombre** — la promesa pendiente, pagada.
+6. **El oído por código** — Whisper: dictan al micrófono, el modelo
+   transcribe *en su Colab*.
+7. **Los peligros, con nombre** — la promesa pendiente, pagada.
 
 > **La llave de la clase** llega por el chat del curso. Va directo a los
 > **Secrets de Colab** (el candadito 🔑 del panel izquierdo), con el nombre
@@ -209,7 +216,9 @@ trabajo de la cuadrilla.
   GPUs de videojuegos**, arrasa la competencia de reconocimiento de
   imágenes ImageNet. Arranca la era del deep learning.
 - **2026** — NVIDIA es una de las empresas más valiosas del mundo (del
-  orden de los **4 billones de dólares**), y las GPUs son el recurso
+  orden de los **4 billones de dólares** — billones *en español*: millones
+  de millones, lo que la prensa en inglés llama *trillions*), y las GPUs
+  son el recurso
   estratégico de la IA: se compran por decenas de miles, con listas de
   espera y geopolítica de por medio.
 
@@ -236,6 +245,13 @@ md(r"""
 ---
 
 # 3 · El mapa: las tareas de la visión por computadora
+
+Un dato para calibrar lo que están a punto de correr: en **1966**, el MIT
+asignó «resolver la visión por computadora» como **proyecto de verano** para
+estudiantes. Tomó **46 años** — décadas de reglas escritas a mano que nunca
+alcanzaron, hasta que en 2012 AlexNet (la misma historia de la GPU) demostró
+que la salida era *aprender* de ejemplos, no programar reglas. Todo lo de
+hoy existe porque esa apuesta ganó.
 
 Cada tarea es una **pregunta distinta** sobre la misma imagen — y saber cuál
 pedir es el 80 % del trabajo:
@@ -365,7 +381,46 @@ Con 17 puntos por persona se responde «¿está agachado?», «¿levantó los
 brazos?», «¿hay alguien en el suelo?» — reglas de seguridad escritas sobre
 geometría.
 
-### 4.5 · Ahora con SUS fotos
+### 4.5 · La perilla que hay que conocer: el umbral de confianza
+
+El detector no dice «hay un bus»: dice «bus, con confianza 0.94». El
+parámetro `conf` decide desde qué confianza se **reporta** — y moverlo
+cambia el resultado:
+""")
+
+code(r"""
+if ULTRA:
+    import collections
+    modelo = YOLO("yolo11n.pt")
+    for umbral in [0.6, 0.25, 0.1]:
+        r = modelo("foto.jpg", conf=umbral, verbose=False)[0]
+        conteo = collections.Counter(r.names[int(c)] for c in r.boxes.cls)
+        print(f"umbral {umbral}: {dict(conteo)}")
+""")
+
+md(r"""
+Lean el experimento: con umbral 0.6 y 0.25 el resultado es **idéntico** (la
+detección más tímida es una persona al 62 %). Pero al bajarlo a 0.1 aparece
+un **monopatín al 12 % que no existe en la foto**. Umbral alto = se pierden
+objetos reales; umbral bajo = entran fantasmas. En una app de seguridad esa
+perilla es una decisión de negocio: ¿qué cuesta más — una alarma falsa o un
+casco sin detectar?
+
+### 4.6 · ¿De dónde salen las 80 clases? (y qué pasa con las SUYAS)
+
+El detector conoce 80 objetos porque se entrenó con **COCO**, un dataset de
+330.000 fotos cotidianas etiquetadas a mano. Por eso sabe qué es un frisbee
+y **no sabe qué es una válvula**: el modelo solo conoce lo que su dataset le
+enseñó — el sesgo de catálogo.
+
+¿Y si su problema necesita «casco de la empresa» o «brida corroída»? Se hace
+**ajuste fino** (*fine-tuning*): se toman 50–200 fotos propias, se etiquetan
+(hay herramientas gratuitas para eso), y se re-entrena el modelo
+preentrenado con `modelo.train(data="mis_fotos.yaml", epochs=50)`. No lo
+corremos hoy — pero sepan que existe, que es *una línea*, y que es lo
+primero que van a necesitar cuando esto toque su trabajo real.
+
+### 4.7 · Ahora con SUS fotos
 
 Suban una foto (panel 📁 de Colab), cambien `"foto.jpg"` por el nombre de la
 suya en cualquiera de las celdas de arriba, y vuelvan a correr.
@@ -441,19 +496,134 @@ código es la que se integra a una app.
 **Y la advertencia que ya conocen elevada al cubo:** cada foto que mandan
 por esta vía **sale de su computador hacia un tercero**. Con la foto de
 prueba, ningún problema. Con una foto de la planta — eso es exactamente el
-tema de la parte 5.
+tema de la parte 7.
 """)
 
-# ======================================================= 5 · LOS PELIGROS ===
+# ==================================================== 6 · EL OIDO ===========
 md(r"""
 ---
 
-# 6 · Los peligros, con nombre
+# 6 · El oído por código: Whisper
+
+La visión no es el único sentido que ya viene preentrenado. **Whisper** es
+el modelo de reconocimiento de voz que OpenAI liberó como **código abierto**
+en 2022: entrenado con 680.000 horas de audio, transcribe español (y 98
+idiomas más) con un `pip install`.
+
+Y trae una diferencia **importante** frente a Gemini: Whisper corre
+**dentro de su Colab**. El audio no viaja a ningún tercero — el modelo se
+descarga una vez y trabaja local. La misma tarea, dos arquitecturas de
+privacidad opuestas. Elegir entre ellas también es una decisión de
+ingeniería.
+
+**El plan:** dictan un reporte de campo al micrófono → Whisper lo vuelve
+texto (local) → Gemini vuelve ese texto un **acta estructurada**. Voz →
+texto → estructura: el flujo completo, en tres celdas.
+""")
+
+code(r"""
+if EN_COLAB:
+    %pip install -q openai-whisper
+
+try:
+    import whisper
+    WHISPER = True
+except ImportError:
+    WHISPER = False
+    print("whisper no está en este entorno; en Colab: la celda de arriba")
+""")
+
+code(r"""
+# grabar desde el microfono del navegador (pide permiso la primera vez)
+if EN_COLAB:
+    from IPython.display import Javascript, display
+    from google.colab import output
+    from base64 import b64decode
+
+    JS_GRABAR = '''
+    const b2texto = blob => new Promise(listo => {
+      const lector = new FileReader()
+      lector.onloadend = e => listo(e.srcElement.result)
+      lector.readAsDataURL(blob)
+    })
+    var grabar = ms => new Promise(async listo => {
+      const stream = await navigator.mediaDevices.getUserMedia({audio: true})
+      const grabadora = new MediaRecorder(stream)
+      const trozos = []
+      grabadora.ondataavailable = e => trozos.push(e.data)
+      grabadora.onstop = async () => listo(await b2texto(new Blob(trozos)))
+      grabadora.start()
+      await new Promise(r => setTimeout(r, ms))
+      grabadora.stop()
+    })
+    '''
+
+    def grabar(segundos=15, archivo="reporte.webm"):
+        display(Javascript(JS_GRABAR))
+        print(f"🎙️ grabando {segundos} segundos... hable ya")
+        datos = output.eval_js(f"grabar({segundos * 1000})")
+        with open(archivo, "wb") as f:
+            f.write(b64decode(datos.split(",")[1]))
+        print("listo:", archivo)
+        return archivo
+
+    # dicten un reporte como si llamaran desde campo, por ejemplo:
+    #   "Inspección del tanque tres. Se observa corrosión en la brida norte.
+    #    Presión registrada: mil doscientos cincuenta psi. Se recomienda
+    #    cambio de empaque antes del viernes."
+    AUDIO = grabar(15)
+else:
+    AUDIO = None
+    print("el micrófono del navegador solo está disponible en Colab")
+""")
+
+code(r"""
+# transcribir -- local, dentro de SU sesion
+if WHISPER and AUDIO:
+    modelo_voz = whisper.load_model("base")     # 74 MB, se descarga una vez
+    resultado = modelo_voz.transcribe(AUDIO, language="es")
+    TEXTO = resultado["text"].strip()
+    print(TEXTO)
+""")
+
+code(r"""
+# el paso final: de la transcripcion al acta -- ahora si, con Gemini
+if GEMINI and WHISPER and AUDIO:
+    r = cliente.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=f'''Este es un reporte de campo dictado por voz:
+
+"{TEXTO}"
+
+Conviértelo en un acta breve con este formato:
+- RESUMEN: (una frase)
+- DATOS: (lista de equipos, valores y unidades mencionados)
+- ACCIONES: (lista de lo que se pide hacer, con plazo si lo hay)''')
+    print(r.text.strip())
+""")
+
+md(r"""
+Léanlo dos veces: dictaron **quince segundos** y tienen un acta con los
+datos y las acciones separados — lista para pegarse en un correo o en un
+sistema. Eso, hace tres años, era un producto que se compraba. Hoy son tres
+celdas.
+
+**Ojo a la frontera de privacidad que acaban de cruzar dos veces:** el
+*audio* nunca salió de su Colab (Whisper es local); el *texto* sí viajó a
+Gemini. Si el reporte tuviera datos confidenciales, este diseño les permite
+decidir **qué cruza y qué no** — de eso, la parte que sigue.
+""")
+
+# ======================================================= 7 · LOS PELIGROS ===
+md(r"""
+---
+
+# 7 · Los peligros, con nombre
 
 La promesa pendiente desde la Clase 1. Cuatro peligros, sus caras, y su
 defensa — que ya practicaron sin saberlo.
 
-### 6.1 · Lo que se pega en un chat de IA, sale de la empresa
+### 7.1 · Lo que se pega en un chat de IA, sale de la empresa
 
 Los proveedores de estos servicios pueden **retener** lo que se les envía —
 prompts, datos, fotos — por meses, y **personas** pueden revisarlo (está en
@@ -467,7 +637,7 @@ hasta 18 meses, revisores humanos).
   agente escribe el código, y el código corre localmente sobre el dato real.
 - En la duda: **pregunten a seguridad de la información antes, no después**.
 
-### 6.2 · Las llaves son contraseñas
+### 7.2 · Las llaves son contraseñas
 
 Lo acaban de vivir: la llave fue al **Secret**, no a la celda. Un cuaderno
 se comparte, se sube a un repositorio, se proyecta en una reunión — y una
@@ -475,7 +645,7 @@ llave pegada en una celda queda expuesta en todos esos lugares. Las llaves
 se guardan en secrets, **se rotan**, y se revocan cuando se comparten de
 más. La nuestra muere hoy — mírenlo pasar.
 
-### 6.3 · Las librerías alucinadas
+### 7.3 · Las librerías alucinadas
 
 Un agente puede recomendar con total confianza una librería **que no
 existe** — o peor: que existe porque alguien la registró con el nombre que
@@ -485,7 +655,7 @@ los agentes suelen inventar, cargada de código malicioso (*typosquatting*).
 ¿existe en PyPI? ¿cuántas descargas? ¿desde cuándo? Si el agente insiste en
 una librería exótica para algo que pandas ya hace — desconfíen.
 
-### 6.4 · El peor de todos: código que corre y está mal
+### 7.4 · El peor de todos: código que corre y está mal
 
 No lanza error. Produce un número. El número es basura. Ya lo vieron tres
 veces en este módulo: las propinas en efectivo, la columna `alive`, el
@@ -502,7 +672,7 @@ tasador de la piedra de 0 mm.
 md(r"""
 ---
 
-# 7 · Cierre del módulo — y su entrega
+# 8 · Cierre del módulo — y su entrega
 
 ## La entrega del jueves
 
@@ -522,7 +692,18 @@ Equipos de hasta 3. El cuaderno del Titanic es la plantilla. Se entrega:
 | 1 | Dirigir un agente: los cuatro fundamentos, y verificar siempre |
 | 2 | Un modelo servido: certificar, entrenar, examinar, blindar |
 | 3 | El flujo profesional (GridSearch, SHAP) — y su primera red |
-| 4 | Las máquinas que ven, el ojo por código, y los peligros con nombre |
+| 4 | Las máquinas que ven — y oyen: visión, voz, y los peligros con nombre |
+
+## La puesta en común
+
+Antes de cerrar, tres preguntas para la sala — una respuesta por equipo:
+
+1. ¿Qué proceso de su trabajo **automatizarían el lunes** con lo visto en el
+   módulo?
+2. ¿Cuál fue el **error del agente** que cazaron esta semana, y cómo lo
+   detectaron?
+3. ¿Qué decisión **no le delegarían jamás** a un modelo, por buena que sea
+   su métrica?
 
 ## Si se llevan una sola cosa del módulo
 

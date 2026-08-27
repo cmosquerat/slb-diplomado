@@ -288,19 +288,23 @@
 \begin{frame}[shrink=5]{Dónde Estamos: la Última Clase}
   \vspace{-2pt}
   {\scriptsize\color{textMuted}
-   Cinco partes, y todas suman piezas para \textbf{su entrega del jueves}:}
+   Siete partes, y todas suman piezas para \textbf{su entrega del jueves}:}
   \vspace{2pt}
   {\scriptsize\color{textMuted}
-  \begin{enumerate}\setlength{\itemsep}{2pt}
+  \begin{enumerate}\setlength{\itemsep}{1pt}
     \item \textbf{La solución del reto} --- Fashion-MNIST, corregido como un
           examen.
     \item \textbf{La GPU} --- el paréntesis que vale billones, y el botón que
           les toca.
-    \item \textbf{El mapa de la visión} --- las tareas, y en qué se
-          diferencian.
-    \item \textbf{Cada tarea, con código} --- cuatro modelos, la misma línea.
-          Y el \textbf{ojo por código}: Gemini multimodal desde la celda.
+    \item \textbf{El mapa de la visión} --- sesenta años de historia, la
+          convolución, y las tareas.
+    \item \textbf{Cada tarea, con código} --- cuatro modelos, la misma línea,
+          y la perilla del umbral. Con el \textbf{ojo por código}: Gemini
+          multimodal desde la celda.
+    \item \textbf{El oído por código} --- Whisper: dictan al micrófono, y el
+          modelo transcribe \emph{dentro} de su Colab.
     \item \textbf{Los peligros, con nombre} --- la promesa pendiente, pagada.
+    \item \textbf{El cierre} --- la puesta en común, y su entrega.
   \end{enumerate}}
   \vspace{2pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
@@ -315,7 +319,7 @@
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{1 · La Solución del Reto}{Fashion-MNIST, corregido como un examen \\[6pt] \normalsize 0 -- 20 min}
+\sectionframe{1 · La Solución del Reto}{Fashion-MNIST, corregido como un examen \\[6pt] \normalsize 0 -- 18 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{La Misma Red, Otro Dato}
@@ -375,7 +379,7 @@
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{2 · El Paréntesis que Vale Billones}{Qué es una GPU, y por qué hay que encenderla \\[6pt] \normalsize 20 -- 30 min}
+\sectionframe{2 · El Paréntesis que Vale Billones}{Qué es una GPU, y por qué hay que encenderla \\[6pt] \normalsize 18 -- 26 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{CPU y GPU, Desde Cero}
@@ -433,7 +437,9 @@
       imágenes ImageNet. Arranca la era del deep learning.
     \item[{\color{arcaRed}\bfseries 2026}]
       NVIDIA es de las empresas más valiosas del mundo --- del orden de los
-      \textbf{4 billones de dólares} --- y la GPU es el recurso estratégico
+      \textbf{4 billones de dólares} (billones \emph{en español}: millones de
+      millones --- lo que la prensa en inglés llama \emph{trillions}) --- y
+      la GPU es el recurso estratégico
       de la IA: se compra por decenas de miles, con listas de espera y
       geopolítica de por medio.
   \end{itemize}}
@@ -450,8 +456,100 @@
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{3 · El Mapa de la Visión}{Cada tarea es una pregunta distinta \\[6pt] \normalsize 30 -- 40 min}
+\sectionframe{3 · El Mapa de la Visión}{Cada tarea es una pregunta distinta \\[6pt] \normalsize 26 -- 40 min}
 % ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[shrink=5]{Sesenta Años de Humildad, en una Lámina}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{4pt}
+    \item[{\color{arcaRed}\bfseries 1966}]
+      El MIT asigna «resolver la visión por computadora» como
+      \textbf{proyecto de verano} para estudiantes. En serio.
+    \item[{\color{arcaRed}\bfseries 1970--2010}]
+      Décadas de \textbf{reglas escritas a mano}: detectores de bordes,
+      esquinas, plantillas. Funcionan en el laboratorio; se rompen en la
+      calle.
+    \item[{\color{arcaRed}\bfseries 2012}]
+      \textbf{AlexNet} --- la historia de la GPU, vista desde el otro lado:
+      dejar de programar reglas y \textbf{aprender de ejemplos}. La visión
+      «se resuelve», 46 años después de aquel verano.
+  \end{itemize}}
+  \vspace{5pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=5pt, bottom=5pt]
+    {\footnotesize\color{arcaDark}\bfseries
+     Todo lo que van a correr hoy existe porque esa apuesta ganó: ejemplos,
+     no reglas.}\\[2pt]
+    {\scriptsize\color{textMuted}
+     La misma idea de todo el curso --- el modelo aprende del dato --- solo
+     que aquí el dato es la imagen.}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[shrink=5]{La Puerta Prometida: la Convolución}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   El MLP \textbf{aplana} la imagen y pierde a los vecinos. La convolución
+   hace lo contrario: un \textbf{filtro pequeño} (3\,$\times$\,3) que
+   \textbf{barre} la imagen buscando \emph{un} patrón.}
+  \vspace{1pt}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.30]
+    \draw[step=1, color=textMuted!40] (0,0) grid (8,8);
+    \node[color=textMuted, font=\scriptsize] at (4,-0.8) {la imagen};
+    \draw[arcaRed, very thick] (1,4) rectangle (4,7);
+    \node[color=arcaRed, font=\scriptsize\bfseries] at (2.5,7.6) {el filtro};
+    \draw[->, very thick, textMuted] (9,4) -- (11,4);
+    \begin{scope}[shift={(12,1)}]
+      \draw[step=1, color=textMuted!40] (0,0) grid (6,6);
+      \fill[arcaRed!75] (1,3) rectangle (2,4);
+      \fill[arcaRed!45] (2,3) rectangle (3,4);
+      \fill[arcaRed!25] (4,1) rectangle (5,2);
+      \node[color=textMuted, font=\scriptsize] at (3,-0.8) {dónde se encendió};
+    \end{scope}
+  \end{tikzpicture}
+  \end{center}
+  \vspace{1pt}
+  {\footnotesize\color{textMuted}
+   Un filtro busca un borde; otro, una esquina. Y la red \textbf{no los
+   trae de fábrica: los aprende del dato}, igual que el MLP sus pesos.}
+\end{frame}
+
+\begin{frame}[shrink=5]{Capa Sobre Capa: la Jerarquía}
+  \vspace{4pt}
+  \begin{center}
+  \begin{tikzpicture}[
+    caja/.style={draw=arcaRed, fill=arcaGray, rounded corners=3pt,
+                 minimum width=2.4cm, minimum height=0.95cm, align=center,
+                 font=\footnotesize\bfseries, text=arcaDark},
+    fle/.style={->, very thick, arcaRed}]
+    \node[caja] (a) at (0,0) {bordes};
+    \node[caja] (b) at (3.1,0) {texturas};
+    \node[caja] (c) at (6.2,0) {partes};
+    \node[caja] (d) at (9.3,0) {objetos};
+    \draw[fle] (a) -- (b); \draw[fle] (b) -- (c); \draw[fle] (c) -- (d);
+    \node[color=textMuted, font=\scriptsize] at (0,-0.95) {capa 1};
+    \node[color=textMuted, font=\scriptsize] at (3.1,-0.95) {capas medias};
+    \node[color=textMuted, font=\scriptsize] at (6.2,-0.95) {capas altas};
+    \node[color=textMuted, font=\scriptsize] at (9.3,-0.95) {la salida};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+   Las primeras capas aprenden bordes; las siguientes los combinan en
+   texturas; luego en partes (una rueda, una manga); al final, en objetos
+   (un bus, una camisa). \textbf{Nadie programó esa escalera: emerge del
+   entrenamiento.}}
+  \vspace{4pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     Por eso el techo de Fashion-MNIST se sube con convolución y no con más
+     épocas: la diferencia entre camiseta y camisa es textura y forma ---
+     cosas de vecinos, no de píxeles sueltos.}
+  \end{tcolorbox}
+\end{frame}
 
 \begin{frame}[shrink=5]{Las Tareas, y la Pregunta que Responde Cada Una}
   \vspace{4pt}
@@ -478,11 +576,12 @@
 
   {\footnotesize\color{textMuted}
    Las cuatro primeras las corremos ahora, \textbf{con código, una por una}.
-   Las dos últimas, con el ojo por código de la parte 5.}
+   Las dos últimas, con el ojo por código al final de la parte que sigue ---
+   y luego un sentido que no está en la tabla: \textbf{el oído}.}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{4 · Cada Tarea, con Código}{Cuatro modelos, la misma línea --- y el ojo por código \\[6pt] \normalsize 40 -- 95 min}
+\sectionframe{4 · Cada Tarea, con Código}{Cuatro modelos, la misma línea --- y el ojo por código \\[6pt] \normalsize 40 -- 90 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=8]{La Lámina Completa: una Foto, Cuatro Preguntas}
@@ -588,6 +687,87 @@ r.keypoints.data.shape[1:]  # (17, 3): articulaciones x (x, y, conf)
   \end{tcolorbox}
 \end{frame}
 
+\begin{frame}[fragile, shrink=5]{4.5 · La Perilla que Hay que Conocer: el Umbral}
+  \vspace{-2pt}
+  \begin{minted}[fontsize=\scriptsize, breaklines]{python}
+for umbral in [0.6, 0.25, 0.1]:
+    r = modelo("foto.jpg", conf=umbral, verbose=False)[0]
+    print(umbral, collections.Counter(r.names[int(c)] for c in r.boxes.cls))
+  \end{minted}
+  \vspace{1pt}
+  \begin{center}
+  {\footnotesize
+  \begin{tabular}{cl}
+    \toprule
+    \textbf{Umbral} & \textbf{Lo que reporta (corrida real)} \\
+    \midrule
+    0.6 & 1 bus + 4 personas \\[1pt]
+    0.25 & idéntico --- la detección más tímida está al 62\,\% \\[1pt]
+    0.1 & \ldots y un \textbf{monopatín al 12\,\% que no existe} \\
+    \bottomrule
+  \end{tabular}}
+  \end{center}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=3pt, bottom=3pt]
+    {\scriptsize\color{textMuted}
+     \textbf{\color{arcaRed}Umbral alto} = se pierden objetos reales.
+     \textbf{\color{arcaRed}Umbral bajo} = entran fantasmas. En una app de
+     seguridad esa perilla es una \textbf{decisión de negocio}: ¿qué cuesta
+     más --- la alarma falsa, o el casco sin detectar?}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[shrink=5]{4.6 · ¿De Dónde Salen las 80 Clases?}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   El detector conoce 80 objetos porque se entrenó con \textbf{COCO}: unas
+   330.000 fotos cotidianas etiquetadas a mano. Por eso sabe qué es un
+   \emph{frisbee}\ y no sabe qué es una \emph{válvula}.}
+  \vspace{6pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=5pt, bottom=5pt]
+    {\scriptsize\color{arcaRed}\bfseries EL SESGO DE CATÁLOGO}\\[2pt]
+    {\footnotesize\color{textMuted}
+     El modelo solo conoce lo que su dataset le enseñó. Es la lección de
+     todo el curso --- \textbf{el modelo hereda a su dato} --- vestida de
+     visión.}
+  \end{tcolorbox}
+  \vspace{6pt}
+  {\footnotesize\color{textMuted}
+   ¿Y un detector de «brida corroída» o «casco de la empresa»? Para eso
+   existe el \textbf{ajuste fino} --- siguiente lámina.}
+\end{frame}
+
+\begin{frame}[fragile, shrink=5]{4.7 · ¿Y si No Conoce SU Objeto? El Ajuste Fino}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Desde cero costaría millones. En cambio se toma el modelo preentrenado y
+   se le \textbf{re-enseña el final} con fotos propias:}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+  \begin{enumerate}\setlength{\itemsep}{2pt}
+    \item \textbf{50--200 fotos} propias del objeto, variadas.
+    \item \textbf{Etiquetarlas}: cajas dibujadas a mano (hay herramientas
+          gratuitas para eso).
+    \item Y una línea:
+  \end{enumerate}}
+  \begin{minted}[fontsize=\scriptsize]{python}
+modelo = YOLO("yolo11n.pt")
+modelo.train(data="mis_fotos.yaml", epochs=50)
+  \end{minted}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=codeGreen, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     No lo corremos hoy --- pero es lo primero que van a necesitar cuando
+     esto toque su trabajo real, y ya saben pedirlo.}\\[2pt]
+    {\scriptsize\color{textMuted}
+     Se llama \emph{transfer learning}: el mismo truco que hace posible
+     todo lo de esta clase.}
+  \end{tcolorbox}
+\end{frame}
+
 \begin{frame}[shrink=5]{El Ojo por Código: la Pregunta Libre}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
@@ -638,15 +818,95 @@ print(r.text)
     {\scriptsize\color{textMuted}
      \textbf{\color{arcaRed}La advertencia al cubo:} cada foto enviada por
      esta vía \textbf{sale hacia un tercero}. Con la de la planta --- parte
-     5, ya mismo.}
+     6, en un momento.}
   \end{tcolorbox}
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{5 · Los Peligros, con Nombre}{La promesa pendiente, pagada \\[6pt] \normalsize 95 -- 112 min}
+\sectionframe{5 · El Oído por Código}{Whisper: dictar, transcribir, estructurar \\[6pt] \normalsize 90 -- 102 min}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=5]{5.1 · Lo que Se Pega, Sale de la Empresa}
+\begin{frame}[shrink=5]{La Visión No Es el Único Sentido Preentrenado}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   \textbf{Whisper} es el modelo de voz que OpenAI liberó como
+   \textbf{código abierto} en 2022: 680.000 horas de audio, español y 98
+   idiomas más, un \texttt{pip install}. Dicta usted; escribe él.}
+  \vspace{5pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=5pt, bottom=5pt]
+    {\scriptsize\color{arcaRed}\bfseries LA DIFERENCIA QUE IMPORTA}\\[2pt]
+    {\footnotesize\color{textMuted}
+     Gemini: la foto \textbf{sale} hacia un tercero. Whisper: corre
+     \textbf{dentro de su Colab} --- el modelo se descarga una vez y el
+     audio no viaja a ninguna parte. La misma tarea, dos arquitecturas de
+     privacidad opuestas. \textbf{Elegir entre ellas también es
+     ingeniería.}}
+  \end{tcolorbox}
+  \vspace{5pt}
+  {\footnotesize\color{textMuted}
+   El plan: dictan un \textbf{reporte de campo} al micrófono $\to$ Whisper
+   lo vuelve texto (local) $\to$ Gemini vuelve ese texto un \textbf{acta
+   estructurada}. Voz $\to$ texto $\to$ estructura, en tres celdas.}
+\end{frame}
+
+\begin{frame}[fragile, shrink=5]{Dictar y Transcribir}
+  \vspace{-2pt}
+  \begin{minted}[fontsize=\scriptsize, breaklines]{python}
+AUDIO = grabar(15)   # el micrófono del navegador, desde la celda
+
+import whisper
+modelo_voz = whisper.load_model("base")        # 74 MB, corre local
+print(modelo_voz.transcribe(AUDIO, language="es")["text"])
+  \end{minted}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+   La función \texttt{grabar()} viene en el cuaderno (un poco de JavaScript
+   del navegador; pide permiso de micrófono la primera vez).}
+  \vspace{3pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries DICTEN COMO SI LLAMARAN DESDE CAMPO}\\[2pt]
+    {\scriptsize\color{textMuted}\itshape
+     «Inspección del tanque tres. Se observa corrosión en la brida norte.
+     Presión registrada: mil doscientos cincuenta psi. Se recomienda cambio
+     de empaque antes del viernes.»}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile, shrink=5]{De la Voz al Acta: el Flujo Completo}
+  \vspace{-2pt}
+  \begin{minted}[fontsize=\scriptsize, breaklines]{python}
+r = cliente.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=f"""Reporte de campo dictado por voz: "{TEXTO}"
+Conviértelo en un acta breve:
+- RESUMEN: (una frase)
+- DATOS: (equipos, valores y unidades mencionados)
+- ACCIONES: (qué se pide hacer, con plazo si lo hay)""")
+print(r.text)
+  \end{minted}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Quince segundos de voz $\to$ un acta con los datos y las acciones
+   separados, lista para un correo o un sistema. Hace tres años, esto era
+   un producto que se compraba.}
+  \vspace{2pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=3pt, bottom=3pt]
+    {\scriptsize\color{textMuted}
+     \textbf{\color{arcaRed}La frontera de privacidad, cruzada dos veces:}
+     el \emph{audio} nunca salió de su Colab (Whisper es local); el
+     \emph{texto} sí viajó a Gemini. Este diseño les deja decidir
+     \textbf{qué cruza y qué no} --- de eso, la parte que sigue.}
+  \end{tcolorbox}
+\end{frame}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\sectionframe{6 · Los Peligros, con Nombre}{La promesa pendiente, pagada \\[6pt] \normalsize 102 -- 115 min}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[shrink=5]{6.1 · Lo que Se Pega, Sale de la Empresa}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
    Los proveedores de estos servicios pueden \textbf{retener} lo que se les
@@ -673,7 +933,7 @@ print(r.text)
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=5]{5.2 · Las Llaves Son Contraseñas}
+\begin{frame}[shrink=5]{6.2 · Las Llaves Son Contraseñas}
   \vspace{4pt}
   {\footnotesize\color{textMuted}
    Lo acaban de vivir: la llave fue al \textbf{Secret}, no a la celda. ¿Por
@@ -701,7 +961,7 @@ print(r.text)
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}[shrink=5]{5.3 · Las Librerías Alucinadas}
+\begin{frame}[shrink=5]{6.3 · Las Librerías Alucinadas}
   \vspace{2pt}
   {\scriptsize\color{textMuted}
    Un agente puede recomendar, con total confianza, una librería \textbf{que
@@ -727,7 +987,7 @@ print(r.text)
    shap --- son masivas y auditadas. La regla es para la que no conocen.}
 \end{frame}
 
-\begin{frame}[shrink=5]{5.4 · El Peor de Todos: Código que Corre y Está Mal}
+\begin{frame}[shrink=5]{6.4 · El Peor de Todos: Código que Corre y Está Mal}
   \vspace{2pt}
   {\scriptsize\color{textMuted}
    No lanza error. Produce un número. El número es basura. Lo vieron
@@ -759,7 +1019,32 @@ print(r.text)
 \end{frame}
 
 % ═════════════════════════════════════════════════════════════════════════════
-\sectionframe{6 · Cierre}{}
+\sectionframe{7 · Cierre}{La puesta en común, y su entrega \\[6pt] \normalsize 115 -- 120 min}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{frame}[shrink=5]{La Puesta en Común}
+  \vspace{2pt}
+  {\footnotesize\color{textMuted}
+   Antes de cerrar el módulo, tres preguntas para la sala --- una respuesta
+   por equipo, en voz alta:}
+  \vspace{6pt}
+  {\footnotesize\color{textMuted}
+  \begin{enumerate}\setlength{\itemsep}{8pt}
+    \item ¿Qué proceso de su trabajo \textbf{automatizarían el lunes} con
+          lo visto en el módulo?
+    \item ¿Cuál fue el \textbf{error del agente} que cazaron esta semana
+          --- y cómo lo detectaron?
+    \item ¿Qué decisión \textbf{no le delegarían jamás} a un modelo, por
+          buena que sea su métrica?
+  \end{enumerate}}
+  \vspace{6pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
+    {\scriptsize\color{arcaDark}\bfseries
+     La tercera es la que importa: saber qué NO delegar es la forma más
+     madura de saber usar la herramienta.}
+  \end{tcolorbox}
+\end{frame}
 % ═════════════════════════════════════════════════════════════════════════════
 
 \begin{frame}[shrink=5]{Su Entrega del Jueves}
@@ -802,7 +1087,7 @@ print(r.text)
     1 & Dirigir un agente: los cuatro fundamentos, y verificar siempre \\[2pt]
     2 & Un modelo servido: certificar, entrenar, examinar, blindar \\[2pt]
     3 & El flujo profesional (GridSearch, SHAP) --- y su primera red \\[2pt]
-    4 & Las máquinas que ven, el ojo por código, y los peligros \\
+    4 & Las máquinas que ven --- y oyen: visión, voz, y los peligros \\
     \bottomrule
   \end{tabular}}
   \end{center}
@@ -830,7 +1115,8 @@ print(r.text)
       \textbf{YOLO}: Redmon et al.\ (2016); implementación
       \textbf{Ultralytics} (yolo11n: cls/det/seg/pose). \textbf{AlexNet}:
       Krizhevsky, Sutskever \& Hinton (2012). \textbf{Gemini API}: SDK
-      \texttt{google-genai}.
+      \texttt{google-genai}. \textbf{Whisper}: Radford et al.\ (OpenAI,
+      2022), código abierto. \textbf{COCO}: Lin et al.\ (2014).
     \item[{\color{arcaRed}\scriptsize\faFileCode}]
       La solución de referencia y las imágenes anotadas salen de
       \texttt{figuras.py} (semilla fija; corridas reales, no ilustraciones).

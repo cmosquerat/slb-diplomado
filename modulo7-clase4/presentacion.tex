@@ -1047,32 +1047,71 @@ print(r.text)
 \end{frame}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\begin{frame}[shrink=5]{Su Entrega del Jueves}
+\begin{frame}[shrink=5]{El Instructivo, 1 de 2: Ustedes Escogen el Proyecto}
   \vspace{2pt}
   {\footnotesize\color{textMuted}
-   Equipos de hasta 3. El cuaderno del Titanic es la plantilla. Se entrega:}
-  \vspace{5pt}
+   \textbf{Equipos de hasta 3.} Una tarea \textbf{afín a su área} --- no
+   necesariamente laboral --- con un \textbf{dataset relacionado}. Vale
+   cualquier tipo de dato:}
+  \vspace{4pt}
   {\footnotesize\color{textMuted}
   \begin{itemize}\setlength{\itemsep}{4pt}
-    \item[{\color{codeGreen}\scriptsize\faCheck}]
-      El \textbf{cuaderno} con el flujo completo: EDA $\to$ limpieza con
-      decisiones escritas $\to$ comparación de modelos $\to$ examen
-      reservado $\to$ explicabilidad
-    \item[{\color{codeGreen}\scriptsize\faCheck}]
-      La \textbf{app} con su link funcionando
-    \item[{\color{codeGreen}\scriptsize\faCheck}]
-      Los \textbf{prompts} que usaron
-    \item[{\color{codeGreen}\scriptsize\faCheck}]
-      \textbf{Un error del agente que ustedes cazaron}, y cómo lo detectaron
-    \item[{\color{codeGreen}\scriptsize\faCheck}]
-      Qué \textbf{decisión} habilita la herramienta, y para quién
+    \item[{\color{arcaRed}\scriptsize\faTable}]
+      \textbf{Tabular} --- predicción o clasificación, al estilo Titanic o
+      diamantes.
+    \item[{\color{arcaRed}\scriptsize\faCamera}]
+      \textbf{Visión} --- al estilo Fashion-MNIST, o detección sobre fotos
+      propias.
+    \item[{\color{arcaRed}\scriptsize\faIndustry}]
+      Lo que su área pida: mantenimiento, transporte, calidad,
+      administración, medio ambiente\ldots
   \end{itemize}}
-  \vspace{6pt}
+  \vspace{5pt}
+  \begin{tcolorbox}[colback=arcaGray, colframe=arcaRed, boxrule=0pt,
+    leftrule=4pt, arc=3pt, left=10pt, right=10pt, top=5pt, bottom=5pt]
+    {\footnotesize\color{textMuted}
+     El dataset: \textbf{público} --- seaborn, \texttt{keras.datasets},
+     UCI, Kaggle, datos abiertos. \textbf{\color{arcaRed}Nunca datos
+     confidenciales de la empresa.}}
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[shrink=8]{El Instructivo, 2 de 2: UN Cuaderno que Corre Completo}
+  \vspace{-2pt}
+  {\scriptsize\color{textMuted}
+   Se entrega \textbf{un \texttt{.ipynb}} que corre de arriba a abajo, con:}
+  \vspace{2pt}
+  {\scriptsize\color{textMuted}
+  \begin{itemize}\setlength{\itemsep}{2pt}
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{EDA} --- las preguntas al dato antes de modelar, con gráficas
+      que digan algo
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{Limpieza} --- con las decisiones \textbf{escritas}: qué se
+      botó, qué se imputó, por qué
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{Varios modelos con grilla} --- \texttt{GridSearchCV}, 2--3
+      modelos e hiperparámetros, validación cruzada
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{Examen reservado} --- el conjunto de prueba se toca
+      \textbf{una} vez, al final
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{Matriz de costos} --- qué error cuesta más y qué umbral
+      eligieron, en el idioma del negocio
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      \textbf{Explicabilidad} --- SHAP o equivalente, global y por caso
+    \item[{\color{codeGreen}\scriptsize\faCheck}]
+      Los \textbf{prompts} usados, y \textbf{un error del agente cazado}
+      --- con cómo lo detectaron
+  \end{itemize}}
+  \vspace{3pt}
   \begin{tcolorbox}[colback=arcaGray, colframe=arcaDark, boxrule=0pt,
-    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=4pt, bottom=4pt]
-    {\scriptsize\color{arcaDark}\bfseries
-     El error cazado vale tanto como la app: demuestra que dirigieron, no
-     que obedecieron.}
+    leftrule=3pt, arc=3pt, left=8pt, right=8pt, top=3pt, bottom=3pt]
+    {\scriptsize\color{textMuted}
+     La \textbf{app en Gradio} con su link: \emph{opcional} --- suma, pero
+     el cuaderno es la entrega. La plantilla es el \textbf{Titanic de la
+     Clase 3}, de la primera celda a la última. Y el error cazado vale
+     tanto como el modelo: demuestra que dirigieron, no que obedecieron.}
   \end{tcolorbox}
 \end{frame}
 

@@ -674,16 +674,43 @@ md(r"""
 
 # 8 · Cierre del módulo — y su entrega
 
-## La entrega del jueves
+## La entrega del jueves — el instructivo completo
 
-Equipos de hasta 3. El cuaderno del Titanic es la plantilla. Se entrega:
+**Equipos de hasta 3 personas.** El proyecto lo escogen **ustedes**: una
+tarea **afín a su área** — no necesariamente laboral — con un dataset
+relacionado. Vale cualquier tipo de dato:
 
-- [ ] El **cuaderno** con el flujo completo: EDA → limpieza con decisiones
-  escritas → comparación de modelos → examen reservado → explicabilidad
-- [ ] La **app** con su link funcionando
-- [ ] Los **prompts** que usaron
-- [ ] **Un error del agente que ustedes cazaron**, y cómo lo detectaron
-- [ ] Qué **decisión** habilita la herramienta, y para quién
+- **Tabular** (predicción o clasificación) — al estilo Titanic o diamantes.
+- **Visión** — al estilo Fashion-MNIST, o detección sobre fotos propias.
+- Lo que su área pida: mantenimiento, transporte, calidad, administración,
+  medio ambiente…
+
+El dataset debe ser **público** (los de seaborn, `keras.datasets`, UCI,
+Kaggle, un portal de datos abiertos). **Nunca datos confidenciales de la
+empresa.**
+
+### Se entrega UN cuaderno (`.ipynb`) que corre de arriba a abajo, con:
+
+- [ ] **EDA** — las preguntas al dato antes de modelar, con gráficas que
+  digan algo
+- [ ] **Limpieza** — con las decisiones **escritas**: qué se botó, qué se
+  imputó, y por qué
+- [ ] **Varios modelos con grilla** — `GridSearchCV` con al menos 2–3
+  modelos e hiperparámetros, comparados con validación cruzada
+- [ ] **Examen reservado** — el conjunto de prueba se toca **una** vez, al
+  final
+- [ ] **Matriz de costos** — qué error cuesta más y qué umbral eligieron,
+  argumentado en el idioma del negocio
+- [ ] **Explicabilidad** — SHAP (o equivalente): qué mueve las predicciones,
+  global y para casos individuales
+- [ ] Los **prompts** que usaron, y **un error del agente que cazaron** —
+  con cómo lo detectaron
+
+La **app en Gradio** con su link funcionando: **opcional** — suma, pero el
+cuaderno es la entrega.
+
+El cuaderno del Titanic (Clase 3) es la plantilla de todo esto, de la
+primera celda a la última.
 
 ## El arco del módulo, en cuatro clases
 

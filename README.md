@@ -13,6 +13,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Clase 1](clase-01/) | Fundamentos de Python (variables, tipos, `input`, `if` básico) | ✅ Publicada |
 | [Clase 2](clase-02/) | Control de flujo — condicionales, listas y ciclos `for` | ✅ Publicada |
 | [Clase 3](clase-03/) | pandas y carga de datos: librerías/pip, CSV, well logs (LAS) y limpieza — campo Volve | ✅ Publicada |
+| [Módulo 2 · Clase 1](modulo2-clase1/) | Exploración de datos: qué es, tipos de datos, filas y columnas en pandas, revisar la tabla, distribuciones y resúmenes (costos médicos, 1.338 personas) | ✅ Lista |
 | [Módulo 3 · Clase 1](modulo3-clase1/) | ML supervisado — Regresión lineal: predecir el registro sónico (Volve) | ✅ Publicada |
 | [Módulo 3 · Clase 2](modulo3-clase2/) | Clasificación — Regresión logística, métricas y **costo de negocio** (FORCE 2020) | ✅ Publicada |
 | [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
@@ -76,6 +77,15 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 9. **Práctica integradora:** reporte de producción del campo Volve
 
 *Datos: campo Volve, Equinor (dataset abierto, 2018).*
+
+## Módulo 2 · Clase 1: Exploración de datos
+
+- [`modulo2-clase1/presentacion.html`](modulo2-clase1/presentacion.html) — presentación (93 láminas). Se abre en el navegador; flechas para avanzar, F para pantalla completa.
+- [`modulo2-clase1/Modulo2_Clase1_Explorar_Datos.ipynb`](modulo2-clase1/Modulo2_Clase1_Explorar_Datos.ipynb) — cuaderno Colab con 4 ejercicios.
+- [`datos/insurance.csv`](datos/insurance.csv) — costos médicos de 1.338 personas (Lantz, *Machine Learning with R*; datos simulados con estadísticas del censo de EE. UU.).
+- `figuras.py` imprime todas las cifras de la clase; `preparar_presentacion.py` inserta los datos en la presentación; `mknb.py` genera el cuaderno.
+
+**Contenidos:** qué es explorar datos, para qué sirve y cuándo se hace (Tukey, el ciclo de un proyecto) · tipos de datos (continuo, discreto, nominal, binario, ordinal) y la trampa de los números que son etiquetas · qué es una librería · filas, columnas e índice en pandas: `head`, `info`, seleccionar columnas, `iloc` y `loc`, filtros, `sort_values`, `value_counts` · revisar la tabla con una lista fija (vacíos, rangos, categorías, repetidos) · distribuciones: cómo se arma un histograma, las cinco formas, el sesgo · media, mediana, moda, dispersión, percentiles, boxplot y atípicos.
 
 ## Módulo 3 · Clase 1: Regresión lineal — predecir el sónico
 

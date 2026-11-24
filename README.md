@@ -14,6 +14,7 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 | [Clase 2](clase-02/) | Control de flujo — condicionales, listas y ciclos `for` | ✅ Publicada |
 | [Clase 3](clase-03/) | pandas y carga de datos: librerías/pip, CSV, well logs (LAS) y limpieza — campo Volve | ✅ Publicada |
 | [Módulo 2 · Clase 1](modulo2-clase1/) | Exploración de datos: qué es, tipos de datos, filas y columnas en pandas, revisar la tabla, distribuciones y resúmenes (costos médicos, 1.338 personas) | ✅ Lista |
+| [Módulo 2 · Clase 2](modulo2-clase2/) | Distribuciones y relaciones entre variables: análisis univariado (tendencia central, asimetría, dispersión, atípicos) y bivariado (linealidad, Pearson, Spearman, multicolinealidad), con preguntas para la clase (producción diaria de 5 pozos de Volve) | ✅ Lista |
 | [Módulo 3 · Clase 1](modulo3-clase1/) | ML supervisado — Regresión lineal: predecir el registro sónico (Volve) | ✅ Publicada |
 | [Módulo 3 · Clase 2](modulo3-clase2/) | Clasificación — Regresión logística, métricas y **costo de negocio** (FORCE 2020) | ✅ Publicada |
 | [Módulo 3 · Clase 3](modulo3-clase3/) | No linealidad — Árboles de decisión y Random Forest (litología + medidor virtual de flujo) | ✅ Publicada |
@@ -86,6 +87,17 @@ Diplomado corporativo enfocado en aplicaciones de análisis de datos para la ind
 - `figuras.py` imprime todas las cifras de la clase; `preparar_presentacion.py` inserta los datos en la presentación; `mknb.py` genera el cuaderno.
 
 **Contenidos:** qué es explorar datos, para qué sirve y cuándo se hace (Tukey, el ciclo de un proyecto) · tipos de datos (continuo, discreto, nominal, binario, ordinal) y la trampa de los números que son etiquetas · qué es una librería · filas, columnas e índice en pandas: `head`, `info`, seleccionar columnas, `iloc` y `loc`, filtros, `sort_values`, `value_counts` · revisar la tabla con una lista fija (vacíos, rangos, categorías, repetidos) · distribuciones: cómo se arma un histograma, las cinco formas, el sesgo · media, mediana, moda, dispersión, percentiles, boxplot y atípicos.
+
+## Módulo 2 · Clase 2: Distribuciones y relaciones entre variables
+
+- [`modulo2-clase2/presentacion.html`](modulo2-clase2/presentacion.html) — presentación (75 láminas, con preguntas para la clase y su respuesta en la lámina siguiente; las láminas «En el cuaderno» van a la par del cuaderno).
+- [`modulo2-clase2/Modulo2_Clase2_Distribuciones_y_Relaciones.ipynb`](modulo2-clase2/Modulo2_Clase2_Distribuciones_y_Relaciones.ipynb) — cuaderno Colab con 2 prácticas.
+- [`datos/volve_pozos_diario.csv`](datos/volve_pozos_diario.csv) — producción diaria de los 5 pozos productores de Volve (9.001 filas: horas, petróleo, gas y agua). Se deja sin limpiar a propósito: se limpia en la clase 3.
+- `preparar_datos.py` arma la tabla; `cifras.py` imprime todas las cifras; `preparar_presentacion.py` inserta los datos en la presentación; `mknb.py` genera el cuaderno.
+
+**Contenidos:** análisis de datos en la era de la IA y *human in the loop* · cargar los datos · variable objetivo y variables predictoras · distribución e histograma · media, mediana y moda (sensibilidad a extremos) · simetría y asimetría, cola de la distribución, coeficiente de asimetría · varianza y desviación estándar, regla 68-95-99,7, coeficiente de variación · puntaje z (comparar escalas, estandarizar) · percentiles, cuartiles y diagrama de caja · valores atípicos: puntaje z y criterio de Tukey; atípico frente a error · poblaciones mezcladas · diagrama de dispersión: dirección, forma y fuerza · linealidad y por qué es rara · covarianza y correlación de Pearson · Spearman y relaciones monótonas · cuarteto de Anscombe · variable de confusión · matriz de correlación y multicolinealidad · fuga de información · guía de revisión según el tipo de problema.
+
+*Datos: campo Volve (Equinor), dataset abierto.*
 
 ## Módulo 3 · Clase 1: Regresión lineal — predecir el sónico
 

@@ -23,7 +23,18 @@ df = pd.read_csv(AQUI.parent / "datos" / "volve_pozos_diario.csv")
 abiertos = df[(df["horas"] > 0) & (df["pozo"] == "Pozo 2") & (df["petroleo"] < 25000)]
 hb20 = (abiertos["petroleo"].sample(20, random_state=4) / 1000).round(0).astype(int).tolist()
 
+# Motores de turbina (NASA): temperatura de salida en °C, una campana casi perfecta
+mot = pd.read_csv(AQUI.parent / "datos" / "flota_turbomaquinas_nasa.csv")
+mot["temp"] = (mot["T50"] - 491.67) * 5 / 9
+mot["restan"] = mot.groupby("unidad")["ciclo"].transform("max") - mot["ciclo"]
+zt = (mot["temp"] - mot["temp"].mean()) / mot["temp"].std()
+mt_counts = pd.cut(mot["temp"], bins=list(range(494, 529))).value_counts(sort=False).tolist()
+
 datos = {
+    "mtCounts": mt_counts,
+    "mtMean": round(mot["temp"].mean(), 2),
+    "mtSd": round(mot["temp"].std(), 3),
+    "mtRestan": sorted(mot.loc[zt.abs() > 3, "restan"].astype(int).tolist()),
     "pz": (df["pozo"].str[-1].astype(int) - 1).tolist(),
     "d": df["dias"].tolist(),
     "h": df["horas"].tolist(),

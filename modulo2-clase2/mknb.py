@@ -19,6 +19,8 @@ import sys
 NOMBRE = "Modulo2_Clase2_Distribuciones_y_Relaciones.ipynb"
 URL = ("https://raw.githubusercontent.com/cmosquerat/slb-diplomado/"
        "main/datos/volve_pozos_diario.csv")
+URL_MOTORES = ("https://raw.githubusercontent.com/cmosquerat/slb-diplomado/"
+               "main/datos/flota_turbomaquinas_nasa.csv")
 
 clase = []      # celdas del cuaderno de la clase
 resuelto = []   # mismas celdas, con los ejercicios resueltos
@@ -261,11 +263,66 @@ escalas distintas.
 """)
 
 code(r"""
-# Ana: 80 en Matemáticas (media 70, desviación 5); 85 en Historia (media 80, desviación 10)
-z_matematicas = (80 - 70) / 5
-z_historia = (85 - 80) / 10
-print('z en Matemáticas:', z_matematicas)
-print('z en Historia:   ', z_historia)
+# Carla vendió 120 mil en una región con media 100 mil y desviación 10 mil
+# Luis vendió 150 mil en una región con media 140 mil y desviación 20 mil
+z_carla = (120 - 100) / 10
+z_luis = (150 - 140) / 20
+print('z de Carla:', z_carla)
+print('z de Luis: ', z_luis)
+""")
+
+md(r"""
+### Un caso donde el puntaje z funciona bien: motores de turbina
+
+Otro conjunto de datos: 100 motores de turbina, simulados por la NASA. En cada
+vuelo (`ciclo`) se registra la temperatura de salida de la turbina (`T50`, en
+grados Rankine). Cada motor vuela hasta que falla.
+""")
+
+code(f"""
+# Leer los datos de los motores
+url_motores = "{URL_MOTORES}"
+motores = pd.read_csv(url_motores)
+
+# Pasar la temperatura de grados Rankine a grados Celsius
+motores['temp'] = (motores['T50'] - 491.67) * 5 / 9
+
+# Histograma: tiene forma de campana
+plt.hist(motores['temp'], bins=34)
+plt.xlabel('Temperatura de salida de la turbina (°C)')
+plt.ylabel('Lecturas')
+plt.show()
+""")
+
+code(r"""
+# Puntaje z de cada lectura
+zt = (motores['temp'] - motores['temp'].mean()) / motores['temp'].std()
+
+# ¿Se cumple la regla 68 - 95 - 99,7?
+for k in [1, 2, 3]:
+    print('A menos de', k, 'desviaciones:', round(100 * (zt.abs() < k).mean(), 1), '%')
+
+# Lecturas atípicas: |z| > 3
+atipicas = motores[zt.abs() > 3]
+print('Lecturas atípicas:', len(atipicas))
+""")
+
+code(r"""
+# ¿Son errores del sensor? Veamos cuántos vuelos le quedaban a cada motor
+# 'vida' es el último vuelo de cada motor; 'restan', los vuelos que le faltaban
+motores['vida'] = motores.groupby('unidad')['ciclo'].transform('max')
+motores['restan'] = motores['vida'] - motores['ciclo']
+
+# Vuelos que le quedaban al motor en cada lectura atípica
+motores[zt.abs() > 3]['restan'].value_counts().sort_index()
+""")
+
+md(r"""
+Las lecturas atípicas no son errores: vienen de motores a punto de fallar. Un
+motor desgastado se calienta más, y el puntaje z encontró esa señal. Entender
+qué significaba requirió conocer el equipo: eso es *human in the loop*.
+
+Con el petróleo, que es asimétrico, el puntaje z funciona peor (sección 1.7).
 """)
 
 code(r"""
